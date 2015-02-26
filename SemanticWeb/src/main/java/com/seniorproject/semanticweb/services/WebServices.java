@@ -24,22 +24,22 @@ import org.springframework.stereotype.Service;
 public class WebServices {
         public String queryJena(String queryString){
         FileManager.get().addLocatorClassLoader(WebServices.class.getClassLoader());
-        Model model = FileManager.get().loadModel("data/linkedmdb-latest-dump.nt");
-        String prefix = 
-                "PREFIX owl: <http://www.w3.org/2002/07/owl#> " +
-                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> " +
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "PREFIX foaf: <http://xmlns.com/foaf/0.1/> " +
-                "PREFIX oddlinker: <http://data.linkedmdb.org/resource/oddlinker/> " +
-                "PREFIX map: <file:/C:/d2r-server-0.4/mapping.n3#> " +
-                "PREFIX db: <http://data.linkedmdb.org/resource/> " +
-                "PREFIX dbpedia: <http://dbpedia.org/property/> " +
-                "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> " +
-                "PREFIX dc: <http://purl.org/dc/terms/> " +
-                "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
-//        Model model = FileManager.get().loadModel("data/data.ttl");
-//        String prefix = "PREFIX foaf: <http://xmlns.com/foaf/0.1/> ";
+//        Model model = FileManager.get().loadModel("data/linkedmdb-latest-dump.nt");
+//        String prefix = 
+//                "PREFIX owl: <http://www.w3.org/2002/07/owl#> " +
+//                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> " +
+//                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
+//                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+//                "PREFIX foaf: <http://xmlns.com/foaf/0.1/> " +
+//                "PREFIX oddlinker: <http://data.linkedmdb.org/resource/oddlinker/> " +
+//                "PREFIX map: <file:/C:/d2r-server-0.4/mapping.n3#> " +
+//                "PREFIX db: <http://data.linkedmdb.org/resource/> " +
+//                "PREFIX dbpedia: <http://dbpedia.org/property/> " +
+//                "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> " +
+//                "PREFIX dc: <http://purl.org/dc/terms/> " +
+//                "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
+        Model model = FileManager.get().loadModel("data/data.ttl");
+        String prefix = "PREFIX foaf: <http://xmlns.com/foaf/0.1/> ";
         Query query = QueryFactory.create(prefix+queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
         String out = "";
