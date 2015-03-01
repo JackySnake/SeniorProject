@@ -51,30 +51,30 @@
 
                     </div>
                     <div role="tabpanel" class="tab-pane" id="advance_search">
-                       
-                        
-                            <c:url var="action" value="/query" ></c:url>
 
-                        <form:form action="${action}" modelAttribute="searchForm" method="POST" name="searchForm">
+
+                        <c:url var="action" value="/query" ></c:url>
+
+                        <form:form action="${action}" id="searchForm" commandName="searchForm">
                             <div class="form-group">
                                 <label for="queryString">SPARQL:</label>
                                 <p>PREFIX owl: &lt;http://www.w3.org/2002/07/owl#><br>
-                            PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#><br>
-                            PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#><br>
-                            PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#><br>
-                            PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/><br>
-                            PREFIX oddlinker: &lt;http://data.linkedmdb.org/resource/oddlinker/><br>
-                            PREFIX map: &lt;file:/C:/d2r-server-0.4/mapping.n3#><br>
-                            PREFIX db: &lt;http://data.linkedmdb.org/resource/><br>
-                            PREFIX dbpedia: &lt;http://dbpedia.org/property/><br>
-                            PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#><br>
-                            PREFIX dc: &lt;http://purl.org/dc/terms/><br>
-                            PREFIX movie: &lt;http://data.linkedmdb.org/resource/movie/></p>
-                             
-                            <form:textarea type="text" path="queryString" class="form-control" rows="3" id="queryString"/>
+                                    PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#><br>
+                                    PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#><br>
+                                    PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#><br>
+                                    PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/><br>
+                                    PREFIX oddlinker: &lt;http://data.linkedmdb.org/resource/oddlinker/><br>
+                                    PREFIX map: &lt;file:/C:/d2r-server-0.4/mapping.n3#><br>
+                                    PREFIX db: &lt;http://data.linkedmdb.org/resource/><br>
+                                    PREFIX dbpedia: &lt;http://dbpedia.org/property/><br>
+                                    PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#><br>
+                                    PREFIX dc: &lt;http://purl.org/dc/terms/><br>
+                                    PREFIX movie: &lt;http://data.linkedmdb.org/resource/movie/></p>
+
+                                <form:textarea type="text" path="queryString" class="form-control" rows="10" id="queryString"/>
                             </div>
-                            <input type="submit" class="btn btn-primary" value="Search"/>
-                 
+                            <input type="submit" class="btn btn-primary center" value="Search"/>
+
                         </form:form>
 
                     </div>
@@ -82,15 +82,31 @@
 
             </div>
 
-            <div id="search_result" >
-                <h2>Found 7 matches</h2>
+            <div id="search_result_wrapper" >
+                <h3>Found 7 matches</h3>
+                <div id="search_result"></div>
             </div>
 
         </div>
         <script>
             $(function () {
-                $('#search_tab a:last').tab('show')
-            })
+                $('#search_tab a:last').tab('show');
+                $('#searchForm').submit(function (event) {
+           
+                    $.ajax({
+                        url: $("#searchForm").attr("action"),
+                        data: $("#queryString"),
+                        type: "GET",
+                        success: function (response) {
+        
+                            $("#search_result").html(response);
+                        }
+                        
+                    });
+                    event.preventDefault();
+                });
+
+            });
         </script>
     </body>
 </html>

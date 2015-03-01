@@ -13,6 +13,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -34,10 +36,17 @@ public class IndexController {
        return "index";
    }
    
-    @RequestMapping(value = "/query", method = RequestMethod.POST)
-    public String query(@ModelAttribute("queryString") SearchForm searchForm, Model model) {
-       String result = this.webServices.queryJena(searchForm.getQueryString());
-       model.addAttribute("result", result);
-       return "result";
-    }
+//    @RequestMapping(value = "/query", method = RequestMethod.POST)
+//    public String query(@ModelAttribute("queryString") SearchForm searchForm, Model model) {
+//       String result = this.webServices.queryJena(searchForm.getQueryString());
+//       model.addAttribute("result", result);
+//       return "result";
+//    }
+    
+    @RequestMapping("/query")  
+ public @ResponseBody String hello(@RequestParam(value = "queryString") String queryString) {  
+  String result = this.webServices.queryJena(queryString);
+  return result;  
+  
+ }  
 }

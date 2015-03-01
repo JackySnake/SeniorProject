@@ -12,7 +12,17 @@ body {
     padding: 0 20px;
 }
 
-#search_result {
+#search_result_wrapper {
     float: left;
     margin-left: 40px;
+}
+
+#advance_search {
+    padding: 20px 0;
+}
+
+.center {
+    margin-left:auto;
+margin-right:0;
+display: block
 }

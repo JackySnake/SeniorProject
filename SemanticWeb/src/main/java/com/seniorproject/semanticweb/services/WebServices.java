@@ -23,8 +23,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class WebServices {
         public String queryJena(String queryString){
+            System.out.println("1 test");
         FileManager.get().addLocatorClassLoader(WebServices.class.getClassLoader());
+        System.out.println("2");
+        
+        long heapSize = Runtime.getRuntime().totalMemory();
+         
+        //Print the jvm heap size.
+//        System.out.println("Heap Size = " + heapSize);
 //        Model model = FileManager.get().loadModel("data/linkedmdb-latest-dump.nt");
+//        System.out.println("3");
 //        String prefix = 
 //                "PREFIX owl: <http://www.w3.org/2002/07/owl#> " +
 //                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> " +
@@ -38,11 +46,16 @@ public class WebServices {
 //                "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> " +
 //                "PREFIX dc: <http://purl.org/dc/terms/> " +
 //                "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
-        Model model = FileManager.get().loadModel("data/data.ttl");
+        System.out.println("4");
+        Model model = FileManager.get().loadModel("data/data.nt");
         String prefix = "PREFIX foaf: <http://xmlns.com/foaf/0.1/> ";
+        System.out.println("5");
         Query query = QueryFactory.create(prefix+queryString);
+        System.out.println("6");
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
+        System.out.println("7");
         String out = "";
+        System.out.println("8");
         try {
             ResultSetRewindable results = ResultSetFactory.makeRewindable(qexec.execSelect());
             out = ResultSetFormatter.asText(results);
@@ -50,6 +63,8 @@ public class WebServices {
         } finally {
             qexec.close();
         }
+        System.out.println("9");
         return out;
     }
 }
+ 
