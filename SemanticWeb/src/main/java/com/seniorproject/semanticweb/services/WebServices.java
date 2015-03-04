@@ -14,6 +14,7 @@ import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.query.ResultSetRewindable;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.util.FileManager;
+import java.io.ByteArrayOutputStream;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,7 +31,7 @@ public class WebServices {
         long heapSize = Runtime.getRuntime().totalMemory();
          
         //Print the jvm heap size.
-//        System.out.println("Heap Size = " + heapSize);
+        System.out.println("Heap Size = " + heapSize);
 //        Model model = FileManager.get().loadModel("data/linkedmdb-latest-dump.nt");
 //        System.out.println("3");
 //        String prefix = 
@@ -46,25 +47,47 @@ public class WebServices {
 //                "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> " +
 //                "PREFIX dc: <http://purl.org/dc/terms/> " +
 //                "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
-        System.out.println("4");
         Model model = FileManager.get().loadModel("data/data.nt");
         String prefix = "PREFIX foaf: <http://xmlns.com/foaf/0.1/> ";
-        System.out.println("5");
         Query query = QueryFactory.create(prefix+queryString);
         System.out.println("6");
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
         System.out.println("7");
         String out = "";
-        System.out.println("8");
         try {
             ResultSetRewindable results = ResultSetFactory.makeRewindable(qexec.execSelect());
-            out = ResultSetFormatter.asText(results);
+             ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ResultSetFormatter.outputAsJSON(bos, results);
+            out = bos.toString();
             results.reset();
         } finally {
             qexec.close();
         }
-        System.out.println("9");
+        System.out.print(out);
         return out;
     }
+        public String getPredicate(String keyword){
+            String type="";
+            FileManager.get().addLocatorClassLoader(WebServices.class.getClassLoader());
+             Model model = FileManager.get().loadModel("data/data.nt");
+        String prefix = "PREFIX foaf: <http://xmlns.com/foaf/0.1/> ";
+        String queryString = "SELECT ?s ?p ?o  WHERE { " +
+                "?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> ." +
+                "?s ?p ?o .}";
+        Query query = QueryFactory.create(prefix+queryString);
+        QueryExecution qexec = QueryExecutionFactory.create(query, model);
+        String out = "";
+        try {
+            ResultSetRewindable results = ResultSetFactory.makeRewindable(qexec.execSelect());
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ResultSetFormatter.outputAsJSON(bos, results);
+            out = bos.toString();
+            results.reset();
+        } finally {
+            qexec.close();
+        }
+        System.out.print(out);
+            return out;
+        }
 }
  

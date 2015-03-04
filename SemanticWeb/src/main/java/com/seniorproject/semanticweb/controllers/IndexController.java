@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class IndexController {
-    
+
     private WebServices webServices;
 
     @Autowired
@@ -30,23 +30,29 @@ public class IndexController {
         this.webServices = webServices;
     }
 
-   @RequestMapping(value = "/", method = RequestMethod.GET)
-   public String index(Model model) {
-       model.addAttribute("searchForm", new SearchForm());
-       return "index";
-   }
-   
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index(Model model) {
+        model.addAttribute("searchForm", new SearchForm());
+        return "index";
+    }
+
 //    @RequestMapping(value = "/query", method = RequestMethod.POST)
 //    public String query(@ModelAttribute("queryString") SearchForm searchForm, Model model) {
 //       String result = this.webServices.queryJena(searchForm.getQueryString());
 //       model.addAttribute("result", result);
 //       return "result";
 //    }
-    
-    @RequestMapping("/query")  
- public @ResponseBody String hello(@RequestParam(value = "queryString") String queryString) {  
-  String result = this.webServices.queryJena(queryString);
-  return result;  
-  
- }  
+    @RequestMapping("/advanceSearch")
+    public @ResponseBody
+    String advanceSearch(@RequestParam(value = "searchString") String queryString) {
+        String result = this.webServices.queryJena(queryString);
+        return result;
+    }
+
+    @RequestMapping("/facetedSearch")
+    public @ResponseBody
+    String facetedSearch(@RequestParam(value = "searchString") String keyword) {
+        String result = this.webServices.getPredicate(keyword);
+        return result;
+    }
 }

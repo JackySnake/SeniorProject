@@ -30,7 +30,7 @@ public class Search {
 //"        		   ?person foaf:mbox <mailto:alice@example.org> .  \n" +
 //"        		    ?person foaf:name ?name . \n" +
 //"        		}";
-            System.out.println("1 test");
+            System.out.println("1 test Search");
         FileManager.get().addLocatorClassLoader(Search.class.getClassLoader());
         System.out.println("2");
         

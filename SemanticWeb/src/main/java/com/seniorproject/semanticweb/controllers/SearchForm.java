@@ -10,14 +10,16 @@ package com.seniorproject.semanticweb.controllers;
  * @author mtmmoei
  */
 public class SearchForm {
-    private String queryString;
+    private String searchString;
 
-    public String getQueryString() {
-        return queryString;
+    public String getSearchString() {
+        return searchString;
     }
 
-    public void setQueryString(String queryString) {
-        this.queryString = queryString;
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
     }
+
+
     
 }
