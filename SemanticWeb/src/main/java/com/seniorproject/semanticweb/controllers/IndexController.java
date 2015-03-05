@@ -6,6 +6,9 @@
 package com.seniorproject.semanticweb.controllers;
 
 import com.seniorproject.semanticweb.services.WebServices;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,8 +54,13 @@ public class IndexController {
 
     @RequestMapping("/facetedSearch")
     public @ResponseBody
-    String facetedSearch(@RequestParam(value = "searchString") String keyword) {
-        String result = this.webServices.getPredicate(keyword);
+    String facetedSearch(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(request.getParameter("searchString"));
+        System.out.println(request.getParameter("type"));
+        String queryString = this.webServices.genSparql(request.getParameter("searchString"),request.getParameter("type"));
+        System.out.print(queryString);
+        String result = this.webServices.queryJena(queryString);
+        System.out.print(result);
         return result;
     }
 }

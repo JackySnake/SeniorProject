@@ -1,41 +1,35 @@
 $(function () {
     $('#search_tab a:first').tab('show');
     $('#advanceSearch').submit(function (event) {
-
         $.ajax({
             url: $("#advanceSearch").attr("action"),
             data: $("#queryString"),
             type: "GET",
             success: function (response) {
-
                 createTable(response);
-
             }
-
         });
         event.preventDefault();
     });
-    $('#factedSearch').submit(function (event) {
-
+    
+    $('#facetedSearch').submit(function (event) {
+        
         $.ajax({
-            url: $("#factedSearch").attr("action"),
-            data: $("#keyword"),
+            url: $("#facetedSearch").attr("action"),
+            data: 'searchString=' + $("#keyword").val() + "&type=" + $("#type").val(),
             type: "GET",
             success: function (response) {
-
-                $("#search_result").html(response);
+                createTable(response);
             }
-
         });
         event.preventDefault();
     });
 
 
     $(".dropdown-menu li a").click(function () {
-
         $(".selection").text($(this).text());
         $(".selection").val($(this).text());
-
+        $("#type").val($(this).text());
     });
 
 

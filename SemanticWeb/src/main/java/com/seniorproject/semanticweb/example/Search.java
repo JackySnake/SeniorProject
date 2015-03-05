@@ -21,11 +21,11 @@ import com.hp.hpl.jena.util.FileManager;
  */
 public class Search {
         public static void main(String[]args){
-            String queryString="SELECT ?resource ?value\n" +
+            String queryString="SELECT ?resource \n" +
 "WHERE { ?resource movie:filmid ?uri.\n" +
 "?resource dc:title \"Forrest Gump\" .\n" +
 "}\n" +
-"ORDER BY ?resource ?value";
+"ORDER BY ?resource ";
 //            String queryString = "SELECT ?name WHERE { \n" +
 //"        		   ?person foaf:mbox <mailto:alice@example.org> .  \n" +
 //"        		    ?person foaf:name ?name . \n" +
@@ -56,6 +56,10 @@ public class Search {
         System.out.println("4");
 //        Model model = FileManager.get().loadModel("data/data.nt");
 //        String prefix = "PREFIX foaf: <http://xmlns.com/foaf/0.1/> ";
+//        String queryString="SELECT ?s ?p ?o " +
+//"WHERE { ?s ?o ?p .}" ;
+//        Model model = FileManager.get().loadModel("data/University20-clean2.nt");
+
         System.out.println("5");
         Query query = QueryFactory.create(prefix+queryString);
         System.out.println("6");

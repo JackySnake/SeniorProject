@@ -66,28 +66,27 @@ public class WebServices {
         System.out.print(out);
         return out;
     }
-        public String getPredicate(String keyword){
-            String type="";
-            FileManager.get().addLocatorClassLoader(WebServices.class.getClassLoader());
-             Model model = FileManager.get().loadModel("data/data.nt");
-        String prefix = "PREFIX foaf: <http://xmlns.com/foaf/0.1/> ";
-        String queryString = "SELECT ?s ?p ?o  WHERE { " +
-                "?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> ." +
-                "?s ?p ?o .}";
-        Query query = QueryFactory.create(prefix+queryString);
-        QueryExecution qexec = QueryExecutionFactory.create(query, model);
-        String out = "";
-        try {
-            ResultSetRewindable results = ResultSetFactory.makeRewindable(qexec.execSelect());
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ResultSetFormatter.outputAsJSON(bos, results);
-            out = bos.toString();
-            results.reset();
-        } finally {
-            qexec.close();
+        
+    public String genSparql(String keyword, String type) {
+        String queryString = "";
+
+        switch (type) {
+            case "Person":
+                queryString = "SELECT * WHERE { \n"
+                        + "?person <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> foaf:Person . \n"
+                        + "?person foaf:name '" + keyword + "' . "
+                        + "?person ?predicate ?object .}";
+                break;
+            case "Mailbox":
+                queryString = "SELECT * WHERE { \n"
+                        + "?person foaf:mbox <" + keyword + "> . "
+                        + "?person foaf:mbox ?mailbox .}";
+                break;
+            default:
+                queryString = "Invalid";
+                break;
         }
-        System.out.print(out);
-            return out;
-        }
+        return queryString;
+    }
 }
  

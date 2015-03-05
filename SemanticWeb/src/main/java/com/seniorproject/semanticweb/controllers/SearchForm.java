@@ -11,7 +11,16 @@ package com.seniorproject.semanticweb.controllers;
  */
 public class SearchForm {
     private String searchString;
+    private String type;
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
     public String getSearchString() {
         return searchString;
     }
