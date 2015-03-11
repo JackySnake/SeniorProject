@@ -31,11 +31,12 @@ import java.util.Scanner;
  *
  * @author mtmmoei
  */
-public class Search {
+public class QueryJena {
 
     public static void main(String[] args) {
+        long startLoadTime = System.currentTimeMillis();
         FileManager fm = FileManager.get();
-        fm.addLocatorClassLoader(Search.class.getClassLoader());
+        fm.addLocatorClassLoader(QueryJena.class.getClassLoader());
         InputStream in = fm.open("data/linkedmdb-latest-dump.nt");
 
 //        Location location = new Location("target/TDB");
@@ -56,14 +57,23 @@ public class Search {
                 + "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> "
                 + "PREFIX dc: <http://purl.org/dc/terms/> "
                 + "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
-        
-         Scanner kb = new Scanner(System.in);
-         Dataset dataset = TDBFactory.createDataset(location);
-        
+
+        Scanner kb = new Scanner(System.in);
+        Dataset dataset = TDBFactory.createDataset(location);
+
 //         while(getKeyCode()!=VK_ESCAPE){
 //             
 //         }
-         while (true) {
+        long endLoadTime = System.currentTimeMillis();
+        long totalLoadTime = endLoadTime - startLoadTime;
+
+        System.out.println("Total load time = " + totalLoadTime);
+
+        long startQueryTime;
+        long endQueryTime;
+        long totalQueryTime;
+
+        while (true) {
             System.out.println("Enter SPARQL");
 //         String queryString = "";
 //         while(kb.hasNext()){
@@ -71,8 +81,10 @@ public class Search {
 //         }
 
             System.out.println("Result");
-//        String queryString = "SELECT ?resource WHERE { ?resource movie:filmid ?uri. ?resource dc:title \"Forrest Gump\" .} ORDER BY ?resource ";
+
+//        String queryString = "SELECT ?resource WHERE { ?resource movie:filmid ?uri. ?resource dc:title "Forrest Gump" .} ORDER BY ?resource ";
             String out = "";
+            startQueryTime = System.currentTimeMillis();
             dataset.begin(ReadWrite.READ);
             try {
                 Query query = QueryFactory.create(prefix + queryString);
@@ -87,11 +99,14 @@ public class Search {
             } finally {
                 dataset.end();
             }
+            endQueryTime = System.currentTimeMillis();
             System.out.println(out);
+            totalQueryTime = endQueryTime - startQueryTime;
+            System.out.println("Total query time = " + totalQueryTime);
+
         }
     }
-    
-    
+
 //        public static void main(String[]args){
 //            String queryString="SELECT ?resource \n" +
 //"WHERE { ?resource movie:filmid ?uri.\n" +

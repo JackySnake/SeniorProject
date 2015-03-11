@@ -20,7 +20,6 @@ import com.hp.hpl.jena.tdb.TDBLoader;
 import com.hp.hpl.jena.tdb.base.file.Location;
 import com.hp.hpl.jena.tdb.sys.TDBInternal;
 import com.hp.hpl.jena.util.FileManager;
-import com.seniorproject.semanticweb.example.ExampleTDB_02;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,7 @@ public class WebServices {
 
     public String queryJena(String queryString) {
         FileManager fm = FileManager.get();
-        fm.addLocatorClassLoader(ExampleTDB_02.class.getClassLoader());
+        fm.addLocatorClassLoader(WebServices.class.getClassLoader());
         InputStream in = fm.open("data/linkedmdb-latest-dump.nt");
 //        Location location = new Location("target/TDB");
         Location location = Location.create("target/TDB");
