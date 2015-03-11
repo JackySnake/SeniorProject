@@ -35,14 +35,11 @@ public class WebServices {
     public String queryJena(String queryString) {
         FileManager fm = FileManager.get();
         fm.addLocatorClassLoader(ExampleTDB_02.class.getClassLoader());
-        System.out.println("-1");
         InputStream in = fm.open("data/linkedmdb-latest-dump.nt");
-System.out.println("0");
-        Location location = new Location("target/TDB");
-System.out.println("1");
+//        Location location = new Location("target/TDB");
+        Location location = Location.create("target/TDB");
         // Load some initial data
         TDBLoader.load(TDBInternal.getBaseDatasetGraphTDB(TDBFactory.createDatasetGraph(location)), in, false);
-System.out.println("2");
         String prefix
                 = "PREFIX owl: <http://www.w3.org/2002/07/owl#> "
                 + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
@@ -59,9 +56,7 @@ System.out.println("2");
 
         String out = "";
         Dataset dataset = TDBFactory.createDataset(location);
-        System.out.println("3");
         dataset.begin(ReadWrite.READ);
-        System.out.println("4");
         try {
             Query query = QueryFactory.create(prefix + queryString);
             QueryExecution qexec = QueryExecutionFactory.create(query, dataset);

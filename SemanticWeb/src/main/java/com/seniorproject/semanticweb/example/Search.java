@@ -23,58 +23,72 @@ import com.hp.hpl.jena.tdb.TDBLoader;
 import com.hp.hpl.jena.tdb.base.file.Location;
 import com.hp.hpl.jena.tdb.sys.TDBInternal;
 import com.hp.hpl.jena.util.FileManager;
+import static java.awt.event.KeyEvent.VK_ESCAPE;
 import java.io.InputStream;
+import java.util.Scanner;
 
 /**
  *
  * @author mtmmoei
  */
 public class Search {
+
     public static void main(String[] args) {
         FileManager fm = FileManager.get();
         fm.addLocatorClassLoader(Search.class.getClassLoader());
         InputStream in = fm.open("data/linkedmdb-latest-dump.nt");
 
-        Location location = new Location ("target/TDB");
+//        Location location = new Location("target/TDB");
+        Location location = Location.create("target/TDB");
 
         // Load some initial data
         TDBLoader.load(TDBInternal.getBaseDatasetGraphTDB(TDBFactory.createDatasetGraph(location)), in, false);
-         String prefix = 
-                "PREFIX owl: <http://www.w3.org/2002/07/owl#> " +
-                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> " +
-                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-                "PREFIX foaf: <http://xmlns.com/foaf/0.1/> " +
-                "PREFIX oddlinker: <http://data.linkedmdb.org/resource/oddlinker/> " +
-                "PREFIX map: <file:/C:/d2r-server-0.4/mapping.n3#> " +
-                "PREFIX db: <http://data.linkedmdb.org/resource/> " +
-                "PREFIX dbpedia: <http://dbpedia.org/property/> " +
-                "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> " +
-                "PREFIX dc: <http://purl.org/dc/terms/> " +
-                "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
-        String queryString = 
-           "SELECT ?resource \n" +
-"WHERE { ?resource movie:filmid ?uri.\n" +
-"?resource dc:title \"Forrest Gump\" .\n" +
-"}\n" +
-"ORDER BY ?resource ";
-          String out = "";
-        Dataset dataset = TDBFactory.createDataset(location);
-        dataset.begin(ReadWrite.READ);
-        try {
-            Query query = QueryFactory.create(prefix+queryString);
-            QueryExecution qexec = QueryExecutionFactory.create(query, dataset);
+        String prefix
+                = "PREFIX owl: <http://www.w3.org/2002/07/owl#> "
+                + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
+                + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+                + "PREFIX foaf: <http://xmlns.com/foaf/0.1/> "
+                + "PREFIX oddlinker: <http://data.linkedmdb.org/resource/oddlinker/> "
+                + "PREFIX map: <file:/C:/d2r-server-0.4/mapping.n3#> "
+                + "PREFIX db: <http://data.linkedmdb.org/resource/> "
+                + "PREFIX dbpedia: <http://dbpedia.org/property/> "
+                + "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> "
+                + "PREFIX dc: <http://purl.org/dc/terms/> "
+                + "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
+        
+         Scanner kb = new Scanner(System.in);
+         Dataset dataset = TDBFactory.createDataset(location);
+        
+//         while(getKeyCode()!=VK_ESCAPE){
+//             
+//         }
+         while (true) {
+            System.out.println("Enter SPARQL");
+//         String queryString = "";
+//         while(kb.hasNext()){
+            String queryString = kb.nextLine();
+//         }
+
+            System.out.println("Result");
+//        String queryString = "SELECT ?resource WHERE { ?resource movie:filmid ?uri. ?resource dc:title \"Forrest Gump\" .} ORDER BY ?resource ";
+            String out = "";
+            dataset.begin(ReadWrite.READ);
             try {
-                 ResultSetRewindable results = ResultSetFactory.makeRewindable(qexec.execSelect());
-            out = ResultSetFormatter.asText(results);
-            results.reset();
+                Query query = QueryFactory.create(prefix + queryString);
+                QueryExecution qexec = QueryExecutionFactory.create(query, dataset);
+                try {
+                    ResultSetRewindable results = ResultSetFactory.makeRewindable(qexec.execSelect());
+                    out = ResultSetFormatter.asText(results);
+                    results.reset();
+                } finally {
+                    qexec.close();
+                }
             } finally {
-                qexec.close();
+                dataset.end();
             }
-        } finally {
-            dataset.end();
+            System.out.println(out);
         }
-        System.out.println(out);
     }
     
     
