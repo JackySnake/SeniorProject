@@ -20,8 +20,22 @@ import com.hp.hpl.jena.tdb.TDBLoader;
 import com.hp.hpl.jena.tdb.base.file.Location;
 import com.hp.hpl.jena.tdb.sys.TDBInternal;
 import com.hp.hpl.jena.util.FileManager;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -63,6 +77,7 @@ public class WebServices {
                 ResultSetRewindable results = ResultSetFactory.makeRewindable(qexec.execSelect());
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 ResultSetFormatter.outputAsJSON(bos, results);
+                out=bos.toString();
                 results.reset();
             } finally {
                 qexec.close();
@@ -94,6 +109,52 @@ public class WebServices {
                 break;
         }
         return queryString;
+    }
+    
+    public String convertToJSON(String queryString){
+        System.out.println("convert");
+//        String queryString
+//                = "SELECT ?s ?p ?o  "
+//                + "WHERE { ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> . "
+//                + "?s ?p ?o .}";
+//        String[] tokens = queryString.split("(\\s|^)select(\\s)|");
+//    JsonArrayBuilder buildingsArrBuilder = Json.createArrayBuilder();
+//        JsonArrayBuilder varsArrBuilder = Json.createArrayBuilder();
+//
+//        JsonObjectBuilder out = Json.createObjectBuilder()
+//        .add("head",Json.createObjectBuilder()
+//                .add("vars", varsArrBuilder))
+//        .add("results",Json.createObjectBuilder()
+//                .add("bindings",buildingsArrBuilder));
+        JsonArrayBuilder out = Json.createArrayBuilder();
+String filePath = new File("").getAbsolutePath();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath.concat("/src/main/resources/data/data.nt")))) {
+
+            String sCurrentLine;
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                List<String> matchList = new ArrayList<String>();
+                Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
+                Matcher regexMatcher = regex.matcher(sCurrentLine);
+                while (regexMatcher.find()) {
+                    matchList.add(regexMatcher.group());
+                }
+                JsonArrayBuilder resultArray = Json.createArrayBuilder();
+
+                for (int i = 0; i < matchList.size(); i++) {
+                    resultArray.add(matchList.get(i));
+                }
+                out.add(resultArray);
+                
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ;
+        System.out.println(out.build());
+        String result = out.build().toString();
+        return result;
     }
 }
  

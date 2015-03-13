@@ -48,7 +48,9 @@ public class IndexController {
     @RequestMapping("/advanceSearch")
     public @ResponseBody
     String advanceSearch(@RequestParam(value = "searchString") String queryString) {
-        String result = this.webServices.queryJena(queryString);
+//        String result = this.webServices.queryJena(queryString);
+        System.out.println("controller");
+        String result = this.webServices.convertToJSON(queryString);
         return result;
     }
 

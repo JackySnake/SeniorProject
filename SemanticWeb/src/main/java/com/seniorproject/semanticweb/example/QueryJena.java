@@ -24,6 +24,7 @@ import com.hp.hpl.jena.tdb.base.file.Location;
 import com.hp.hpl.jena.tdb.sys.TDBInternal;
 import com.hp.hpl.jena.util.FileManager;
 import static java.awt.event.KeyEvent.VK_ESCAPE;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -38,7 +39,7 @@ public class QueryJena {
         FileManager fm = FileManager.get();
         fm.addLocatorClassLoader(QueryJena.class.getClassLoader());
         InputStream in = fm.open("data/linkedmdb-latest-dump.nt");
-
+//        InputStream in = fm.open("data/data.nt");
 //        Location location = new Location("target/TDB");
         Location location = Location.create("target/TDB");
 
@@ -57,7 +58,7 @@ public class QueryJena {
                 + "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> "
                 + "PREFIX dc: <http://purl.org/dc/terms/> "
                 + "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
-
+//String prefix = "";
         Scanner kb = new Scanner(System.in);
         Dataset dataset = TDBFactory.createDataset(location);
 
@@ -91,6 +92,9 @@ public class QueryJena {
                 QueryExecution qexec = QueryExecutionFactory.create(query, dataset);
                 try {
                     ResultSetRewindable results = ResultSetFactory.makeRewindable(qexec.execSelect());
+//                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//                ResultSetFormatter.outputAsJSON(bos, results);
+//                  out=bos.toString();
                     out = ResultSetFormatter.asText(results);
                     results.reset();
                 } finally {
