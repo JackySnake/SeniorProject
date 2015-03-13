@@ -3,7 +3,7 @@
 REGISTER PigSPARQL_udf.jar;
 
 -- load input data
-indata = LOAD '$inputData' USING pigsparql.rdfLoader.ExNTriplesLoader(' ','expand') as (s,p,o);
+indata = LOAD '$inputData' USING pigsparql.rdfLoader.ExNTriplesLoader(' ','expand') ;
 
 -- BGP
 f0 = FILTER indata BY p == '<http://data.linkedmdb.org/resource/movie/filmid>' ;
@@ -17,7 +17,7 @@ BGP1 = FOREACH BGP1 GENERATE $0 AS resource, $1 AS uri ;
 SM_Order = ORDER BGP1 BY resource PARALLEL $reducerNum ;
 
 -- SM_Project
-SM_Project = FOREACH SM_Order GENERATE resource, p, o ;
+SM_Project = FOREACH SM_Order GENERATE resource ;
 
 -- store results into output
 STORE SM_Project INTO '$outputData' USING PigStorage(' ') ;

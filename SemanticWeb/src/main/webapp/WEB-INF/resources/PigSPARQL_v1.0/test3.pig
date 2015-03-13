@@ -3,7 +3,7 @@
 REGISTER PigSPARQL_udf.jar;
 
 -- load input data
-indata = LOAD '$inputData' USING pigsparql.rdfLoader.ExNTriplesLoader(' ','expand') as (s,p,o);
+indata = LOAD '$inputData' USING pigsparql.rdfLoader.ExNTriplesLoader(' ','expand') ;
 
 -- BGP
 f0 = FILTER indata BY p == '<http://data.linkedmdb.org/resource/movie/filmid>' ;

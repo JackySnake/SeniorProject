@@ -17,7 +17,7 @@ BGP1 = FOREACH BGP1 GENERATE $0 AS resource, $1 AS uri ;
 SM_Order = ORDER BGP1 BY resource PARALLEL $reducerNum ;
 
 -- SM_Project
-SM_Project = FOREACH SM_Order GENERATE resource, p, o ;
+SM_Project = FOREACH SM_Order GENERATE resource ;
 
 -- store results into output
 STORE SM_Project INTO '$outputData' USING PigStorage(' ') ;

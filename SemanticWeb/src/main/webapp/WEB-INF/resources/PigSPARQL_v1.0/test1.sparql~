@@ -12,5 +12,5 @@ PREFIX dc: <http://purl.org/dc/terms/>
 PREFIX movie: <http://data.linkedmdb.org/resource/movie/>
 
 SELECT ?resource ?p ?o  
-WHERE { ?resource movie:filmid ?uri. ?resource dc:title "Forrest Gump" .} 
+WHERE { ?resource movie:filmid ?uri. ?resource dc:title "Forrest Gump" . ?resource ?p ?o.} 
 ORDER BY ?resource

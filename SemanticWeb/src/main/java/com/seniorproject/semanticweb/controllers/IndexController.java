@@ -6,6 +6,7 @@
 package com.seniorproject.semanticweb.controllers;
 
 import com.seniorproject.semanticweb.services.WebServices;
+import java.io.IOException;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,10 +48,11 @@ public class IndexController {
 //    }
     @RequestMapping("/advanceSearch")
     public @ResponseBody
-    String advanceSearch(@RequestParam(value = "searchString") String queryString) {
+    String advanceSearch(@RequestParam(value = "searchString") String queryString) throws IOException, InterruptedException {
 //        String result = this.webServices.queryJena(queryString);
         System.out.println("controller");
-        String result = this.webServices.convertToJSON(queryString);
+        
+        String result = this.webServices.queryHadoop(queryString);
         return result;
     }
 
