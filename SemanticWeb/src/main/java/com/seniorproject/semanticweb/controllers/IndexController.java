@@ -52,7 +52,8 @@ public class IndexController {
 //        String result = this.webServices.queryJena(queryString);
         System.out.println("controller");
         
-        String result = this.webServices.queryHadoop(queryString);
+        String result = this.webServices.convertToJSON(queryString);
+        System.out.println(result);
         return result;
     }
 

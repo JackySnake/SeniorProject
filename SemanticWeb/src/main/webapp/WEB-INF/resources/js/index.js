@@ -70,9 +70,16 @@ function createTable(result) {
 //        }
 //        tbdy.appendChild(tr);
 //    }
-    for (var i = 0; i < json.length; i++) {
+
+    for (var i = 0; i < json[0].length; i++) {
+        var th = document.createElement('th');
+        th.appendChild(document.createTextNode(json[0][i]));
+        tr.appendChild(th);
+    }
+    tbdy.appendChild(tr);
+    for (var i = 1; i < json.length; i++) {
         var tr = document.createElement('tr');
-        for (var j = 0; j < json.length; j++) {
+        for (var j = 0; j < json[i].length; j++) {
             var td = document.createElement('td');
             td.appendChild(document.createTextNode(json[i][j]));
             tr.appendChild(td);

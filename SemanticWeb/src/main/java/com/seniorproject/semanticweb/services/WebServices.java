@@ -120,24 +120,24 @@ public class WebServices {
         return queryString;
     }
 
-    public String convertToJSON(String queryString) {
+    public String convertToJSON(String queryString) throws FileNotFoundException {
         System.out.println("convert");
-//        String queryString
-//                = "SELECT ?s ?p ?o  "
-//                + "WHERE { ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> . "
-//                + "?s ?p ?o .}";
-//        String[] tokens = queryString.split("(\\s|^)select(\\s)|");
-//    JsonArrayBuilder buildingsArrBuilder = Json.createArrayBuilder();
-//        JsonArrayBuilder varsArrBuilder = Json.createArrayBuilder();
-//
-//        JsonObjectBuilder out = Json.createObjectBuilder()
-//        .add("head",Json.createObjectBuilder()
-//                .add("vars", varsArrBuilder))
-//        .add("results",Json.createObjectBuilder()
-//                .add("bindings",buildingsArrBuilder));
         JsonArrayBuilder out = Json.createArrayBuilder();
-        String filePath = new File("").getAbsolutePath();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath.concat("/src/main/resources/data/data.nt")))) {
+        JsonArrayBuilder resultArray = Json.createArrayBuilder();
+
+        String words[] = queryString.split("\\s+");
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].equalsIgnoreCase("select")) {
+                int j = i + 1;
+                while (!words[j].equalsIgnoreCase("where")) {
+                    resultArray.add(words[j].substring(1));
+                    j++;
+                }
+                break;
+            }
+        }
+        out.add(resultArray);
+        try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/data/data.nt")))) {
 
             String sCurrentLine;
 
@@ -148,7 +148,6 @@ public class WebServices {
                 while (regexMatcher.find()) {
                     matchList.add(regexMatcher.group());
                 }
-                JsonArrayBuilder resultArray = Json.createArrayBuilder();
 
                 for (int i = 0; i < matchList.size(); i++) {
                     resultArray.add(matchList.get(i));
@@ -161,9 +160,7 @@ public class WebServices {
             e.printStackTrace();
         }
         ;
-        System.out.println(out.build());
-        String result = out.build().toString();
-        return result;
+        return out.build().toString();
     }
 
     public String queryHadoop(String queryString) throws IOException, InterruptedException {
@@ -180,39 +177,41 @@ public class WebServices {
                 + "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> "
                 + "PREFIX dc: <http://purl.org/dc/terms/> "
                 + "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
-        File file = new File(servletContext.getRealPath("/WEB-INF/resources/hadoop/"),"test1.sparql");
+        File file = new File(servletContext.getRealPath("/WEB-INF/resources/hadoop/"), "test1.sparql");
 
- if (file.createNewFile()){
-	        System.out.println("File is created!");
-	      }else{
-	        System.out.println("File already exists.");
-	      }
+        if (file.createNewFile()) {
+            System.out.println("File is created!");
+        } else {
+            System.out.println("File already exists.");
+        }
         FileWriter fw = new FileWriter(file.getAbsoluteFile());
         BufferedWriter bw = new BufferedWriter(fw);
-        bw.write(prefix+queryString);
+        bw.write(prefix + queryString);
         bw.close();
-        
-		BufferedReader br = null;
- 
-		try {
- 
-			String sCurrentLine;
- 
-			br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/resources/hadoop/test1.sparql")));
- 
-			while ((sCurrentLine = br.readLine()) != null) {
-				System.out.println(sCurrentLine);
-			}
- 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (br != null)br.close();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
+
+        BufferedReader br = null;
+
+        try {
+
+            String sCurrentLine;
+
+            br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/resources/hadoop/test1.sparql")));
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                System.out.println(sCurrentLine);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
         test();
         return "";
     }
@@ -229,28 +228,29 @@ public class WebServices {
         //delete folder before running pig
         deleteFolderFromHadoop();
 
-	    //Then call pig file and query on HDFS using pigsparql 
+        //Then call pig file and query on HDFS using pigsparql 
         //  Process
         runningPig();
 
-            //merge file back into local
+        //merge file back into local
         mergeHadoopFile();
     }
-   private void converSparql() throws IOException, InterruptedException {
-       System.out.println("converSparql");
-       File file = new File(servletContext.getRealPath("/WEB-INF/resources/hadoop/"),"test3.pig");
-        if (file.createNewFile()){
-	        System.out.println("File is created!");
-	      }else{
-	        System.out.println("File already exists.");
-	      }
+
+    private void converSparql() throws IOException, InterruptedException {
+        System.out.println("converSparql");
+        File file = new File(servletContext.getRealPath("/WEB-INF/resources/hadoop/"), "test3.pig");
+        if (file.createNewFile()) {
+            System.out.println("File is created!");
+        } else {
+            System.out.println("File already exists.");
+        }
 //src/main/resources/PigSPARQL_v1.0/test1.sparql 
-       //servletContext.getRealPath("/WEB-INF/resources/PigSPARQL_v1.0/PigSPARQL_main.jar")
+        //servletContext.getRealPath("/WEB-INF/resources/PigSPARQL_v1.0/PigSPARQL_main.jar")
         Process ps = Runtime.getRuntime().exec("java"
-                + " -jar "+servletContext.getRealPath("/WEB-INF/resources/PigSPARQL_v1.0/PigSPARQL_main.jar")+"  -e "
-                + "-i "+servletContext.getRealPath("/WEB-INF/resources/hadoop/test1.sparql")
-                +" -o "+servletContext.getRealPath("/WEB-INF/resources/hadoop/test3.pig")+" -opt");
-	     // Then retreive the process output
+                + " -jar " + servletContext.getRealPath("/WEB-INF/resources/PigSPARQL_v1.0/PigSPARQL_main.jar") + "  -e "
+                + "-i " + servletContext.getRealPath("/WEB-INF/resources/hadoop/test1.sparql")
+                + " -o " + servletContext.getRealPath("/WEB-INF/resources/hadoop/test3.pig") + " -opt");
+        // Then retreive the process output
         //     InputStream in = proc.getInputStream();
         //   InputStream err = proc.getErrorStream();
         ps.waitFor();
@@ -258,7 +258,7 @@ public class WebServices {
         byte b[] = new byte[is.available()];
         is.read(b, 0, b.length);
         System.out.println(new String(b));
-        
+
 //BufferedReader br = null;
 // 
 //		try {
@@ -282,20 +282,17 @@ public class WebServices {
 //		}
     }
 
-
-
     private void modifiedPig() throws IOException {
         System.out.println("modifiedPig");
         String sReadFileName = servletContext.getRealPath("/WEB-INF/resources/hadoop/test3.pig");
-        File file = new File(servletContext.getRealPath("/WEB-INF/resources/hadoop/"),"test4.pig");
-         if (file.createNewFile()){
-	        System.out.println("File is created!");
-	      }else{
-	        System.out.println("File already exists.");
-	      }
+        File file = new File(servletContext.getRealPath("/WEB-INF/resources/hadoop/"), "test4.pig");
+        if (file.createNewFile()) {
+            System.out.println("File is created!");
+        } else {
+            System.out.println("File already exists.");
+        }
         String sWriteFileName = file.toString();
 
-        
         String sReplaceText = "indata = LOAD '$inputData' USING pigsparql.rdfLoader.ExNTriplesLoader(' ','expand') as (s,p,o)";
         String sReadLine = null;
 
@@ -333,12 +330,12 @@ public class WebServices {
             System.out.println(
                     "Error reading file '"
                     + sReadFileName + "'");
-	            // Or we could just do this: 
+            // Or we could just do this: 
             // ex.printStackTrace();
         }
     }
 
-     private void deleteFolderFromHadoop() throws IOException, InterruptedException {
+    private void deleteFolderFromHadoop() throws IOException, InterruptedException {
         System.out.println("delete");
         // TODO Auto-generated method stub
         Process ps2 = Runtime.getRuntime().exec("hadoop fs -rm -r /user/admin/SeniorData/out4");
@@ -351,7 +348,7 @@ public class WebServices {
 
     private void runningPig() throws InterruptedException, IOException {
 		// TODO Auto-generated method stub
-System.out.println("runningPig");
+        System.out.println("runningPig");
         Process ps2 = Runtime.getRuntime().exec("pig -param inputData='/user/admin/SeniorData/linkedmdb-latest-dump.nt' -param outputData='/user/admin/SeniorData/out4' -param reducerNum='12' src/main/resources/PigSPARQL_v1.0/test4.pig");
         ps2.waitFor();
         java.io.InputStream is2 = ps2.getInputStream();
@@ -360,16 +357,17 @@ System.out.println("runningPig");
         System.out.println(new String(b2));
 
     }
+
     private void mergeHadoopFile() throws IOException, InterruptedException {
         System.out.println("merge");
-        File file = new File(servletContext.getRealPath("/WEB-INF/resources/hadoop/"),"output.txt");
-        if (file.createNewFile()){
-	        System.out.println("File is created!");
-	      }else{
-	        System.out.println("File already exists.");
-	      }
-        Process ps = Runtime.getRuntime().exec("hadoop fs -getmerge /user/admin/SeniorData/out4 "+servletContext.getRealPath("/WEB-INF/resources/hadoop/output,txt"));
-	     // Then retreive the process output
+        File file = new File(servletContext.getRealPath("/WEB-INF/resources/hadoop/"), "output.txt");
+        if (file.createNewFile()) {
+            System.out.println("File is created!");
+        } else {
+            System.out.println("File already exists.");
+        }
+        Process ps = Runtime.getRuntime().exec("hadoop fs -getmerge /user/admin/SeniorData/out4 " + servletContext.getRealPath("/WEB-INF/resources/hadoop/output,txt"));
+        // Then retreive the process output
         //     InputStream in = proc.getInputStream();
         //   InputStream err = proc.getErrorStream();
         ps.waitFor();
