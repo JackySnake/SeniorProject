@@ -7,6 +7,8 @@ package com.seniorproject.semanticweb.controllers;
 
 import com.seniorproject.semanticweb.services.WebServices;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +38,29 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
-        model.addAttribute("searchForm", new SearchForm());
+        ArrayList<Category> categories = new ArrayList<>();
+        categories.add(new Category("Movie", new ArrayList<String>() {
+            {
+                add("Title");
+                add("Actor");
+                add("Director");
+            }
+        }));
+        categories.add(new Category("Actor", new ArrayList<String>() {
+            {
+                add("Name");
+                add("Movie");
+                add("Birthdate");
+            }
+        }));
+        categories.add(new Category("Director", new ArrayList<String>() {
+            {
+                add("Name");
+                add("Movie");
+                add("Birthdate");
+            }
+        }));
+        model.addAttribute("categories", categories);
         return "index";
     }
 
@@ -46,26 +70,26 @@ public class IndexController {
 //       model.addAttribute("result", result);
 //       return "result";
 //    }
-    @RequestMapping("/advanceSearch")
+    @RequestMapping(value = "/advanceSearch", method = RequestMethod.GET)
     public @ResponseBody
-    String advanceSearch(@RequestParam(value = "searchString") String queryString) throws IOException, InterruptedException {
+    String advanceSearch(@RequestParam("searchString") String queryString) throws IOException, InterruptedException {
 //        String result = this.webServices.queryJena(queryString);
-        System.out.println("controller");
-        
+        System.out.println("advanceSearch");
         String result = this.webServices.convertToJSON(queryString);
         System.out.println(result);
         return result;
     }
 
-    @RequestMapping("/facetedSearch")
+    @RequestMapping(value = "/facetedSearch", method = RequestMethod.GET)
     public @ResponseBody
-    String facetedSearch(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(request.getParameter("searchString"));
-        System.out.println(request.getParameter("type"));
-        String queryString = this.webServices.genSparql(request.getParameter("searchString"),request.getParameter("type"));
-        System.out.print(queryString);
-        String result = this.webServices.queryJena(queryString);
-        System.out.print(result);
-        return result;
+    String facetedSearch(@RequestParam("searchString") String searchString,@RequestParam("type") String type) throws IOException, InterruptedException {
+        System.out.println("facetedSearch");
+        String queryString = this.webServices.genSparql(searchString,type);
+        System.out.println(queryString);
+//        String result = this.webServices.queryHadoop(queryString);
+//        System.out.print(queryString);
+//        String result = this.webServices.queryJena(queryString);
+//        System.out.print(result);
+        return "";
     }
 }

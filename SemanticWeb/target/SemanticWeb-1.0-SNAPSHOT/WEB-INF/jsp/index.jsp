@@ -18,15 +18,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Semantic Web</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="${cp}/resources/css/bootstrap.min.css">
-
-        <!-- Optional theme -->
         <link rel="stylesheet" href="${cp}/resources/css/bootstrap-theme.min.css">
-
-        <!-- Latest compiled and minified JavaScript -->
-
-
         <link rel="stylesheet" type="text/css" href="${cp}/resources/css/index.css" />
         <script src="${cp}/resources/js/bootstrap.min.js"></script>
         <script src="${cp}/resources/js/index.js"></script>
@@ -47,29 +40,47 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane" id="faceted_search_tabpanel">
-                        <c:url var="action" value="/facetedSearch" ></c:url>
-                        <form:form action="${action}" id="facetedSearch" commandName="searchForm" class="form-inline">
+                        <form action="${pageContext.request.contextPath}/facetedSearch" id="facetedSearch" class="form-inline" method="get">
+                            <!--                            <div class="form-group">
+                                                            <input type="text" class="form-control" id="keyword" placeholder="Enter keyword ..."/>
+                                                        </div>-->
                             <div class="form-group">
-                                <form:input type="text" path="searchString" class="form-control" id="keyword" placeholder="Enter keyword ..."/>
-                            </div>
+                            <label for="category" class="col-sm-3 control-label">Search for</label>
                             <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                                    <span class="selection">Person</span>
+                                <button class="btn btn-default dropdown-toggle" type="button" id="category" data-toggle="dropdown" aria-expanded="true">
+                                    <span class="selection">${categories[0].name}</span>
                                     <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Person</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Mailbox</a></li>
-              
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="category">
+                                    <c:forEach items="${categories}" var="category">
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">${category.name}</a></li>
+                                        </c:forEach>
                                 </ul>
                             </div>
-                            <form:hidden path="type" id="type" value="Person"/>
+                        </div>
+                                    <input id="type" value="Movie" hidden="true"/>
+                            <div class="form-group">
+                                    <label for="filter" class="col-sm-3 control-label">Add filter</label>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="filter" data-toggle="dropdown" aria-expanded="true">
+                                    <span class="selection">${categories[0].properties[0]}</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="filter">
+                                    <c:forEach items="${categories[0].properties}" var="property">
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">${property}</a></li>
+                                        </c:forEach>
+                                </ul>
+                            </div>
+                            </div>
+                            <div id="filter_wrapper" hidden="true">
+                                <strong>Add filter: </strong> 
+                            </div>
                             <input type="submit" class="btn btn-primary center" value="Search"/>
-                        </form:form>
+                        </form>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="advance_search_tabpanel">
-                        <c:url var="action" value="/advanceSearch" ></c:url>
-                        <form:form action="${action}" id="advanceSearch" commandName="searchForm">
+                        <form action="${pageContext.request.contextPath}/advanceSearch" id="advanceSearch" method="get">
                             <div class="form-group">
                                 <label for="queryString">SPARQL:</label>
                                 <p>PREFIX owl: &lt;http://www.w3.org/2002/07/owl#><br>
@@ -84,10 +95,10 @@
                                     PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#><br>
                                     PREFIX dc: &lt;http://purl.org/dc/terms/><br>
                                     PREFIX movie: &lt;http://data.linkedmdb.org/resource/movie/></p>
-                                    <form:textarea type="text" path="searchString" class="form-control" rows="10" id="queryString"/>
+                                <textarea type="text" class="form-control" rows="10" id="queryString"></textarea>
                             </div>
                             <input type="submit" class="btn btn-primary center" value="Search"/>
-                        </form:form>
+                        </form>
                     </div>
                 </div>
 

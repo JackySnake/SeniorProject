@@ -3,7 +3,7 @@ $(function () {
     $('#advanceSearch').submit(function (event) {
         $.ajax({
             url: $("#advanceSearch").attr("action"),
-            data: $("#queryString"),
+            data: 'searchString=' + $("#queryString").val(),
             type: "GET",
             success: function (response) {
                 createTable(response);
@@ -13,10 +13,22 @@ $(function () {
     });
 
     $('#facetedSearch').submit(function (event) {
-
+        console.log("submit");
+        var filter_wrapper = document.getElementById('filter_wrapper');
+        filter_wrapper.hidden=false;
+        if ($("#type").val() === "Movie") {
+            var a = document.createElement('a');
+            a.setAttribute("href", "#");
+            a.appendChild(document.createTextNode("Date"));
+            filter_wrapper.appendChild(a);            
+        }
+        
+        var a= 'searchString=' + $("#keyword").val() + "&type=" + $("#type").val();
+        var o = { searchString: $("#keyword").val(), type: $("#type").val() };
+        console.log(a);
         $.ajax({
             url: $("#facetedSearch").attr("action"),
-            data: 'searchString=' + $("#keyword").val() + "&type=" + $("#type").val(),
+            data: a,
             type: "GET",
             success: function (response) {
                 createTable(response);
@@ -25,14 +37,11 @@ $(function () {
         event.preventDefault();
     });
 
-
     $(".dropdown-menu li a").click(function () {
-        $(".selection").text($(this).text());
-        $(".selection").val($(this).text());
-        $("#type").val($(this).text());
+        $(this).parent().parent().parent().find("button .selection").val($(this).text())
+        $(this).parent().parent().parent().find("button .selection").text($(this).text())
+        console.log($(this).parent().parent().parent().find("button .selection").val());
     });
-
-
 });
 function createTable(result) {
     var json = JSON.parse(result);
@@ -67,9 +76,8 @@ function createTable(result) {
 //                td.appendChild(document.createTextNode(json.results.bindings[i][b].value)); 
 //            }
 //            tr.appendChild(td);
-//        }
-//        tbdy.appendChild(tr);
-//    }
+    //        }
+    //        tbdy.appendChild(tr); //    }
 
     for (var i = 0; i < json[0].length; i++) {
         var th = document.createElement('th');

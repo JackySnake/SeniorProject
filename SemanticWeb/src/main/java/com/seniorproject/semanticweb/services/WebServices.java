@@ -102,14 +102,13 @@ public class WebServices {
         String queryString = "";
 
         switch (type) {
-            case "Person":
-                queryString = "SELECT * WHERE { \n"
-                        + "?person <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> foaf:Person . \n"
-                        + "?person foaf:name '" + keyword + "' . "
-                        + "?person ?predicate ?object .}";
+            case "Movie":
+                queryString = "SELECT ?movie WHERE { "
+                        + "?movie rdf:type movie:film . "
+                        + "?movie dc:title '" + keyword + "' .}";
                 break;
             case "Mailbox":
-                queryString = "SELECT * WHERE { \n"
+                queryString = "SELECT * WHERE { "
                         + "?person foaf:mbox <" + keyword + "> . "
                         + "?person foaf:mbox ?mailbox .}";
                 break;
