@@ -38,29 +38,7 @@ public class IndexController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
-        ArrayList<Category> categories = new ArrayList<>();
-        categories.add(new Category("Movie", new ArrayList<String>() {
-            {
-                add("Title");
-                add("Actor");
-                add("Director");
-            }
-        }));
-        categories.add(new Category("Actor", new ArrayList<String>() {
-            {
-                add("Name");
-                add("Movie");
-                add("Birthdate");
-            }
-        }));
-        categories.add(new Category("Director", new ArrayList<String>() {
-            {
-                add("Name");
-                add("Movie");
-                add("Birthdate");
-            }
-        }));
-        model.addAttribute("categories", categories);
+        model.addAttribute("categories", this.webServices.getCategories());
         return "index";
     }
 
