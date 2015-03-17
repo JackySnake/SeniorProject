@@ -41,7 +41,7 @@ public class Utils {
                 + "PREFIX dc: <http://purl.org/dc/terms/> "
                 + "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
 
-        try (BufferedReader br = new BufferedReader(new FileReader("/hadoop/dictionary.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/hadoop/dictionary.txt"))) {
 
             String sCurrentLine;
 
@@ -52,21 +52,23 @@ public class Utils {
                 while (regexMatcher.find()) {
                     matchList.add(regexMatcher.group());
                 }
-                File file = new File("/hadoop/", "propertyQuery_"+matchList.get(0) + ".sparql");
+                if (matchList.size() > 0) {
+                    File file = new File("src/main/resources/hadoop/", "propertyQuery_" + matchList.get(0) + ".sparql");
 
-                if (file.createNewFile()) {
-                    System.out.println("File is created!");
-                } else {
-                    System.out.println("File already exists.");
+                    if (file.createNewFile()) {
+                        System.out.println("File is created!");
+                    } else {
+                        System.out.println("File already exists.");
+                    }
+                    String queryString = "SELECT DISTINCT ?p "
+                            + "WHERE {"
+                            + "?s rdf:type " + matchList.get(1) + "."
+                            + "?s ?p ?o. }";
+                    FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    bw.write(prefix + queryString);
+                    bw.close();
                 }
-                String queryString = "SELECT DISTINCT ?p "
-                        + "WHERE {"
-                        + "?s rdf:type " + matchList.get(1) + "."
-                        + "?s ?p ?o. }";
-                FileWriter fw = new FileWriter(file.getAbsoluteFile());
-                BufferedWriter bw = new BufferedWriter(fw);
-                bw.write(prefix + queryString);
-                bw.close();
 
             }
 
