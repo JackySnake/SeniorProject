@@ -48,12 +48,12 @@
                             <label for="category" class="col-sm-3 control-label">Search for</label>
                             <div class="dropdown">
                                 <button class="btn btn-default dropdown-toggle" type="button" id="category" data-toggle="dropdown" aria-expanded="true">
-                                    <span class="selection">${categories[0].name}</span>
+                                    <span class="selection">${categories[0]}</span>
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="category">
                                     <c:forEach items="${categories}" var="category">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">${category.name}</a></li>
+                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">${category}</a></li>
                                         </c:forEach>
                                 </ul>
                             </div>

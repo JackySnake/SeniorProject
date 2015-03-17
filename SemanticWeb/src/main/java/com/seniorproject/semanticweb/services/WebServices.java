@@ -397,4 +397,19 @@ public class WebServices {
         };
         return categories;
     }
+     public ArrayList<String> getProperties(String category){
+        ArrayList<String> properties = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/property_"+category+".txt")))) {
+
+            String sCurrentLine;
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                properties.add(sCurrentLine);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        };
+        return properties;
+    }
 }
