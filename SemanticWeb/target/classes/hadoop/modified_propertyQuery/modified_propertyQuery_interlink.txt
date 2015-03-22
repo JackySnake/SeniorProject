@@ -1,0 +1,6 @@
+movie:linkid
+oddlinker:link_type
+oddlinker:link_source
+oddlinker:link_target
+oddlinker:linkage_run
+oddlinker:linkage_score

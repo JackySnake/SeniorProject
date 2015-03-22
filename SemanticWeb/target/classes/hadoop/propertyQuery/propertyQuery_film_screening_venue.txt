@@ -1,0 +1,5 @@
+<http://www.w3.org/2000/01/rdf-schema#label>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://data.linkedmdb.org/resource/movie/film_screening_venue_name>
+<http://data.linkedmdb.org/resource/movie/film_screening_venue_freebase_url>
+<http://data.linkedmdb.org/resource/movie/film_screening_venue_film_screening_venue_id>

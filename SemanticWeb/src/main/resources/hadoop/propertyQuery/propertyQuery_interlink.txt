@@ -1,0 +1,8 @@
+<http://www.w3.org/2000/01/rdf-schema#label>
+<http://data.linkedmdb.org/resource/movie/linkid>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://data.linkedmdb.org/resource/oddlinker/link_type>
+<http://data.linkedmdb.org/resource/oddlinker/link_source>
+<http://data.linkedmdb.org/resource/oddlinker/link_target>
+<http://data.linkedmdb.org/resource/oddlinker/linkage_run>
+<http://data.linkedmdb.org/resource/oddlinker/linkage_score>

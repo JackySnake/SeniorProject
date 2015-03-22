@@ -1,0 +1,4 @@
+movie:film_featured_song_name
+movie:film_featured_song_freebase_url
+movie:film_featured_song_performed_by
+movie:film_featured_song_film_featured_song_id

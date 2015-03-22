@@ -1,0 +1,8 @@
+<http://xmlns.com/foaf/0.1/page>
+<http://www.w3.org/2000/01/rdf-schema#label>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://data.linkedmdb.org/resource/movie/runtime>
+<http://data.linkedmdb.org/resource/movie/film_cut_note>
+<http://data.linkedmdb.org/resource/movie/type_of_film_cut>
+<http://data.linkedmdb.org/resource/movie/film_cut_film_cutid>
+<http://data.linkedmdb.org/resource/movie/film_release_region>

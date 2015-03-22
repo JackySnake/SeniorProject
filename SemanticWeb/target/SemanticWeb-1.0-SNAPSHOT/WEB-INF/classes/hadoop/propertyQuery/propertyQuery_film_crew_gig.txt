@@ -1,0 +1,10 @@
+<http://xmlns.com/foaf/0.1/page>
+<http://www.w3.org/2000/01/rdf-schema#label>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://data.linkedmdb.org/resource/movie/film_crew_role>
+<http://data.linkedmdb.org/resource/movie/film_crewmember>
+<http://data.linkedmdb.org/resource/movie/film_crew_gig_id>
+<http://data.linkedmdb.org/resource/movie/film_crew_gig_film>
+<http://data.linkedmdb.org/resource/movie/film_crew_gig_name>
+<http://data.linkedmdb.org/resource/movie/film_crew_gig_film_job>
+<http://data.linkedmdb.org/resource/movie/film_crew_gig_film_crew_gigid>

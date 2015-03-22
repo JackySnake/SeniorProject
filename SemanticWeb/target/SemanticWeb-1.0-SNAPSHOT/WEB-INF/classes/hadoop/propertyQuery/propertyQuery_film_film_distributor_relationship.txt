@@ -1,0 +1,13 @@
+<http://www.w3.org/2000/01/rdf-schema#label>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://data.linkedmdb.org/resource/movie/film_distributor>
+<http://data.linkedmdb.org/resource/movie/film_of_distributor>
+<http://data.linkedmdb.org/resource/movie/film_distribution_medium>
+<http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_name>
+<http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_year>
+<http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_region>
+<http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_film_cut>
+<http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_distributor>
+<http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_freebase_url>
+<http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_film_distribution_medium>
+<http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_film_film_distributor_relationshipid>

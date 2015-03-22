@@ -19,7 +19,6 @@
         <title>Semantic Web</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <link rel="stylesheet" href="${cp}/resources/css/bootstrap.min.css">
-        <link rel="stylesheet" href="${cp}/resources/css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="${cp}/resources/css/index.css" />
         <script src="${cp}/resources/js/bootstrap.min.js"></script>
         <script src="${cp}/resources/js/index.js"></script>
@@ -30,54 +29,41 @@
         <hr>
         <div id="content_wrapper">
             <div role="tabpanel" id="search_panel" class="panel panel-default">
-                <h3>Search</h3>
+<!--                <h3>Search</h3>-->
                 <!-- Nav tabs -->
-                <ul class="nav nav-tabs" role="tablist" id="search_tab">
-                    <li role="presentation"><a href="#faceted_search_tabpanel" aria-controls="faceted_search" role="tab" data-toggle="tab">Faceted Search</a></li>
-                    <li role="presentation"><a href="#advance_search_tabpanel" aria-controls="advance_search" role="tab" data-toggle="tab">Advanced Search</a></li>
+                <br>
+                <ul class="nav nav-pills" role="tablist" id="search_tab">
+                    <li role="presentation" class="active">
+                        <a href="#faceted_search_tabpanel" aria-controls="faceted_search" role="tab" data-toggle="tab" aria-expanded="true">Faceted Search</a></li>
+                    <li role="presentation">
+                        <a href="#advance_search_tabpanel" aria-controls="advance_search" role="tab" data-toggle="tab" aria-expanded="false">Advanced Search</a></li>
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane" id="faceted_search_tabpanel">
-                        <form action="${pageContext.request.contextPath}/facetedSearch" id="facetedSearch" class="form-inline" method="get">
-                            <!--                            <div class="form-group">
-                                                            <input type="text" class="form-control" id="keyword" placeholder="Enter keyword ..."/>
-                                                        </div>-->
-                            <div class="form-group">
-                            <label for="category" class="col-sm-3 control-label">Search for</label>
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" id="category" data-toggle="dropdown" aria-expanded="true">
-                                    <span class="selection">${categories[0]}</span>
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="category">
-                                    <c:forEach items="${categories}" var="category">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">${category}</a></li>
-                                        </c:forEach>
-                                </ul>
+                    <div role="tabpanel" class="tab-pane active" id="faceted_search_tabpanel">
+                        <div id="facetedSearch">
+ 
+                            <div class="form-group col-sm-12">
+                             
+                                <label for="category" class="col-sm-4 control-label">Search for</label>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="category" action="${pageContext.request.contextPath}/selectCategory" data-toggle="dropdown" aria-expanded="true">
+                                        <span class="selection"></span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="category">
+                                        <c:forEach items="${categories}" var="category">
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">${category}</a></li>
+                                            </c:forEach>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                                    <input id="type" value="Movie" hidden="true"/>
-                            <div class="form-group">
-                                    <label for="filter" class="col-sm-3 control-label">Add filter</label>
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" id="filter" data-toggle="dropdown" aria-expanded="true">
-                                    <span class="selection">${categories[0].properties[0]}</span>
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="filter">
-                                    <c:forEach items="${categories[0].properties}" var="property">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">${property}</a></li>
-                                        </c:forEach>
-                                </ul>
-                            </div>
-                            </div>
-                            <div id="filter_wrapper" hidden="true">
-                                <strong>Add filter: </strong> 
-                            </div>
-                            <input type="submit" class="btn btn-primary center" value="Search"/>
-                        </form>
+                                        
+                                        <div id="property"></div>
+                                        <div id='dropdownAddProperty' class='form-group col-sm-12'></div>
+
                     </div>
                     <div role="tabpanel" class="tab-pane" id="advance_search_tabpanel">
                         <form action="${pageContext.request.contextPath}/advanceSearch" id="advanceSearch" method="get">
@@ -111,4 +97,7 @@
 
         </div>
     </body>
+    <script>
+        var ctx = "${pageContext.request.contextPath}";
+    </script>
 </html>

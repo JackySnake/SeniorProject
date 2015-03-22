@@ -1,0 +1,7 @@
+<http://www.w3.org/2000/01/rdf-schema#label>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://data.linkedmdb.org/resource/movie/film_company>
+<http://data.linkedmdb.org/resource/movie/film_film_company_relationship_name>
+<http://data.linkedmdb.org/resource/movie/film_film_company_relationship_freebase_url>
+<http://data.linkedmdb.org/resource/movie/film_film_company_relationship_role_service>
+<http://data.linkedmdb.org/resource/movie/film_film_company_relationship_film_film_company_relationshipid>

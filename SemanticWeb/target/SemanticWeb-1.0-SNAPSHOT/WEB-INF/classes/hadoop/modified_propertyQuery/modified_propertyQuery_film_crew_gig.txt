@@ -1,0 +1,7 @@
+movie:film_crew_role
+movie:film_crewmember
+movie:film_crew_gig_id
+movie:film_crew_gig_film
+movie:film_crew_gig_name
+movie:film_crew_gig_film_job
+movie:film_crew_gig_film_crew_gigid

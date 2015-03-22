@@ -1,4 +1,3 @@
-			
 country										movie:country 									<http://data.linkedmdb.org/resource/movie/country>
 film											movie:flim											<http://data.linkedmdb.org/resource/movie/film>
 actor											movie:actor										<http://data.linkedmdb.org/resource/movie/actor>

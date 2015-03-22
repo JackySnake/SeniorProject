@@ -1,0 +1,6 @@
+movie:content_rating_name
+movie:content_rating_system
+movie:content_rating_country
+movie:content_rating_content_ratingid
+movie:content_rating_film_rating_system
+movie:content_rating_minimum_unaccompanied_age

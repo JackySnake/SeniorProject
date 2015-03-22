@@ -1,0 +1,15 @@
+<http://www.w3.org/2002/07/owl#sameAs>
+<http://www.w3.org/2000/01/rdf-schema#label>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://data.linkedmdb.org/resource/movie/country_id>
+<http://data.linkedmdb.org/resource/movie/country_name>
+<http://data.linkedmdb.org/resource/movie/country_capital>
+<http://data.linkedmdb.org/resource/movie/country_currency>
+<http://data.linkedmdb.org/resource/movie/country_continent>
+<http://data.linkedmdb.org/resource/movie/country_fips_code>
+<http://data.linkedmdb.org/resource/movie/country_languages>
+<http://data.linkedmdb.org/resource/movie/country_areaInSqKm>
+<http://data.linkedmdb.org/resource/movie/country_iso_alpha2>
+<http://data.linkedmdb.org/resource/movie/country_iso_alpha3>
+<http://data.linkedmdb.org/resource/movie/country_population>
+<http://data.linkedmdb.org/resource/movie/country_iso_numeric>

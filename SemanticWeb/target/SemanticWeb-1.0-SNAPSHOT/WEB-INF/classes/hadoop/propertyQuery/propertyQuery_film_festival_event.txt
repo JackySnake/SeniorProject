@@ -1,0 +1,7 @@
+<http://www.w3.org/2000/01/rdf-schema#label>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://data.linkedmdb.org/resource/movie/film_festival_event_name>
+<http://data.linkedmdb.org/resource/movie/film_festival_event_closing_date>
+<http://data.linkedmdb.org/resource/movie/film_festival_event_freebase_url>
+<http://data.linkedmdb.org/resource/movie/film_festival_event_opening_date>
+<http://data.linkedmdb.org/resource/movie/film_festival_event_film_festival_event_id>

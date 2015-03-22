@@ -1,0 +1,5 @@
+movie:actor_name
+movie:performance
+movie:actor_actorid
+movie:actor_netflix_id
+movie:actor_nytimes_id

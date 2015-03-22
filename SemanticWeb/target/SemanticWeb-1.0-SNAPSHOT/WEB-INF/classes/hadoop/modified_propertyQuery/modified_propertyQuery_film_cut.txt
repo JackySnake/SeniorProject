@@ -1,0 +1,5 @@
+movie:runtime
+movie:film_cut_note
+movie:type_of_film_cut
+movie:film_cut_film_cutid
+movie:film_release_region

@@ -1,0 +1,5 @@
+movie:personal_film_appearance_name
+movie:personal_film_appearance_type
+movie:personal_film_appearance_person
+movie:personal_film_appearance_type_of_appearance
+movie:personal_film_appearance_personal_film_appearanceid

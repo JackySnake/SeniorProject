@@ -1,0 +1,477 @@
+1561403
+<http://data.linkedmdb.org/resource/interlink/85494> <http://data.linkedmdb.org/resource/oddlinker/link_source> <http://data.linkedmdb.org/resource/actor/338> .
+<http://data.linkedmdb.org/resource/interlink/56300> <http://data.linkedmdb.org/resource/oddlinker/link_source> <http://data.linkedmdb.org/resource/country/SA> .
+<http://data.linkedmdb.org/resource/interlink/1> <http://data.linkedmdb.org/resource/oddlinker/link_source> <http://data.linkedmdb.org/resource/film/1> .
+<http://data.linkedmdb.org/resource/interlink/85020> <http://data.linkedmdb.org/resource/oddlinker/link_source> <http://data.linkedmdb.org/resource/music_contributor/3340> .
+
+
+<http://data.linkedmdb.org/resource/interlink/1> <http://data.linkedmdb.org/resource/oddlinker/linkage_run> <http://data.linkedmdb.org/resource/linkage_run/1> .
+<http://data.linkedmdb.org/resource/interlink/1> <http://data.linkedmdb.org/resource/oddlinker/link_type> "owl:sameAs" .
+<http://data.linkedmdb.org/resource/interlink/1> <http://www.w3.org/2000/01/rdf-schema#label> "1 (Interlink)" .
+<http://data.linkedmdb.org/resource/interlink/1> <http://data.linkedmdb.org/resource/oddlinker/linkage_score> "0.863291105370469" .
+<http://data.linkedmdb.org/resource/interlink/1> <http://data.linkedmdb.org/resource/movie/linkid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/interlink/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/oddlinker/interlink> .
+<http://data.linkedmdb.org/resource/interlink/1> <http://data.linkedmdb.org/resource/oddlinker/link_target> <http://dbpedia.org/resource/Buffy_the_Vampire_Slayer_%28film%29> .
+
+<http://data.linkedmdb.org/resource/interlink/120957> <http://data.linkedmdb.org/resource/oddlinker/link_source> <http://data.linkedmdb.org/resource/writer/1> .
+
+<http://data.linkedmdb.org/resource/film_festival/357> <http://data.linkedmdb.org/resource/movie/film_festival_event> <http://data.linkedmdb.org/resource/film_festival_event/68> .
+
+<http://data.linkedmdb.org/resource/personal_film_appearance/33> <http://data.linkedmdb.org/resource/movie/personal_film_appearance_type> <http://data.linkedmdb.org/resource/personal_film_appearance_type/6> .
+
+<http://data.linkedmdb.org/resource/content_rating/1> <http://data.linkedmdb.org/resource/movie/content_rating_system> <http://data.linkedmdb.org/resource/content_rating_system/43> .
+
+<http://data.linkedmdb.org/resource/performance/139224> <http://data.linkedmdb.org/resource/movie/performance_special_performance_type> <http://data.linkedmdb.org/resource/special_film_performance_type/1> .
+
+<http://data.linkedmdb.org/resource/performance/1> <http://data.linkedmdb.org/resource/movie/film_character> <http://data.linkedmdb.org/resource/film_character/253> .
+
+<http://data.linkedmdb.org/resource/film_film_company_relationship/33> <http://data.linkedmdb.org/resource/movie/film_company> <http://data.linkedmdb.org/resource/film_company/5> .
+
+<http://data.linkedmdb.org/resource/film/32> <http://data.linkedmdb.org/resource/movie/location> <http://data.linkedmdb.org/resource/film_location/16> .
+
+<http://data.linkedmdb.org/resource/film/39678> <http://data.linkedmdb.org/resource/movie/writer> <http://data.linkedmdb.org/resource/writer/12991> .
+
+<http://data.linkedmdb.org/resource/film/38078> <http://data.linkedmdb.org/resource/movie/film_regional_release_date> <http://data.linkedmdb.org/resource/film_regional_release_date/171> .
+
+<http://data.linkedmdb.org/resource/film/38138> <http://data.linkedmdb.org/resource/movie/film_collection> <http://data.linkedmdb.org/resource/film_collection/38> .
+
+<http://data.linkedmdb.org/resource/film/72> <http://data.linkedmdb.org/resource/movie/executive_producer> <http://data.linkedmdb.org/resource/producer/4490> .
+
+<http://data.linkedmdb.org/resource/film/43> <http://data.linkedmdb.org/resource/movie/film_story_contributor> <http://data.linkedmdb.org/resource/film_story_contributor/190> .
+
+<http://data.linkedmdb.org/resource/film/43> <http://data.linkedmdb.org/resource/movie/story_contributor> <http://data.linkedmdb.org/resource/film_story_contributor/190> .
+
+<http://data.linkedmdb.org/resource/film/72> <http://data.linkedmdb.org/resource/movie/film_production_designer> <http://data.linkedmdb.org/resource/film_production_designer/1> .
+
+<http://data.linkedmdb.org/resource/film/2961> <http://data.linkedmdb.org/resource/movie/featured_film_location> <http://data.linkedmdb.org/resource/film_location/232> .
+
+<http://data.linkedmdb.org/resource/director/8368> <http://xmlns.com/foaf/0.1/made> <http://data.linkedmdb.org/resource/film/38079> .
+
+<http://data.linkedmdb.org/resource/film_film_distributor_relationship/3> <http://data.linkedmdb.org/resource/movie/film_distribution_medium> <http://data.linkedmdb.org/resource/film_distribution_medium/10> .
+
+<http://data.linkedmdb.org/resource/film_film_distributor_relationship/1> <http://data.linkedmdb.org/resource/movie/film_of_distributor> <http://data.linkedmdb.org/resource/film/75> .
+
+<http://data.linkedmdb.org/resource/film/78> <http://data.linkedmdb.org/resource/movie/dubbing_performance> <http://data.linkedmdb.org/resource/dubbing_performance/14> .
+
+<http://data.linkedmdb.org/resource/film/87743> <http://www.w3.org/2004/02/skos/core#subject> <http://data.linkedmdb.org/resource/film_subject/189> .
+
+<http://data.linkedmdb.org/resource/film/38079> <http://data.linkedmdb.org/resource/movie/film_format> <http://data.linkedmdb.org/resource/film_format/66> .
+
+<http://data.linkedmdb.org/resource/film/38213> <http://data.linkedmdb.org/resource/movie/film_featured_song> <http://data.linkedmdb.org/resource/film_featured_song/1> .
+
+<http://data.linkedmdb.org/resource/film/54176> <http://data.linkedmdb.org/resource/movie/actor> <http://data.linkedmdb.org/resource/actor/29362> .
+
+<http://data.linkedmdb.org/resource/film/41325> <http://data.linkedmdb.org/resource/movie/director> <http://data.linkedmdb.org/resource/director/8377> .
+
+<http://data.linkedmdb.org/resource/film/6488> <http://data.linkedmdb.org/resource/movie/cinematographer> <http://data.linkedmdb.org/resource/cinematographer/1> .
+
+<http://data.linkedmdb.org/resource/film/72> <http://data.linkedmdb.org/resource/movie/film_casting_director> <http://data.linkedmdb.org/resource/film_casting_director/1> .
+
+<http://data.linkedmdb.org/resource/film/38067> <http://data.linkedmdb.org/resource/movie/prequel> <http://data.linkedmdb.org/resource/film/38092> .
+
+<http://data.linkedmdb.org/resource/film/1245> <http://data.linkedmdb.org/resource/movie/personal_film_appearance> <http://data.linkedmdb.org/resource/personal_film_appearance/1> .
+
+<http://data.linkedmdb.org/resource/film/121> <http://data.linkedmdb.org/resource/movie/costume_designer> <http://data.linkedmdb.org/resource/film_costume_designer/16> .
+
+<http://data.linkedmdb.org/resource/film/6403> <http://data.linkedmdb.org/resource/movie/film_cut> <http://data.linkedmdb.org/resource/film_cut/1> .
+
+<http://data.linkedmdb.org/resource/film/39103> <http://data.linkedmdb.org/resource/movie/editor> <http://data.linkedmdb.org/resource/editor/2304> .
+
+<http://data.linkedmdb.org/resource/film/225> <http://www.w3.org/2004/02/skos/core#subject> <http://data.linkedmdb.org/resource/film_subject/5> .
+
+<http://data.linkedmdb.org/resource/film/7469> <http://data.linkedmdb.org/resource/movie/production_company> <http://data.linkedmdb.org/resource/production_company/3> .
+
+<http://data.linkedmdb.org/resource/film/38079> <http://data.linkedmdb.org/resource/movie/producer> <http://data.linkedmdb.org/resource/producer/9638> .
+
+<http://data.linkedmdb.org/resource/film/8315> <http://data.linkedmdb.org/resource/movie/country> <http://data.linkedmdb.org/resource/country/PK> .
+
+<http://data.linkedmdb.org/resource/film/10> <http://data.linkedmdb.org/resource/movie/rating> <http://data.linkedmdb.org/resource/content_rating/3> .
+
+<http://data.linkedmdb.org/resource/film/38065> <http://data.linkedmdb.org/resource/movie/sequel> <http://data.linkedmdb.org/resource/film/14180> .
+
+<http://data.linkedmdb.org/resource/film/40332> <http://data.linkedmdb.org/resource/movie/film_set_designer> <http://data.linkedmdb.org/resource/film_set_designer/1> .
+
+<http://data.linkedmdb.org/resource/film/62> <http://data.linkedmdb.org/resource/movie/film_series> <http://data.linkedmdb.org/resource/film_series/1> .
+
+<http://data.linkedmdb.org/resource/film/8> <http://data.linkedmdb.org/resource/movie/genre> <http://data.linkedmdb.org/resource/film_genre/17> .
+
+<http://data.linkedmdb.org/resource/film/75> <http://data.linkedmdb.org/resource/movie/film_film_company_relationship> <http://data.linkedmdb.org/resource/film_film_company_relationship/1> .
+
+<http://data.linkedmdb.org/resource/film/96785> <http://data.linkedmdb.org/resource/movie/film_art_director> <http://data.linkedmdb.org/resource/film_art_director/1> .
+
+<http://data.linkedmdb.org/resource/film/11531> <http://data.linkedmdb.org/resource/movie/music_contributor> <http://data.linkedmdb.org/resource/music_contributor/4003> .
+
+<http://data.linkedmdb.org/resource/film/38065> <http://data.linkedmdb.org/resource/movie/performance> <http://data.linkedmdb.org/resource/performance/2755> .
+
+<http://data.linkedmdb.org/resource/film_crew_gig/1> <http://data.linkedmdb.org/resource/movie/film_crew_gig_film> <http://data.linkedmdb.org/resource/film/13487> .
+
+<http://data.linkedmdb.org/resource/film_crew_gig/934> <http://data.linkedmdb.org/resource/movie/film_crew_gig_film_job> <http://data.linkedmdb.org/resource/film_job/67> .
+
+<http://data.linkedmdb.org/resource/film_crew_gig/1> <http://data.linkedmdb.org/resource/movie/film_crewmember> <http://data.linkedmdb.org/resource/film_crewmember/1> .
+
+<http://data.linkedmdb.org/resource/actor/29362> <http://data.linkedmdb.org/resource/movie/performance> <http://data.linkedmdb.org/resource/performance/113885> .
+
+<http://data.linkedmdb.org/resource/film_distribution_medium/1> <http://www.w3.org/2000/01/rdf-schema#label> "Theatrical (Film Distribution Medium)" .
+<http://data.linkedmdb.org/resource/film_distribution_medium/1> <http://data.linkedmdb.org/resource/movie/film_distribution_medium_film_distribution_mediumid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_distribution_medium/1> <http://data.linkedmdb.org/resource/movie/film_distribution_medium_name> "Theatrical" .
+<http://data.linkedmdb.org/resource/film_distribution_medium/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_distribution_medium> .
+<http://data.linkedmdb.org/resource/film_distribution_medium/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f8000000007b2e058> .
+
+<http://data.linkedmdb.org/resource/film_art_director/1> <http://data.linkedmdb.org/resource/movie/film_art_director_id> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_art_director/1> <http://data.linkedmdb.org/resource/movie/film_art_director_name> "Eric Drooker" .
+<http://data.linkedmdb.org/resource/film_art_director/1> <http://www.w3.org/2000/01/rdf-schema#label> "Eric Drooker (Film Art Director)" .
+<http://data.linkedmdb.org/resource/film_art_director/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_art_director> .
+<http://data.linkedmdb.org/resource/film_art_director/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f80000000004b2bcf> .
+
+<http://data.linkedmdb.org/resource/special_film_performance_type/1> <http://www.w3.org/2000/01/rdf-schema#label> "Him/Herself (Special Film Performance Type)" .
+<http://data.linkedmdb.org/resource/special_film_performance_type/1> <http://data.linkedmdb.org/resource/movie/special_film_performance_type_name> "Him/Herself" .
+<http://data.linkedmdb.org/resource/special_film_performance_type/1> <http://data.linkedmdb.org/resource/movie/special_film_performance_type_special_film_performance_typeid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/special_film_performance_type/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/special_film_performance_type> .
+<http://data.linkedmdb.org/resource/special_film_performance_type/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f80000000041e9f1f> .
+
+<http://data.linkedmdb.org/resource/film_screening_venue/1> <http://data.linkedmdb.org/resource/movie/film_screening_venue_film_screening_venue_id> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_screening_venue/1> <http://data.linkedmdb.org/resource/movie/film_screening_venue_name> "Beijing" .
+<http://data.linkedmdb.org/resource/film_screening_venue/1> <http://www.w3.org/2000/01/rdf-schema#label> "Beijing (Film Screening Venue)" .
+<http://data.linkedmdb.org/resource/film_screening_venue/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_screening_venue> .
+<http://data.linkedmdb.org/resource/film_screening_venue/1> <http://data.linkedmdb.org/resource/movie/film_screening_venue_freebase_url> <http://www.freebase.com/view/guid/9202a8c04000641f800000000000a424> .
+
+<http://data.linkedmdb.org/resource/film_festival/1> <http://www.w3.org/2000/01/rdf-schema#label> "Roger Ebert's Overlooked Film Festival (Film Festival)" .
+<http://data.linkedmdb.org/resource/film_festival/1> <http://data.linkedmdb.org/resource/movie/film_festival_film_festivalid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_festival/1> <http://data.linkedmdb.org/resource/movie/film_festival_name> "Roger Ebert's Overlooked Film Festival" .
+<http://data.linkedmdb.org/resource/film_festival/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_festival> .
+<http://data.linkedmdb.org/resource/film_festival/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000007c034> .
+
+<http://data.linkedmdb.org/resource/film_awards_ceremony/81> <http://data.linkedmdb.org/resource/movie/film_awards_ceremony_film_awards_ceremonyid> "81"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_awards_ceremony/81> <http://data.linkedmdb.org/resource/movie/film_awards_ceremony_id> "/guid/9202a8c04000641f8000000000274a7c" .
+<http://data.linkedmdb.org/resource/film_awards_ceremony/81> <http://data.linkedmdb.org/resource/movie/film_awards_ceremony_name> "76th Academy Awards" .
+<http://data.linkedmdb.org/resource/film_awards_ceremony/81> <http://www.w3.org/2000/01/rdf-schema#label> "76th Academy Awards (Film Awards Ceremony)" .
+<http://data.linkedmdb.org/resource/film_awards_ceremony/81> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_awards_ceremony> .
+<http://data.linkedmdb.org/resource/film_awards_ceremony/81> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f8000000000274a7c> .
+
+<http://data.linkedmdb.org/resource/film_production_designer/1> <http://data.linkedmdb.org/resource/movie/film_production_designer_film_production_designer_id> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_production_designer/1> <http://www.w3.org/2000/01/rdf-schema#label> "Peter Lamont (Film Production Designer)" .
+<http://data.linkedmdb.org/resource/film_production_designer/1> <http://data.linkedmdb.org/resource/movie/film_production_designer_name> "Peter Lamont" .
+<http://data.linkedmdb.org/resource/film_production_designer/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_production_designer> .
+<http://data.linkedmdb.org/resource/film_production_designer/1> <http://data.linkedmdb.org/resource/movie/film_production_designer_freebase_url> <http://www.freebase.com/view/guid/9202a8c04000641f80000000004f8691> .
+
+<http://data.linkedmdb.org/resource/personal_film_appearance/4> <http://data.linkedmdb.org/resource/movie/personal_film_appearance_personal_film_appearanceid> "4"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/personal_film_appearance/4> <http://data.linkedmdb.org/resource/movie/personal_film_appearance_name> "" .
+<http://data.linkedmdb.org/resource/personal_film_appearance/4> <http://data.linkedmdb.org/resource/movie/personal_film_appearance_person> "Gertrude Kubrick" .
+<http://data.linkedmdb.org/resource/personal_film_appearance/4> <http://www.w3.org/2000/01/rdf-schema#label> "personal_film_appearance #4" .
+<http://data.linkedmdb.org/resource/personal_film_appearance/4> <http://data.linkedmdb.org/resource/movie/personal_film_appearance_type_of_appearance> "" .
+<http://data.linkedmdb.org/resource/personal_film_appearance/4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/personal_film_appearance> .
+
+<http://data.linkedmdb.org/resource/film_character/1> <http://data.linkedmdb.org/resource/movie/film_character_name> "L\u00C3\u00A9on" .
+<http://data.linkedmdb.org/resource/film_character/1> <http://data.linkedmdb.org/resource/movie/film_character_film_characterid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_character/1> <http://www.w3.org/2000/01/rdf-schema#label> "L\u00C3\u00A9on (Film Character)" .
+<http://data.linkedmdb.org/resource/film_character/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_character> .
+<http://data.linkedmdb.org/resource/film_character/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f80000000000258ae> .
+
+<http://data.linkedmdb.org/resource/content_rating/5> <http://data.linkedmdb.org/resource/movie/content_rating_country> "United States" .
+<http://data.linkedmdb.org/resource/content_rating/5> <http://data.linkedmdb.org/resource/movie/content_rating_content_ratingid> "5"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/content_rating/5> <http://data.linkedmdb.org/resource/movie/content_rating_film_rating_system> "MPAA film rating system" .
+<http://data.linkedmdb.org/resource/content_rating/5> <http://www.w3.org/2000/01/rdf-schema#label> "G (USA) (Content Rating)" .
+<http://data.linkedmdb.org/resource/content_rating/5> <http://data.linkedmdb.org/resource/movie/content_rating_name> "G (USA)" .
+<http://data.linkedmdb.org/resource/content_rating/5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/content_rating> .
+
+<http://data.linkedmdb.org/resource/country/BT> <http://data.linkedmdb.org/resource/movie/country_currency> "BTN" .
+<http://data.linkedmdb.org/resource/country/BT> <http://data.linkedmdb.org/resource/movie/country_name> "Bhutan" .
+<http://data.linkedmdb.org/resource/country/BT> <http://data.linkedmdb.org/resource/movie/country_fips_code> "BT" .
+<http://data.linkedmdb.org/resource/country/BT> <http://data.linkedmdb.org/resource/movie/country_capital> "Thimphu" .
+<http://data.linkedmdb.org/resource/country/BT> <http://data.linkedmdb.org/resource/movie/country_iso_numeric> "64" .
+<http://data.linkedmdb.org/resource/country/BT> <http://data.linkedmdb.org/resource/movie/country_languages> "dz" .
+<http://data.linkedmdb.org/resource/country/BT> <http://data.linkedmdb.org/resource/movie/country_continent> "AS" .
+<http://data.linkedmdb.org/resource/country/BT> <http://data.linkedmdb.org/resource/movie/country_population> "2376000" .
+<http://data.linkedmdb.org/resource/country/BT> <http://data.linkedmdb.org/resource/movie/country_areaInSqKm> "47000"^^<http://www.w3.org/2001/XMLSchema#double> .
+
+<http://data.linkedmdb.org/resource/production_company/3> <http://data.linkedmdb.org/resource/movie/production_company_production_companyid> "3"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/production_company/3> <http://www.w3.org/2000/01/rdf-schema#label> "BBC (Production Company)" .
+<http://data.linkedmdb.org/resource/production_company/3> <http://data.linkedmdb.org/resource/movie/production_company_name> "BBC" .
+<http://data.linkedmdb.org/resource/production_company/3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/production_company> .
+<http://data.linkedmdb.org/resource/production_company/3> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000000b122> .
+
+<http://data.linkedmdb.org/resource/music_contributor/82> <http://data.linkedmdb.org/resource/movie/music_contributor_name> "Gerald Hugh Tyrwhitt-Wilson, 14th Baron Berners" .
+<http://data.linkedmdb.org/resource/music_contributor/82> <http://data.linkedmdb.org/resource/movie/music_contributor_music_contributorid> "82"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/music_contributor/82> <http://www.w3.org/2000/01/rdf-schema#label> "Gerald Hugh Tyrwhitt-Wilson, 14th Baron Berners (Music Contributor)" .
+<http://data.linkedmdb.org/resource/music_contributor/82> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/music_contributor> .
+<http://data.linkedmdb.org/resource/music_contributor/82> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f8000000000556df5> .
+
+<http://data.linkedmdb.org/resource/film_cut/36869> <http://data.linkedmdb.org/resource/movie/type_of_film_cut> "" .
+<http://data.linkedmdb.org/resource/film_cut/36869> <http://data.linkedmdb.org/resource/movie/runtime> "95.0" .
+<http://data.linkedmdb.org/resource/film_cut/36869> <http://www.w3.org/2000/01/rdf-schema#label> "Film Cut #36869" .
+<http://data.linkedmdb.org/resource/film_cut/36869> <http://data.linkedmdb.org/resource/movie/film_cut_note> "" .
+<http://data.linkedmdb.org/resource/film_cut/36869> <http://data.linkedmdb.org/resource/movie/film_release_region> "" .
+<http://data.linkedmdb.org/resource/film_cut/36869> <http://data.linkedmdb.org/resource/movie/film_cut_film_cutid> "36869"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_cut/36869> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_cut> .
+<http://data.linkedmdb.org/resource/film_cut/36869> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000e015f95> .
+
+<http://data.linkedmdb.org/resource/film_format/1> <http://data.linkedmdb.org/resource/movie/film_format_film_formatid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_format/1> <http://data.linkedmdb.org/resource/movie/film_format_name> "9.5 mm film" .
+<http://data.linkedmdb.org/resource/film_format/1> <http://www.w3.org/2000/01/rdf-schema#label> "9.5 mm film (Film Format)" .
+<http://data.linkedmdb.org/resource/film_format/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_format> .
+<http://data.linkedmdb.org/resource/film_format/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000008fe2a> .
+
+<http://data.linkedmdb.org/resource/writer/2> <http://data.linkedmdb.org/resource/movie/writer_writerid> "2"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/writer/2> <http://data.linkedmdb.org/resource/movie/writer_name> "Chris Morris" .
+<http://data.linkedmdb.org/resource/writer/2> <http://www.w3.org/2000/01/rdf-schema#label> "Chris Morris (Writer)" .
+<http://data.linkedmdb.org/resource/writer/2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/writer> .
+<http://data.linkedmdb.org/resource/writer/2> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000000d090> .
+
+<http://data.linkedmdb.org/resource/performance/3> <http://data.linkedmdb.org/resource/movie/performance_performanceid> "3"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/performance/3> <http://data.linkedmdb.org/resource/movie/performance_film> ".45" .
+<http://data.linkedmdb.org/resource/performance/3> <http://data.linkedmdb.org/resource/movie/performance_note> "" .
+<http://data.linkedmdb.org/resource/performance/3> <http://data.linkedmdb.org/resource/movie/performance_actor> "Aisha Tyler" .
+<http://data.linkedmdb.org/resource/performance/3> <http://data.linkedmdb.org/resource/movie/performance_name> "" .
+<http://data.linkedmdb.org/resource/performance/3> <http://data.linkedmdb.org/resource/movie/performance_character> "" .
+<http://data.linkedmdb.org/resource/performance/3> <http://www.w3.org/2000/01/rdf-schema#label> "performance #3" .
+<http://data.linkedmdb.org/resource/performance/3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/performance> .
+<http://data.linkedmdb.org/resource/performance/3> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f80000000010c3a7e> .
+
+<http://data.linkedmdb.org/resource/film_film_company_relationship/4> <http://data.linkedmdb.org/resource/movie/film_film_company_relationship_film_film_company_relationshipid> "4"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_film_company_relationship/4> <http://data.linkedmdb.org/resource/movie/film_film_company_relationship_role_service> "Electronic laboratory" .
+<http://data.linkedmdb.org/resource/film_film_company_relationship/4> <http://www.w3.org/2000/01/rdf-schema#label> "film_film_company_relationship #4" .
+<http://data.linkedmdb.org/resource/film_film_company_relationship/4> <http://data.linkedmdb.org/resource/movie/film_film_company_relationship_name> "" .
+<http://data.linkedmdb.org/resource/film_film_company_relationship/4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_film_company_relationship> .
+<http://data.linkedmdb.org/resource/film_film_company_relationship/4> <http://data.linkedmdb.org/resource/movie/film_film_company_relationship_freebase_url> <http://www.freebase.com/view/guid/9202a8c04000641f8000000007dd6863> .
+
+<http://data.linkedmdb.org/resource/film_job/1> <http://data.linkedmdb.org/resource/movie/film_job_film_jobid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_job/1> <http://data.linkedmdb.org/resource/movie/film_job_name> "Gaffer" .
+<http://data.linkedmdb.org/resource/film_job/1> <http://www.w3.org/2000/01/rdf-schema#label> "Gaffer (Film Job)" .
+<http://data.linkedmdb.org/resource/film_job/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_job> .
+<http://data.linkedmdb.org/resource/film_job/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f80000000001d098a> .
+
+<http://data.linkedmdb.org/resource/content_rating_system/1> <http://data.linkedmdb.org/resource/movie/content_rating_system_name> "Office of Film and Literature Classification (Australia)" .
+<http://data.linkedmdb.org/resource/content_rating_system/1> <http://data.linkedmdb.org/resource/movie/content_rating_system_jurisdiction> "Australia" .
+<http://data.linkedmdb.org/resource/content_rating_system/1> <http://www.w3.org/2000/01/rdf-schema#label> "Office of Film and Literature Classification (Australia) (Content Rating System)" .
+<http://data.linkedmdb.org/resource/content_rating_system/1> <http://data.linkedmdb.org/resource/movie/content_rating_system_content_rating_systemid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/content_rating_system/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/content_rating_system> .
+<http://data.linkedmdb.org/resource/content_rating_system/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f80000000004152e7> .
+
+<http://data.linkedmdb.org/resource/dubbing_performance/1> <http://data.linkedmdb.org/resource/movie/dubbing_performance_language> "Japanese Language" .
+<http://data.linkedmdb.org/resource/dubbing_performance/1> <http://data.linkedmdb.org/resource/movie/dubbing_performance_character> "Motoko Kusanagi" .
+<http://data.linkedmdb.org/resource/dubbing_performance/1> <http://www.w3.org/2000/01/rdf-schema#label> "dubbing_performance 1" .
+<http://data.linkedmdb.org/resource/dubbing_performance/1> <http://data.linkedmdb.org/resource/movie/dubbing_performance_actor> "Atsuko Tanaka" .
+<http://data.linkedmdb.org/resource/dubbing_performance/1> <http://data.linkedmdb.org/resource/movie/dubbing_performance_film> "Ghost in the Shell" .
+<http://data.linkedmdb.org/resource/dubbing_performance/1> <http://data.linkedmdb.org/resource/movie/dubbing_performance_name> "" .
+<http://data.linkedmdb.org/resource/dubbing_performance/1> <http://data.linkedmdb.org/resource/movie/dubbing_performance_dubbing_performanceid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+
+<http://data.linkedmdb.org/resource/film_location/1> <http://data.linkedmdb.org/resource/movie/film_location_name> "Cologne, Germany" .
+<http://data.linkedmdb.org/resource/film_location/1> <http://www.w3.org/2000/01/rdf-schema#label> "Cologne, Germany (Film Location)" .
+<http://data.linkedmdb.org/resource/film_location/1> <http://data.linkedmdb.org/resource/movie/film_location_film_locationid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_location/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_location> .
+<http://data.linkedmdb.org/resource/film_location/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000000e90b> .
+
+<http://data.linkedmdb.org/resource/film_casting_director/3> <http://data.linkedmdb.org/resource/movie/film_casting_director_film_casting_director_id> "3"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_casting_director/3> <http://data.linkedmdb.org/resource/movie/film_casting_director_name> "Joseph Middleton" .
+<http://data.linkedmdb.org/resource/film_casting_director/3> <http://www.w3.org/2000/01/rdf-schema#label> "Joseph Middleton (Film Casting Director)" .
+<http://data.linkedmdb.org/resource/film_casting_director/3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_casting_director> .
+<http://data.linkedmdb.org/resource/film_casting_director/3> <http://data.linkedmdb.org/resource/movie/film_casting_director_freebase_url> <http://www.freebase.com/view/guid/9202a8c04000641f80000000010d6bb6> .
+
+<http://data.linkedmdb.org/resource/film_company/1> <http://data.linkedmdb.org/resource/movie/film_company_name> "DEFA-Studio f\u00C3\u00BCr Spielfilme" .
+<http://data.linkedmdb.org/resource/film_company/1> <http://data.linkedmdb.org/resource/movie/film_company_film_companyid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_company/1> <http://www.w3.org/2000/01/rdf-schema#label> "1 (Film Company)" .
+<http://data.linkedmdb.org/resource/film_company/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Agent> .
+<http://data.linkedmdb.org/resource/film_company/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_company> .
+<http://data.linkedmdb.org/resource/film_company/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f80000000001f1b3f> .
+
+<http://data.linkedmdb.org/resource/personal_film_appearance_type/1> <http://www.w3.org/2000/01/rdf-schema#label> "Archive Footage (Personal Film Appearance Type)" .
+<http://data.linkedmdb.org/resource/personal_film_appearance_type/1> <http://data.linkedmdb.org/resource/movie/personal_film_appearance_type_name> "Archive Footage" .
+<http://data.linkedmdb.org/resource/personal_film_appearance_type/1> <http://data.linkedmdb.org/resource/movie/personal_film_appearance_type_personal_film_appearance_typeid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/personal_film_appearance_type/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/personal_film_appearance_type> .
+<http://data.linkedmdb.org/resource/personal_film_appearance_type/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f80000000054c4382> .
+
+<http://data.linkedmdb.org/resource/film_featured_song/1> <http://www.w3.org/2000/01/rdf-schema#label> "Gonna Fly Now (Film Featured Song)" .
+<http://data.linkedmdb.org/resource/film_featured_song/1> <http://data.linkedmdb.org/resource/movie/film_featured_song_performed_by> "" .
+<http://data.linkedmdb.org/resource/film_featured_song/1> <http://data.linkedmdb.org/resource/movie/film_featured_song_name> "Gonna Fly Now" .
+<http://data.linkedmdb.org/resource/film_featured_song/1> <http://data.linkedmdb.org/resource/movie/film_featured_song_film_featured_song_id> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_featured_song/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_featured_song> .
+<http://data.linkedmdb.org/resource/film_featured_song/1> <http://data.linkedmdb.org/resource/movie/film_featured_song_freebase_url> <http://www.freebase.com/view/guid/9202a8c04000641f800000000052ec39> .
+
+<http://data.linkedmdb.org/resource/film_distributor/2> <http://data.linkedmdb.org/resource/movie/film_distributor_film_distributorid> "2"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_distributor/2> <http://www.w3.org/2000/01/rdf-schema#label> "Channel 4 (Film Distributor)" .
+<http://data.linkedmdb.org/resource/film_distributor/2> <http://data.linkedmdb.org/resource/movie/film_distributor_name> "Channel 4" .
+<http://data.linkedmdb.org/resource/film_distributor/2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_distributor> .
+<http://data.linkedmdb.org/resource/film_distributor/2> <http://data.linkedmdb.org/resource/movie/film_distributor_freebase_url> <http://www.freebase.com/view/guid/9202a8c04000641f800000000000ed22> .
+
+<http://data.linkedmdb.org/resource/film_series/1> <http://data.linkedmdb.org/resource/movie/film_series_film_seriesid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_series/1> <http://www.w3.org/2000/01/rdf-schema#label> "Airplane! (Film Series)" .
+<http://data.linkedmdb.org/resource/film_series/1> <http://data.linkedmdb.org/resource/movie/film_series_name> "Airplane!" .
+<http://data.linkedmdb.org/resource/film_series/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_series> .
+<http://data.linkedmdb.org/resource/film_series/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000005c726> .
+
+<http://data.linkedmdb.org/resource/film_set_designer/1> <http://data.linkedmdb.org/resource/movie/film_set_designer_name> "Edwin B. Willis" .
+<http://data.linkedmdb.org/resource/film_set_designer/1> <http://www.w3.org/2000/01/rdf-schema#label> "Edwin B. Willis (Film Set Designer)" .
+<http://data.linkedmdb.org/resource/film_set_designer/1> <http://data.linkedmdb.org/resource/movie/film_set_designer_film_set_designer_id> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_set_designer/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_set_designer> .
+<http://data.linkedmdb.org/resource/film_set_designer/1> <http://data.linkedmdb.org/resource/movie/film_set_designer_freebase_url> <http://www.freebase.com/view/guid/9202a8c04000641f8000000000734b9a> .
+
+<http://data.linkedmdb.org/resource/film_festival_event/1> <http://data.linkedmdb.org/resource/movie/film_festival_event_film_festival_event_id> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_festival_event/1> <http://data.linkedmdb.org/resource/movie/film_festival_event_opening_date> "" .
+<http://data.linkedmdb.org/resource/film_festival_event/1> <http://data.linkedmdb.org/resource/movie/film_festival_event_name> "2004 Cannes Film Festival" .
+<http://data.linkedmdb.org/resource/film_festival_event/1> <http://www.w3.org/2000/01/rdf-schema#label> "2004 Cannes Film Festival (Film Festival Event)" .
+<http://data.linkedmdb.org/resource/film_festival_event/1> <http://data.linkedmdb.org/resource/movie/film_festival_event_freebase_url> "http://www.freebase.com/view/guid/9202a8c04000641f80000000002dc28a" .
+<http://data.linkedmdb.org/resource/film_festival_event/1> <http://data.linkedmdb.org/resource/movie/film_festival_event_closing_date> "" .
+<http://data.linkedmdb.org/resource/film_festival_event/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_festival_event> .
+
+<http://data.linkedmdb.org/resource/film_costume_designer/1> <http://data.linkedmdb.org/resource/movie/film_costume_designer_name> "Sandy Powell" .
+<http://data.linkedmdb.org/resource/film_costume_designer/1> <http://www.w3.org/2000/01/rdf-schema#label> "Sandy Powell (Film Costume Designer)" .
+<http://data.linkedmdb.org/resource/film_costume_designer/1> <http://data.linkedmdb.org/resource/movie/film_costume_designer_film_costume_designerid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_costume_designer/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Agent> .
+<http://data.linkedmdb.org/resource/film_costume_designer/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_costume_designer> .
+<http://data.linkedmdb.org/resource/film_costume_designer/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000029f14c> .
+
+<http://data.linkedmdb.org/resource/film/1> <http://data.linkedmdb.org/resource/movie/initial_release_date> "1992-07-31" .
+<http://data.linkedmdb.org/resource/film/1> <http://purl.org/dc/terms/date> "1992-07-31" .
+<http://data.linkedmdb.org/resource/film/1> <http://data.linkedmdb.org/resource/movie/filmid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film/1> <http://purl.org/dc/terms/title> "Buffy the Vampire Slayer" .
+<http://data.linkedmdb.org/resource/film/1> <http://www.w3.org/2000/01/rdf-schema#label> "Buffy the Vampire Slayer" .
+<http://data.linkedmdb.org/resource/film/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film> .
+<http://data.linkedmdb.org/resource/film/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000000ad5c> .
+<http://data.linkedmdb.org/resource/film/1> <http://xmlns.com/foaf/0.1/page> <http://www.imdb.com/title/tt0103893> .
+
+<http://data.linkedmdb.org/resource/film/6403> <http://data.linkedmdb.org/resource/movie/runtime> "97" .
+
+<http://data.linkedmdb.org/resource/film_genre/1> <http://data.linkedmdb.org/resource/movie/film_genre_film_genreid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_genre/1> <http://www.w3.org/2000/01/rdf-schema#label> "Conspiracy theory (Film Genre)" .
+<http://data.linkedmdb.org/resource/film_genre/1> <http://data.linkedmdb.org/resource/movie/film_genre_name> "Conspiracy theory" .
+<http://data.linkedmdb.org/resource/film_genre/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_genre> .
+<http://data.linkedmdb.org/resource/film_genre/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000000d4ed> .
+
+<http://data.linkedmdb.org/resource/film_festival_focus/1> <http://data.linkedmdb.org/resource/movie/film_festival_focus_name> "Animation" .
+<http://data.linkedmdb.org/resource/film_festival_focus/1> <http://www.w3.org/2000/01/rdf-schema#label> "Animation (Film Festival Focus)" .
+<http://data.linkedmdb.org/resource/film_festival_focus/1> <http://data.linkedmdb.org/resource/movie/film_festival_focus_film_festival_focus_id> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_festival_focus/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_festival_focus> .
+<http://data.linkedmdb.org/resource/film_festival_focus/1> <http://data.linkedmdb.org/resource/movie/film_festival_focus_freebase_url> <http://www.freebase.com/view/guid/9202a8c04000641f8000000000003d77> .
+
+<http://data.linkedmdb.org/resource/film_crewmember/1> <http://data.linkedmdb.org/resource/movie/film_crewmember_name> "Malosi Leonard" .
+<http://data.linkedmdb.org/resource/film_crewmember/1> <http://www.w3.org/2000/01/rdf-schema#label> "Malosi Leonard (Film Crewmember)" .
+<http://data.linkedmdb.org/resource/film_crewmember/1> <http://data.linkedmdb.org/resource/movie/film_crewmember_film_crewmemberid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_crewmember/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .
+<http://data.linkedmdb.org/resource/film_crewmember/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_crewmember> .
+<http://data.linkedmdb.org/resource/film_crewmember/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f8000000006ab594f> .
+
+<http://data.linkedmdb.org/resource/film_subject/4> <http://data.linkedmdb.org/resource/movie/film_subject_film_subjectid> "4"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_subject/4> <http://www.w3.org/2000/01/rdf-schema#label> "Pregnancy (Film Subject)" .
+<http://data.linkedmdb.org/resource/film_subject/4> <http://data.linkedmdb.org/resource/movie/film_subject_name> "Pregnancy" .
+<http://data.linkedmdb.org/resource/film_subject/4> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_subject> .
+<http://data.linkedmdb.org/resource/film_subject/4> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000002eaf8> .
+
+<http://data.linkedmdb.org/resource/film_critic/1> <http://data.linkedmdb.org/resource/movie/film_critic_film_criticid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_critic/1> <http://www.w3.org/2000/01/rdf-schema#label> "Jonathan Ross (Film Critic)" .
+<http://data.linkedmdb.org/resource/film_critic/1> <http://data.linkedmdb.org/resource/movie/film_critic_name> "Jonathan Ross" .
+<http://data.linkedmdb.org/resource/film_critic/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_critic> .
+<http://data.linkedmdb.org/resource/film_critic/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000011dadc> .
+
+<http://data.linkedmdb.org/resource/director/1> <http://data.linkedmdb.org/resource/movie/director_directorid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/director/1> <http://data.linkedmdb.org/resource/movie/director_name> "Chris Morris" .
+<http://data.linkedmdb.org/resource/director/1> <http://www.w3.org/2000/01/rdf-schema#label> "Chris Morris (Director)" .
+<http://data.linkedmdb.org/resource/director/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .
+<http://data.linkedmdb.org/resource/director/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/director> .
+<http://data.linkedmdb.org/resource/director/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000000d090> .
+
+<http://data.linkedmdb.org/resource/film_regional_release_date/1> <http://data.linkedmdb.org/resource/movie/film_regional_release_date_film_regional_debut_venue> "Cannes Film Festival" .
+<http://data.linkedmdb.org/resource/film_regional_release_date/1> <http://data.linkedmdb.org/resource/movie/film_regional_release_date_release_date> "2002-05-16" .
+<http://data.linkedmdb.org/resource/film_regional_release_date/1> <http://data.linkedmdb.org/resource/movie/film_regional_release_date_name> "" .
+<http://data.linkedmdb.org/resource/film_regional_release_date/1> <http://data.linkedmdb.org/resource/movie/film_regional_release_date_film_regional_release_id> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_regional_release_date/1> <http://data.linkedmdb.org/resource/movie/film_regional_release_date_film_release_region> "France" .
+<http://data.linkedmdb.org/resource/film_regional_release_date/1> <http://data.linkedmdb.org/resource/movie/film_regional_release_date_film_release_distribution_medium> "Theatrical" .
+<http://data.linkedmdb.org/resource/film_regional_release_date/1> <http://www.w3.org/2000/01/rdf-schema#label> "2002-05-16 Cannes Film Festival (Film Regional Release Date)" .
+<http://data.linkedmdb.org/resource/film_regional_release_date/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_regional_release_date> .
+<http://data.linkedmdb.org/resource/film_regional_release_date/1> <http://data.linkedmdb.org/resource/movie/film_regional_release_date_freebase_url> <http://www.freebase.com/view/guid/9202a8c04000641f8000000007dd9b39> .
+
+<http://data.linkedmdb.org/resource/film_festival_sponsor/1> <http://data.linkedmdb.org/resource/movie/film_festival_sponsor_film_festival_sponsor_id> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_festival_sponsor/1> <http://data.linkedmdb.org/resource/movie/film_festival_sponsor_name> "American Film Institute" .
+<http://data.linkedmdb.org/resource/film_festival_sponsor/1> <http://www.w3.org/2000/01/rdf-schema#label> "American Film Institute (Film Festival Sponsor)" .
+<http://data.linkedmdb.org/resource/film_festival_sponsor/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_festival_sponsor> .
+<http://data.linkedmdb.org/resource/film_festival_sponsor/1> <http://data.linkedmdb.org/resource/movie/film_festival_sponsor_freebase_url> <http://www.freebase.com/view/guid/9202a8c04000641f80000000000045a0> .
+
+<http://data.linkedmdb.org/resource/film_theorist/33> <http://data.linkedmdb.org/resource/movie/film_theorist_film_theoristid> "33"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_theorist/33> <http://data.linkedmdb.org/resource/movie/film_theorist_name> "Jean-Luc Godard" .
+<http://data.linkedmdb.org/resource/film_theorist/33> <http://www.w3.org/2000/01/rdf-schema#label> "Jean-Luc Godard (Film Theorist)" .
+<http://data.linkedmdb.org/resource/film_theorist/33> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_theorist> .
+<http://data.linkedmdb.org/resource/film_theorist/33> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f80000000000732dd> .
+
+<http://data.linkedmdb.org/resource/cinematographer/1> <http://data.linkedmdb.org/resource/movie/cinematographer_name> "Robert J. Flaherty" .
+<http://data.linkedmdb.org/resource/cinematographer/1> <http://www.w3.org/2000/01/rdf-schema#label> "Robert J. Flaherty (Cinematographer)" .
+<http://data.linkedmdb.org/resource/cinematographer/1> <http://data.linkedmdb.org/resource/movie/cinematographer_cinematographerid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/cinematographer/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .
+<http://data.linkedmdb.org/resource/cinematographer/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/cinematographer> .
+<http://data.linkedmdb.org/resource/cinematographer/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f8000000000032c20> .
+
+<http://data.linkedmdb.org/resource/film_film_distributor_relationship/1> <http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_year> "1977" .
+<http://data.linkedmdb.org/resource/film_film_distributor_relationship/1> <http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_film_film_distributor_relationshipid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_film_distributor_relationship/1> <http://www.w3.org/2000/01/rdf-schema#label> "film_film_distributor_relationship #1" .
+<http://data.linkedmdb.org/resource/film_film_distributor_relationship/1> <http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_film_cut> "" .
+<http://data.linkedmdb.org/resource/film_film_distributor_relationship/1> <http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_name> "" .
+<http://data.linkedmdb.org/resource/film_film_distributor_relationship/1> <http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_film_distribution_medium> "Theatrical" .
+<http://data.linkedmdb.org/resource/film_film_distributor_relationship/1> <http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_region> "France" .
+<http://data.linkedmdb.org/resource/film_film_distributor_relationship/1> <http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_distributor> "20th Century Fox" .
+<http://data.linkedmdb.org/resource/film_film_distributor_relationship/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship> .
+<http://data.linkedmdb.org/resource/film_film_distributor_relationship/1> <http://data.linkedmdb.org/resource/movie/film_film_distributor_relationship_freebase_url> <http://www.freebase.com/view/guid/9202a8c04000641f8000000007b2e069> .
+
+<http://data.linkedmdb.org/resource/producer/1> <http://www.w3.org/2000/01/rdf-schema#label> "Cecil B. DeMille (Producer)" .
+<http://data.linkedmdb.org/resource/producer/1> <http://data.linkedmdb.org/resource/movie/producer_name> "Cecil B. DeMille" .
+<http://data.linkedmdb.org/resource/producer/1> <http://data.linkedmdb.org/resource/movie/producer_producerid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/producer/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/producer> .
+<http://data.linkedmdb.org/resource/producer/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000000e8af> .
+
+<http://data.linkedmdb.org/resource/film_crew_gig/1> <http://data.linkedmdb.org/resource/movie/film_crew_gig_film_crew_gigid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_crew_gig/1> <http://data.linkedmdb.org/resource/movie/film_crew_gig_id> "/guid/9202a8c04000641f8000000006ab594c" .
+<http://data.linkedmdb.org/resource/film_crew_gig/1> <http://data.linkedmdb.org/resource/movie/film_crew_role> "" .
+<http://data.linkedmdb.org/resource/film_crew_gig/1> <http://www.w3.org/2000/01/rdf-schema#label> "Film Crew Gig #1" .
+<http://data.linkedmdb.org/resource/film_crew_gig/1> <http://data.linkedmdb.org/resource/movie/film_crew_gig_name> "" .
+<http://data.linkedmdb.org/resource/film_crew_gig/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_crew_gig> .
+<http://data.linkedmdb.org/resource/film_crew_gig/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f8000000006ab594c> .
+
+<http://data.linkedmdb.org/resource/actor/1> <http://data.linkedmdb.org/resource/movie/actor_name> "Bernard Montgomery, 1st Viscount Montgomery of Alamein" .
+<http://data.linkedmdb.org/resource/actor/1> <http://data.linkedmdb.org/resource/movie/actor_actorid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/actor/1> <http://www.w3.org/2000/01/rdf-schema#label> "Bernard Montgomery, 1st Viscount Montgomery of Alamein (Actor)" .
+<http://data.linkedmdb.org/resource/actor/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .
+<http://data.linkedmdb.org/resource/actor/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/actor> .
+<http://data.linkedmdb.org/resource/actor/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000000a2c7> .
+
+<http://data.linkedmdb.org/resource/actor/59844> <http://data.linkedmdb.org/resource/movie/actor_name> "Aaron Martini" .
+<http://data.linkedmdb.org/resource/actor/59844> <http://data.linkedmdb.org/resource/movie/actor_nytimes_id> "" .
+<http://data.linkedmdb.org/resource/actor/59844> <http://data.linkedmdb.org/resource/movie/actor_netflix_id> "" .
+<http://data.linkedmdb.org/resource/actor/59844> <http://data.linkedmdb.org/resource/movie/actor_actorid> "59844"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/actor/59844> <http://www.w3.org/2000/01/rdf-schema#label> "Aaron Martini (Actor)" .
+<http://data.linkedmdb.org/resource/actor/59844> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .
+<http://data.linkedmdb.org/resource/actor/59844> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/actor> .
+<http://data.linkedmdb.org/resource/actor/59844> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f8000000009d682d1> .
+
+<http://data.linkedmdb.org/resource/editor/1> <http://www.w3.org/2000/01/rdf-schema#label> "David Beatty, 1st Earl Beatty (Editor)" .
+<http://data.linkedmdb.org/resource/editor/1> <http://data.linkedmdb.org/resource/movie/editor_name> "David Beatty, 1st Earl Beatty" .
+<http://data.linkedmdb.org/resource/editor/1> <http://data.linkedmdb.org/resource/movie/editor_editorid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/editor/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .
+<http://data.linkedmdb.org/resource/editor/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/editor> .
+<http://data.linkedmdb.org/resource/editor/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f80000000000137a6> .
+
+<http://data.linkedmdb.org/resource/film_story_contributor/1> <http://data.linkedmdb.org/resource/movie/film_story_contributor_name> "Chris Morris" .
+<http://data.linkedmdb.org/resource/film_story_contributor/1> <http://data.linkedmdb.org/resource/movie/film_story_contributor_film_story_contributorid> "1"^^<http://www.w3.org/2001/XMLSchema#int> .
+<http://data.linkedmdb.org/resource/film_story_contributor/1> <http://www.w3.org/2000/01/rdf-schema#label> "Chris Morris (Film Story Contributor)" .
+<http://data.linkedmdb.org/resource/film_story_contributor/1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/film_story_contributor> .
+<http://data.linkedmdb.org/resource/film_story_contributor/1> <http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f800000000000d090> .
+
+<http://data.linkedmdb.org/resource/music_contributor/1> <http://www.w3.org/2002/07/owl#sameAs> <http://zitgist.com/music/artist/cada66ce-743d-4545-a72a-c6ecbcebf7cc> .
+
+<http://data.linkedmdb.org/resource/writer/1> <http://www.w3.org/2000/01/rdf-schema#SeeAlso> <http://www4.wiwiss.fu-berlin.de/bookmashup/persons/Arthur+St.+Clair> .
+
+<http://data.linkedmdb.org/resource/film/50700> <http://xmlns.com/foaf/0.1/based_near> <http://sws.geonames.org/102358/> .
+
+<http://data.linkedmdb.org/resource/film/1> <http://dbpedia.org/property/hasPhotoCollection> <http://www4.wiwiss.fu-berlin.de/flickrwrappr/photos/Buffy_the_Vampire_Slayer_(film)> .
+
+<http://data.linkedmdb.org/resource/film/1> <http://www.w3.org/2002/07/owl#sameAs> <http://mpii.de/yago/resource/Buffy_the_Vampire_Slayer_%28film%29> .
+
+<http://data.linkedmdb.org/resource/film/12902> <http://data.linkedmdb.org/resource/movie/relatedBook> <http://www4.wiwiss.fu-berlin.de/bookmashup/books/0394415760> .
+
+<http://data.linkedmdb.org/resource/film/1> <http://www.w3.org/2002/07/owl#sameAs> <http://dbpedia.org/resource/Buffy_the_Vampire_Slayer_%28film%29> .
+
+<http://data.linkedmdb.org/resource/film/1> <http://xmlns.com/foaf/0.1/page> <http://www.rottentomatoes.com/alias?type=imdbid&s=0103893> .
+
+<http://data.linkedmdb.org/resource/film/1> <http://data.linkedmdb.org/resource/movie/language> <http://www.lingvoj.org/lingvo/en> .
+
+<http://data.linkedmdb.org/resource/actor/338> <http://www.w3.org/2002/07/owl#sameAs> <http://dbpedia.org/resource/Alastair_Mackenzie> .
+
+<http://data.linkedmdb.org/resource/actor/338> <http://dbpedia.org/property/hasPhotoCollection> <http://www4.wiwiss.fu-berlin.de/flickrwrappr/photos/Alastair_Mackenzie> .
+
+

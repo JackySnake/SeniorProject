@@ -1,0 +1,8 @@
+movie:film_character
+movie:performance_film
+movie:performance_name
+movie:performance_note
+movie:performance_actor
+movie:performance_character
+movie:performance_performanceid
+movie:performance_special_performance_type

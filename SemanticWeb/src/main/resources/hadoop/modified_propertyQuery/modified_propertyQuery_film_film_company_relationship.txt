@@ -1,0 +1,5 @@
+movie:film_company
+movie:film_film_company_relationship_name
+movie:film_film_company_relationship_freebase_url
+movie:film_film_company_relationship_role_service
+movie:film_film_company_relationship_film_film_company_relationshipid

@@ -1,0 +1,11 @@
+<http://xmlns.com/foaf/0.1/page>
+<http://www.w3.org/2000/01/rdf-schema#label>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://data.linkedmdb.org/resource/movie/film_character>
+<http://data.linkedmdb.org/resource/movie/performance_film>
+<http://data.linkedmdb.org/resource/movie/performance_name>
+<http://data.linkedmdb.org/resource/movie/performance_note>
+<http://data.linkedmdb.org/resource/movie/performance_actor>
+<http://data.linkedmdb.org/resource/movie/performance_character>
+<http://data.linkedmdb.org/resource/movie/performance_performanceid>
+<http://data.linkedmdb.org/resource/movie/performance_special_performance_type>

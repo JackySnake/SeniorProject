@@ -11,6 +11,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -23,7 +28,8 @@ import java.util.regex.Pattern;
 public class Utils {
 
     public static void main(String[] args) throws IOException {
-        getPropertiesFromHadoop();
+//        getPropertiesFromHadoop();
+        modifyProperty();
     }
 
     private static void getPropertiesFromHadoop() throws IOException {
@@ -53,7 +59,7 @@ public class Utils {
                     matchList.add(regexMatcher.group());
                 }
                 if (matchList.size() > 0) {
-                    File file = new File("src/main/resources/hadoop/", "propertyQuery_" + matchList.get(0) + ".sparql");
+                    File file = new File("src/main/resources/hadoop/propertyQuery/", "propertyQuery_" + matchList.get(0) + ".sparql");
 
                     if (file.createNewFile()) {
                         System.out.println("File is created!");
@@ -77,4 +83,36 @@ public class Utils {
         };
 
     }
+
+    private static void modifyProperty() throws IOException {
+        File folder = new File("src/main/resources/hadoop/propertyQuery");
+File[] listOfFiles = folder.listFiles();
+
+    for (int i = 0; i < listOfFiles.length; i++) {
+        Path path = Paths.get("src/main/resources/hadoop/propertyQuery/"+listOfFiles[i].getName());
+        Charset charset = StandardCharsets.UTF_8;
+
+        String content = new String(Files.readAllBytes(path), charset);
+        content = content.replaceAll("<http://xmlns.com/foaf/0.1/page>\n", "");
+        content = content.replaceAll("<http://www.w3.org/2002/07/owl#sameAs>\n", "");
+        content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#label>\n", "");
+        content = content.replaceAll("<http://dbpedia.org/property/hasPhotoCollection>\n", "");
+        content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>\n", "");
+        content = content.replaceAll("<http://www.w3.org/2002/07/owl#", "owl:");
+        content = content.replaceAll("<http://www.w3.org/2001/XMLSchema#", "xsd:");
+        content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#", "rdfs:");
+        content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:");
+        content = content.replaceAll("<http://xmlns.com/foaf/0.1/", "foaf:");
+        content = content.replaceAll("<http://data.linkedmdb.org/resource/oddlinker/", "oddlinker:");
+        content = content.replaceAll("<file:/C:/d2r-server-0.4/mapping.n3#", "map:");
+        content = content.replaceAll("<http://data.linkedmdb.org/resource/movie/", "movie:");
+        content = content.replaceAll("<http://data.linkedmdb.org/resource/", "db:");
+        content = content.replaceAll("<http://dbpedia.org/property/", "dbpedia:");
+        content = content.replaceAll("<http://www.w3.org/2004/02/skos/core#", "skos:");
+        content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
+        content = content.replaceAll(">", "");
+
+        Files.write(Paths.get("src/main/resources/hadoop/modified_propertyQuery/modified_"+listOfFiles[i].getName()), content.getBytes(charset));
+    }
+     }
 }

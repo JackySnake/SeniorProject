@@ -1,0 +1,9 @@
+<http://xmlns.com/foaf/0.1/page>
+<http://www.w3.org/2000/01/rdf-schema#label>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://data.linkedmdb.org/resource/movie/content_rating_name>
+<http://data.linkedmdb.org/resource/movie/content_rating_system>
+<http://data.linkedmdb.org/resource/movie/content_rating_country>
+<http://data.linkedmdb.org/resource/movie/content_rating_content_ratingid>
+<http://data.linkedmdb.org/resource/movie/content_rating_film_rating_system>
+<http://data.linkedmdb.org/resource/movie/content_rating_minimum_unaccompanied_age>

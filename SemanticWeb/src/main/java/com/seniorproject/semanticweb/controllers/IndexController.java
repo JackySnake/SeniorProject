@@ -51,10 +51,9 @@ public class IndexController {
     @RequestMapping(value = "/advanceSearch", method = RequestMethod.GET)
     public @ResponseBody
     String advanceSearch(@RequestParam("searchString") String queryString) throws IOException, InterruptedException {
-//        String result = this.webServices.queryJena(queryString);
         System.out.println("advanceSearch");
-        String result = this.webServices.convertToJSON(queryString);
-        System.out.println(result);
+        String filePath = this.webServices.queryHadoop(queryString);
+        String result = this.webServices.convertToJSON(filePath);
         return result;
     }
 
@@ -69,5 +68,36 @@ public class IndexController {
 //        String result = this.webServices.queryJena(queryString);
 //        System.out.print(result);
         return "";
+    }
+    
+    @RequestMapping(value = "/selectCategory", method = RequestMethod.GET)
+    public @ResponseBody
+    ArrayList<String> selectCategory(@RequestParam("category") String category) {
+        System.out.println("selectCategory");
+        ArrayList<String> result = this.webServices.getProperties(category);
+        return result;
+    }
+    
+    @RequestMapping(value = "/addProperty", method = RequestMethod.GET)
+    public @ResponseBody
+    String addProperty(@RequestParam("category") String category,@RequestParam("property") String property) {
+        System.out.println("addProperty");
+        String queryString  = this.webServices.generateQueryPropertyString(category, property);
+        System.out.println(queryString);
+        
+//        String filePath = this.webServices.queryHadoop(queryString);
+//        String result = this.webServices.getProperties(category);
+        return queryString;
+    }
+     @RequestMapping(value = "/selectValue", method = RequestMethod.GET)
+    public @ResponseBody
+    String selectValue(@RequestParam("values") String json) {
+        System.out.println("selectValue");
+        String queryString  = this.webServices.sparqlGenerator(json);
+        System.out.println(queryString);
+        
+//        String filePath = this.webServices.queryHadoop(queryString);
+//        String result = this.webServices.getProperties(category);
+        return queryString;
     }
 }

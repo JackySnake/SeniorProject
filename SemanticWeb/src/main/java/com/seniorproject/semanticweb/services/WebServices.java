@@ -30,6 +30,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,8 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.stream.JsonParser;
+import javax.json.stream.JsonParser.Event;
 import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -187,35 +190,35 @@ public class WebServices {
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(prefix + queryString);
         bw.close();
-
-        BufferedReader br = null;
-
-        try {
-
-            String sCurrentLine;
-
-            br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/test1.sparql")));
-
-            while ((sCurrentLine = br.readLine()) != null) {
-                System.out.println(sCurrentLine);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (br != null) {
-                    br.close();
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        test();
-        return "";
+//
+//        BufferedReader br = null;
+//
+//        try {
+//
+//            String sCurrentLine;
+//
+//            br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/test1.sparql")));
+//
+//            while ((sCurrentLine = br.readLine()) != null) {
+//                System.out.println(sCurrentLine);
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (br != null) {
+//                    br.close();
+//                }
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+        String filePath = test();
+        return filePath;
     }
 
-    private void test() throws IOException, InterruptedException {
+    private String test() throws IOException, InterruptedException {
         System.out.println("Working Directory = "
                 + System.getProperty("user.dir"));
         // convert sparql file into pig calling pigsparql main file
@@ -233,6 +236,7 @@ public class WebServices {
 
         //merge file back into local
         mergeHadoopFile();
+        return servletContext.getRealPath("/WEB-INF/classes/hadoop/output.txt");
     }
 
     private void converSparql() throws IOException, InterruptedException {
@@ -346,9 +350,9 @@ public class WebServices {
     }
 
     private void runningPig() throws InterruptedException, IOException {
-		// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
         System.out.println("runningPig");
-        Process ps2 = Runtime.getRuntime().exec("pig -param inputData='/user/admin/SeniorData/linkedmdb-latest-dump.nt' -param outputData='/user/admin/SeniorData/out4' -param reducerNum='12' "+servletContext.getRealPath("/WEB-INF/classes/hadoop/test4.pig"));
+        Process ps2 = Runtime.getRuntime().exec("pig -param inputData='/user/admin/SeniorData/linkedmdb-latest-dump.nt' -param outputData='/user/admin/SeniorData/out4' -param reducerNum='12' " + servletContext.getRealPath("/WEB-INF/classes/hadoop/test4.pig"));
         ps2.waitFor();
         java.io.InputStream is2 = ps2.getInputStream();
         byte b2[] = new byte[is2.available()];
@@ -365,7 +369,7 @@ public class WebServices {
         } else {
             System.out.println("File already exists.");
         }
-        Process ps = Runtime.getRuntime().exec("hadoop fs -getmerge /user/admin/SeniorData/out4 " + servletContext.getRealPath("/WEB-INF/classes/hadoop/output,txt"));
+        Process ps = Runtime.getRuntime().exec("hadoop fs -getmerge /user/admin/SeniorData/out4 " + servletContext.getRealPath("/WEB-INF/classes/hadoop/output.txt"));
         // Then retreive the process output
         //     InputStream in = proc.getInputStream();
         //   InputStream err = proc.getErrorStream();
@@ -375,8 +379,8 @@ public class WebServices {
         is.read(b, 0, b.length);
         System.out.println(new String(b));
     }
-    
-    public ArrayList<String> getCategories(){
+
+    public ArrayList<String> getCategories() {
         ArrayList<String> categories = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/dictionary.txt")))) {
 
@@ -389,7 +393,9 @@ public class WebServices {
                 while (regexMatcher.find()) {
                     matchList.add(regexMatcher.group());
                 }
-                categories.add(matchList.get(0));
+                if (matchList.size() > 0) {
+                    categories.add(matchList.get(0));
+                }
             }
 
         } catch (IOException e) {
@@ -397,9 +403,10 @@ public class WebServices {
         };
         return categories;
     }
-     public ArrayList<String> getProperties(String category){
+
+    public ArrayList<String> getProperties(String category) {
         ArrayList<String> properties = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/property_"+category+".txt")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/modified_propertyQuery/modified_propertyQuery_" + category + ".txt")))) {
 
             String sCurrentLine;
 
@@ -411,5 +418,52 @@ public class WebServices {
             e.printStackTrace();
         };
         return properties;
+    }
+
+    public String generateQueryPropertyString(String category, String property) {
+        String iri = getIRI(category);
+        String queryString = "SELECT ?o (COUNT(?o) as ?oCount) WHERE { ?s rdf:type " + iri + " . ?s " + property + " ?o .} GROUP BY ?o";
+        return queryString;
+    }
+
+    public String getIRI(String category) {
+        try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/dictionary.txt")))) {
+
+            String sCurrentLine;
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                List<String> matchList = new ArrayList<String>();
+                Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
+                Matcher regexMatcher = regex.matcher(sCurrentLine);
+                while (regexMatcher.find()) {
+                    matchList.add(regexMatcher.group());
+                }
+                if (matchList.size() > 0 && matchList.get(0).equalsIgnoreCase(category)) {
+                    return matchList.get(1);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        };
+        return "";
+    }
+
+    public String sparqlGenerator(String json) {
+
+        JsonParser parser = Json.createParser(new StringReader(json));
+        Event event = parser.next();// START_OBJECT
+        event = parser.next();//"category"
+        event = parser.next();//value of category
+        String iri = getIRI(parser.getString());
+        String queryString = "SELECT ?s WHERE { ?s rdf:type " + iri + " . ";
+        while ((event = parser.next()) != Event.END_OBJECT) {
+            queryString += "?s " + parser.getString() + " ";
+            event = parser.next();
+            queryString += "'"+parser.getString() + "'. ";
+            queryString += "?s rdfs:label ?label. ";
+        }
+        queryString += "}";
+        return queryString;
     }
 }

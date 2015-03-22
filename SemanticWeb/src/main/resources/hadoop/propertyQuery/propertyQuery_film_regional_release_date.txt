@@ -1,0 +1,9 @@
+<http://www.w3.org/2000/01/rdf-schema#label>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://data.linkedmdb.org/resource/movie/film_regional_release_date_name>
+<http://data.linkedmdb.org/resource/movie/film_regional_release_date_freebase_url>
+<http://data.linkedmdb.org/resource/movie/film_regional_release_date_release_date>
+<http://data.linkedmdb.org/resource/movie/film_regional_release_date_film_release_region>
+<http://data.linkedmdb.org/resource/movie/film_regional_release_date_film_regional_release_id>
+<http://data.linkedmdb.org/resource/movie/film_regional_release_date_film_regional_debut_venue>
+<http://data.linkedmdb.org/resource/movie/film_regional_release_date_film_release_distribution_medium>
