@@ -11,6 +11,6 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX dc: <http://purl.org/dc/terms/>
 PREFIX movie: <http://data.linkedmdb.org/resource/movie/>
 
-SELECT ?resource ?p ?o  
+SELECT ?resource
 WHERE { ?resource movie:filmid ?uri. ?resource dc:title "Forrest Gump" .} 
 ORDER BY ?resource

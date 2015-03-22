@@ -80,24 +80,26 @@ public class IndexController {
     
     @RequestMapping(value = "/addProperty", method = RequestMethod.GET)
     public @ResponseBody
-    String addProperty(@RequestParam("category") String category,@RequestParam("property") String property) {
+    ArrayList<String> addProperty(@RequestParam("category") String category,@RequestParam("property") String property) throws IOException, InterruptedException {
         System.out.println("addProperty");
         String queryString  = this.webServices.generateQueryPropertyString(category, property);
         System.out.println(queryString);
         
-//        String filePath = this.webServices.queryHadoop(queryString);
-//        String result = this.webServices.getProperties(category);
-        return queryString;
+        String filePath = this.webServices.queryHadoop(queryString);
+        System.out.println("hadoop done");
+        ArrayList<String> result = this.webServices.readFile(filePath);
+        return result;
     }
      @RequestMapping(value = "/selectValue", method = RequestMethod.GET)
     public @ResponseBody
-    String selectValue(@RequestParam("values") String json) {
+    ArrayList<String> selectValue(@RequestParam("values") String json) throws IOException, InterruptedException {
         System.out.println("selectValue");
         String queryString  = this.webServices.sparqlGenerator(json);
         System.out.println(queryString);
         
-//        String filePath = this.webServices.queryHadoop(queryString);
-//        String result = this.webServices.getProperties(category);
-        return queryString;
+        String filePath = this.webServices.queryHadoop(queryString);
+        System.out.println("hadoop done");
+        ArrayList<String> result = this.webServices.readFile(filePath);
+        return result;
     }
 }

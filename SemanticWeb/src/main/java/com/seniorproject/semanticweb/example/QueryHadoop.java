@@ -17,7 +17,7 @@ public class QueryHadoop {
                 String sparqlFileName = "test1";
                 String pigFileName = "test3";
                 String modifiedPigFileName = "test4";
-                String outputFileName = "out";
+                String outputFileName = "src/main/resources/PigSPARQL_v1.0/out";
 		// convert sparql file into pig calling pigsparql main file
                     converSparql(sparqlFileName,pigFileName);
 		

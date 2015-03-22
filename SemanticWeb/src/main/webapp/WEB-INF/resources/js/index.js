@@ -102,7 +102,7 @@ function addProperty(property) {
         datatype: "json",
         success: function (response) {
             if ($("#accordion" + res[1]).length <= 0) {
-                $("#property").append("" +
+                var html = "" +
                         "<div class='panel-group property' id='accordion" + res[1] + "' role='tablist' aria-multiselectable='true'>" +
                         "<div class='panel panel-default'>" +
                         "<div class='panel-heading' role='tab' id='heading" + res[1] + "'>" +
@@ -114,16 +114,18 @@ function addProperty(property) {
                         "</div>" +
                         "<div data-property=" + property.text + " id='collapse" + res[1] + "' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" + res[1] + "'>" +
                         "<div class='panel-body'>" +
-                        "<div class='list-group'>" +
-                        "<a href='#!' class='list-group-item' onclick='selectValue(this)'><span class='badge'>14</span>Dapibus ac facilisis</a>" +
-                        "<a href='#!' class='list-group-item' onclick='selectValue(this)'><span class='badge'>14</span>Dapibus ac facilisis</a>" +
-                        "<a href='#!' class='list-group-item' onclick='selectValue(this)'><span class='badge'>14</span>Dapibus ac facilisis</a>" +
-                        "<a href='#!' class='list-group-item' onclick='selectValue(this)'><span class='badge'>14</span>Dapibus ac facilisis</a>" +
+                        "<div class='list-group'>";
+                        for(value in response){
+                          html+="<a href='#!' class='list-group-item' onclick='selectValue(this)'>\n\
+      <span class='badge'>14</span>"+response[value]+"</a>";
+                          
+                        }
+                        html+="</div>" +
                         "</div>" +
                         "</div>" +
                         "</div>" +
-                        "</div>" +
-                        "</div>");
+                        "</div>";
+                $("#property").append(html);
             }
         }
     });
@@ -155,58 +157,24 @@ function selectValue(elem) {
         type: "GET",
         datatype: "json",
         success: function (response) {
-            showFacetedSearchResult(response);
+                console.log("showFacetedSearchResult");
+    var html = "<div class='list-group'>";
+                for(value in response){
+                  html+= "<a href='#collapse"+response[value]+"' onclick='selectResult(this)' class='list-group-item' data-toggle='collapse' aria-expanded='false' aria-controls='collapse"+response[value]+"'>" +
+                    "<h4 class='list-group-item-heading'>"+response[value]+"</h4>" +
+                    "<p class='list-group-item-text'>"+response[value]+"</p>" +
+                "</a>" +
+                "<div class='collapse' id='collapse"+response[value]+"'>" +
+                    "<div class='well'>" +
+                    "</div>" +
+                "</div>" +
+                
+            "</div>"; 
+                }
+            
+    $("#search_result").html(html);
         }
     });
-}
-
-function showFacetedSearchResult(response) {
-    console.log("showFacetedSearchResult");
-    $("#search_result").html("" +
-            "<div class='list-group'>" +
-                "<a href='#collapseExample' onclick='selectResult(this)' class='list-group-item' data-toggle='collapse' aria-expanded='false' aria-controls='collapseExample'>" +
-                    "<h4 class='list-group-item-heading'>Ang Lee (Actor)</h4>" +
-                    "<p class='list-group-item-text'>http://data.linkedmdb.org/resource/actor/29362</p>" +
-                "</a>" +
-                "<div class='collapse' id='collapseExample'>" +
-                    "<div class='well'>" +
-                        "<dl class='dl-horizontal'>" +
-                            "<dt>movie:actor_actorid</dt>" +
-                            "<dd>1 (xsd:int)</dd>" +
-                            "<dt>movie:actor_name</dt>" +
-                            "<dd>Bernard Montgomery, 1st Viscount Montgomery of Alamein </dd>" +
-                        "</dl>" +
-                    "</div>" +
-                "</div>" +
-                "<a href='#collapseExample2' onclick='selectResult(this)' class='list-group-item' data-toggle='collapse' aria-expanded='false' aria-controls='collapseExample2'>" +
-                    "<h4 class='list-group-item-heading'>List group item heading</h4>" +
-                    "<p class='list-group-item-text'>...</p>" +
-                "</a>" +
-                "<div class='collapse' id='collapseExample2'>" +
-                    "<div class='well'>" +
-                        "<dl class='dl-horizontal'>" +
-                            "<dt>movie:actor_actorid</dt>" +
-                            "<dd>1 (xsd:int)</dd>" +
-                            "<dt>movie:actor_name</dt>" +
-                            "<dd>Bernard Montgomery, 1st Viscount Montgomery of Alamein </dd>" +
-                        "</dl>" +
-                    "</div>" +
-                "</div>" +
-                 "<a href='#collapseExample3' onclick='selectResult(this)' class='list-group-item' data-toggle='collapse' aria-expanded='false' aria-controls='collapseExample3'>" +
-                    "<h4 class='list-group-item-heading'>List group item heading</h4>" +
-                    "<p class='list-group-item-text'>...</p>" +
-                "</a>" +
-                "<div class='collapse' id='collapseExample3'>" +
-                    "<div class='well'>" +
-                        "<dl class='dl-horizontal'>" +
-                            "<dt>movie:actor_actorid</dt>" +
-                            "<dd>1 (xsd:int)</dd>" +
-                            "<dt>movie:actor_name</dt>" +
-                            "<dd>Bernard Montgomery, 1st Viscount Montgomery of Alamein </dd>" +
-                        "</dl>" +
-                    "</div>" +
-                "</div>" +
-            "</div>");
 }
 
 function selectResult(elem) {
