@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class IndexController {
-
+@Autowired
+    ServletContext servletContext;
     private WebServices webServices;
 
     @Autowired
@@ -86,20 +88,25 @@ public class IndexController {
         System.out.println(queryString);
         
         String filePath = this.webServices.queryHadoop(queryString);
+       
+//        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/actor_name.txt");
         System.out.println("hadoop done");
         ArrayList<String> result = this.webServices.readFile(filePath);
         return result;
     }
      @RequestMapping(value = "/selectValue", method = RequestMethod.GET)
     public @ResponseBody
-    ArrayList<String> selectValue(@RequestParam("values") String json) throws IOException, InterruptedException {
+    String selectValue(@RequestParam("values") String json) throws IOException, InterruptedException {
         System.out.println("selectValue");
         String queryString  = this.webServices.sparqlGenerator(json);
         System.out.println(queryString);
         
         String filePath = this.webServices.queryHadoop(queryString);
+//        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/actor_name.txt");
         System.out.println("hadoop done");
-        ArrayList<String> result = this.webServices.readFile(filePath);
+        String result = this.webServices.readFileToJSON(filePath);
+        System.out.println(result);
+        
         return result;
     }
 }

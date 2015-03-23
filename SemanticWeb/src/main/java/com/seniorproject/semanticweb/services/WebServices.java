@@ -464,11 +464,11 @@ public class WebServices {
         event = parser.next();//"category"
         event = parser.next();//value of category
         String iri = getIRI(parser.getString());
-        String queryString = "SELECT ?s WHERE { ?s rdf:type " + iri + " . ";
+        String queryString = "SELECT ?s ?label WHERE { ?s rdf:type " + iri + " . ";
         while ((event = parser.next()) != Event.END_OBJECT) {
             queryString += "?s " + parser.getString() + " ";
             event = parser.next();
-            queryString += "'"+parser.getString() + "'. ";
+            queryString += parser.getString() + ". ";
             queryString += "?s rdfs:label ?label. ";
         }
         queryString += "}";
@@ -489,5 +489,37 @@ public class WebServices {
             e.printStackTrace();
         };
         return result;
+    }
+    
+    public String readFileToJSON(String filepath) throws FileNotFoundException{
+        ArrayList<String> result = new ArrayList<>();
+        JsonArrayBuilder out = Json.createArrayBuilder();
+        JsonObjectBuilder resultObject = Json.createObjectBuilder();
+
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+
+            String sCurrentLine;
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                List<String> matchList = new ArrayList<String>();
+                Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
+                Matcher regexMatcher = regex.matcher(sCurrentLine);
+                while (regexMatcher.find()) {
+                    matchList.add(regexMatcher.group());
+                }
+                if(matchList.size()>=2){
+                resultObject.add("url", matchList.get(0).replaceAll("<|>", ""));
+                resultObject.add("head", matchList.get(1).replace("\"", ""));
+                    
+                }
+                out.add(resultObject);
+
+            }
+             } catch (IOException e) {
+            e.printStackTrace();
+        };
+
+        return out.build().toString();
     }
 }

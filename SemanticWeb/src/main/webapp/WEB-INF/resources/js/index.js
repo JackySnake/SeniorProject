@@ -115,12 +115,13 @@ function addProperty(property) {
                         "<div data-property=" + property.text + " id='collapse" + res[1] + "' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" + res[1] + "'>" +
                         "<div class='panel-body'>" +
                         "<div class='list-group'>";
-                        for(value in response){
-                          html+="<a href='#!' class='list-group-item' onclick='selectValue(this)'>\n\
-      <span class='badge'>14</span>"+response[value]+"</a>";
-                          
-                        }
-                        html+="</div>" +
+                for (var value in response) {
+                    html += "<a href='#!' class='list-group-item' onclick='selectValue(this)'>" +
+//                          "<span class='badge'>14</span>"+
+                            response[value] + "</a>";
+
+                }
+                html += "</div>" +
                         "</div>" +
                         "</div>" +
                         "</div>" +
@@ -157,39 +158,41 @@ function selectValue(elem) {
         type: "GET",
         datatype: "json",
         success: function (response) {
-                console.log("showFacetedSearchResult");
-    var html = "<div class='list-group'>";
-                for(value in response){
-                  html+= "<a href='#collapse"+response[value]+"' onclick='selectResult(this)' class='list-group-item' data-toggle='collapse' aria-expanded='false' aria-controls='collapse"+response[value]+"'>" +
-                    "<h4 class='list-group-item-heading'>"+response[value]+"</h4>" +
-                    "<p class='list-group-item-text'>"+response[value]+"</p>" +
-                "</a>" +
-                "<div class='collapse' id='collapse"+response[value]+"'>" +
-                    "<div class='well'>" +
-                    "</div>" +
-                "</div>" +
-                
-            "</div>"; 
-                }
-            
-    $("#search_result").html(html);
+            console.log("showFacetedSearchResult");
+            var json = JSON.parse(response);
+            var html = "<div class='list-group'>";
+            for (var i = 0; i < json.length; i++) {
+                html += "<a href='#collapse" + i + "' onclick='selectResult(this)' class='list-group-item' data-toggle='collapse' aria-expanded='false' aria-controls='collapse" + i + "'>" +
+                            "<h4 class='list-group-item-heading'>" + json[i].head + "</h4>" +
+                            "<p class='list-group-item-text'>" + json[i].url + "</p>" +
+                        "</a>" +
+                        "<div class='collapse' id='collapse" + i + "'>" +
+                            "<div class='well'>" +
+                            "</div>" +
+                        "</div>";
+                        
+            }
+    html+="</div>";
+            $("#search_result").html(html);
         }
     });
 }
 
 function selectResult(elem) {
+    console.log("selectResult");
     var old = $("#search_result").find(".active");
-    if(!old.is($(elem))){
-    old.removeClass("active");
-    old.next().removeClass("collapse in");
-    old.next().addClass("collapse");
-    $(elem).addClass("active");
-    $(elem).next().children().children().html("<dl class='dl-horizontal'>" +
-                            "<dt>movie:actor_actorid</dt>" +
-                            "<dd>1 (xsd:int)</dd>" +
-                            "<dt>movie:actor_name</dt>" +
-                            "<dd>Bernard Montgomery, 1st Viscount Montgomery of Alamein </dd>" +
-                        "</dl>");
+    if (!old.is($(elem))) {
+        old.removeClass("active");
+        old.next().removeClass("collapse in");
+        old.next().addClass("collapse");
+        $(elem).addClass("active");
+        $(elem).next().children().children().html("<dl class='dl-horizontal'>" +
+                "<dt>movie:actor_actorid</dt>" +
+                "<dd>1 (xsd:int)</dd>" +
+                "<dt>movie:actor_name</dt>" +
+                "<dd>Bernard Montgomery, 1st Viscount Montgomery of Alamein </dd>" +
+                "</dl>");
+
 //    $.ajax({
 //        url: ctx + "/selectValue",
 //        data: {
