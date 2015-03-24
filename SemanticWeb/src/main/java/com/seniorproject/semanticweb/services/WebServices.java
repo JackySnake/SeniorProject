@@ -540,7 +540,7 @@ System.out.println("readfile");
 
         return out.build().toString();
     }
-    public void replaceString(String filePath) throws IOException{
+    public String replaceString(String filePath) throws IOException{
         Path path = Paths.get(filePath);
         Charset charset = StandardCharsets.UTF_8;
 
@@ -564,7 +564,8 @@ System.out.println("readfile");
         content = content.replaceAll("<http://www.w3.org/2004/02/skos/core#", "skos:");
         content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
         content = content.replaceAll(">", "");
-        Files.write(path, content.getBytes(charset));
-    
+         Path newpath = Paths.get(filePath+"new");
+        Files.write(newpath, content.getBytes(charset));
+    return newpath.toString();
     }
 }

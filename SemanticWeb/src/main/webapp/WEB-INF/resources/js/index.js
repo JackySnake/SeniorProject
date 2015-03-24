@@ -207,7 +207,7 @@ function selectResult(elem) {
 
                 var json = JSON.parse(response);
 
-                for (var i = 0; i < json.length(); i++) {
+                for (var i = 0; i < json.length; i++) {
                     html += "<dt>" + json.name + "</dt>" +
                             "<dd>" + json.value + "</dd>";
                 }
