@@ -6,14 +6,18 @@ REGISTER PigSPARQL_udf.jar;
 indata = LOAD '$inputData' USING pigsparql.rdfLoader.ExNTriplesLoader(' ','expand') ;
 
 -- BGP
-f0 = FILTER indata BY p == '<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>' AND o == '<http://data.linkedmdb.org/resource/movie/music_contributor>' ;
-t0 = FOREACH f0 GENERATE s AS s ;
-f1 = FILTER indata BY p == '<http://data.linkedmdb.org/resource/movie/music_contributor_name>' AND o == '"Zakir Hussain"' ;
-t1 = FOREACH f1 GENERATE s AS s ;
-f2 = FILTER indata BY p == '<http://www.w3.org/2000/01/rdf-schema#label>' ;
-t2 = FOREACH f2 GENERATE s AS s, o AS label ;
-BGP1 = JOIN t0 BY s, t1 BY s, t2 BY s PARALLEL $reducerNum ;
-BGP1 = FOREACH BGP1 GENERATE $0 AS s, $3 AS label ;
+f0 = FILTER indata BY p == '<http://data.linkedmdb.org/resource/movie/filmid>' ;
+t0 = FOREACH f0 GENERATE s AS resource, o AS uri ;
+f1 = FILTER indata BY p == '<http://purl.org/dc/terms/title>' AND o == '"Forrest Gump"' ;
+t1 = FOREACH f1 GENERATE s AS resource ;
+BGP1 = JOIN t0 BY resource, t1 BY resource PARALLEL $reducerNum ;
+BGP1 = FOREACH BGP1 GENERATE $0 AS resource, $1 AS uri ;
+
+-- SM_Order
+SM_Order = ORDER BGP1 BY resource PARALLEL $reducerNum ;
+
+-- SM_Project
+SM_Project = FOREACH SM_Order GENERATE resource ;
 
 -- store results into output
-STORE BGP1 INTO '$outputData' USING PigStorage(' ') ;
+STORE SM_Project INTO '$outputData' USING PigStorage(' ') ;

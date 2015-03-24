@@ -8,16 +8,10 @@ package com.seniorproject.semanticweb.controllers;
 import com.seniorproject.semanticweb.services.WebServices;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,8 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class IndexController {
-@Autowired
+    @Autowired
     ServletContext servletContext;
+    
     private WebServices webServices;
 
     @Autowired
@@ -87,10 +82,11 @@ public class IndexController {
         String queryString  = this.webServices.generateQueryPropertyString(category, property);
         System.out.println(queryString);
         
-        String filePath = this.webServices.queryHadoop(queryString);
+//        String filePath = this.webServices.queryHadoop(queryString);
        
-//        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/actor_name.txt");
+        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/personal_film_appearance_type.txt");
         System.out.println("hadoop done");
+        this.webServices.replaceString(filePath);
         ArrayList<String> result = this.webServices.readFile(filePath);
         return result;
     }
@@ -98,15 +94,32 @@ public class IndexController {
     public @ResponseBody
     String selectValue(@RequestParam("values") String json) throws IOException, InterruptedException {
         System.out.println("selectValue");
-        String queryString  = this.webServices.sparqlGenerator(json);
+        String queryString  = this.webServices.selectValueSparqlGenerator(json);
         System.out.println(queryString);
         
-        String filePath = this.webServices.queryHadoop(queryString);
-//        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/actor_name.txt");
-        System.out.println("hadoop done");
+//        String filePath = this.webServices.queryHadoop(queryString);
+        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/performance_char_anita.txt");
+        this.webServices.replaceString(filePath);
         String result = this.webServices.readFileToJSON(filePath);
         System.out.println(result);
         
         return result;
     }
+    @RequestMapping(value = "/selectResult", method = RequestMethod.GET)
+    public @ResponseBody
+    String selectResult(@RequestParam("result") String json) throws IOException, InterruptedException {
+        System.out.println("selectResult");
+        String queryString  = this.webServices.selectResultSparqlGenerator(json);
+        System.out.println(queryString);
+        
+//        String filePath = this.webServices.queryHadoop(queryString);
+        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/cinematographer_name_william.txt");
+        System.out.println(filePath);
+        this.webServices.replaceString(filePath);
+        String result = this.webServices.readFileToJSON(filePath);
+        System.out.println(result);
+        
+        return result;
+    }
+    
 }

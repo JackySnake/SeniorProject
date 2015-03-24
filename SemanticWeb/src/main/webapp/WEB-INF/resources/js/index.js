@@ -110,6 +110,7 @@ function addProperty(property) {
                         "<a data-toggle='collapse' data-parent='#accordion" + res[1] + "' href='#collapse" + res[1] + "' aria-expanded='true' aria-controls='collapse" + res[1] + "'>" +
                         res[1] +
                         "</a>" +
+                        "<button type='button' class='close' onclick='removeProperty(this)' data-target='#accordion" + res[1] + "' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
                         "</h4>" +
                         "</div>" +
                         "<div data-property=" + property.text + " id='collapse" + res[1] + "' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" + res[1] + "'>" +
@@ -143,7 +144,6 @@ function selectValue(elem) {
     $(elem).addClass("active");
     var values = {};
     var elems = $(".panel-body .list-group .list-group-item.active");
-    console.log(elems.length);
 //        var elems = document.getElementsByClassName("select");
     values["category"] = $("#category .selection").text();
     for (var i = 0; i < elems.length; i++) {
@@ -163,16 +163,16 @@ function selectValue(elem) {
             var html = "<div class='list-group'>";
             for (var i = 0; i < json.length; i++) {
                 html += "<a href='#collapse" + i + "' onclick='selectResult(this)' class='list-group-item' data-toggle='collapse' aria-expanded='false' aria-controls='collapse" + i + "'>" +
-                            "<h4 class='list-group-item-heading'>" + json[i].head + "</h4>" +
-                            "<p class='list-group-item-text'>" + json[i].url + "</p>" +
+                        "<h4 class='list-group-item-heading'>" + json[i].value + "</h4>" +
+                        "<p class='list-group-item-text'>" + json[i].name + "</p>" +
                         "</a>" +
                         "<div class='collapse' id='collapse" + i + "'>" +
-                            "<div class='well'>" +
-                            "</div>" +
+                        "<div class='well'>" +
+                        "</div>" +
                         "</div>";
-                        
+
             }
-    html+="</div>";
+            html += "</div>";
             $("#search_result").html(html);
         }
     });
@@ -182,30 +182,45 @@ function selectResult(elem) {
     console.log("selectResult");
     var old = $("#search_result").find(".active");
     if (!old.is($(elem))) {
+        console.log("test");
+
         old.removeClass("active");
         old.next().removeClass("collapse in");
         old.next().addClass("collapse");
         $(elem).addClass("active");
-        $(elem).next().children().children().html("<dl class='dl-horizontal'>" +
-                "<dt>movie:actor_actorid</dt>" +
-                "<dd>1 (xsd:int)</dd>" +
-                "<dt>movie:actor_name</dt>" +
-                "<dd>Bernard Montgomery, 1st Viscount Montgomery of Alamein </dd>" +
-                "</dl>");
 
-//    $.ajax({
-//        url: ctx + "/selectValue",
-//        data: {
-//            loadProds: 1,
-//            values: JSON.stringify(values)
-//        },
-//        type: "GET",
-//        datatype: "json",
-//        success: function (response) {
-//            showFacetedSearchResult(response);
-//        }
-//    });
+
+        var result = {};
+        result["category"] = $("#category .selection").text();
+        result["label"] = "\"" + $(elem).children().first().text() + "\"";
+        console.log(result);
+        $.ajax({
+            url: ctx + "/selectResult",
+            data: {
+                loadProds: 1,
+                result: JSON.stringify(result)
+            },
+            type: "GET",
+            datatype: "json",
+            success: function (response) {
+                var html = "<dl class='dl-horizontal'>";
+
+                var json = JSON.parse(response);
+
+                for (var i = 0; i < json.length(); i++) {
+                    html += "<dt>" + json.name + "</dt>" +
+                            "<dd>" + json.value + "</dd>";
+                }
+                html += "</dl>";
+                $(elem).next().children().html(html);
+            }
+        });
     }
+}
+function removeProperty(elem) {
+    console.log("remove");
+    var target = $($(elem).attr("data-target"));
+    target.remove();
 }
 
 function createTable(result) {

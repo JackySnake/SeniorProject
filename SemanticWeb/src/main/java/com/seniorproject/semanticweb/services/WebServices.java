@@ -32,6 +32,11 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -457,7 +462,7 @@ public class WebServices {
         return "";
     }
 
-    public String sparqlGenerator(String json) {
+    public String selectValueSparqlGenerator(String json) {
 
         JsonParser parser = Json.createParser(new StringReader(json));
         Event event = parser.next();// START_OBJECT
@@ -469,9 +474,23 @@ public class WebServices {
             queryString += "?s " + parser.getString() + " ";
             event = parser.next();
             queryString += parser.getString() + ". ";
-            queryString += "?s rdfs:label ?label. ";
         }
+        queryString += "?s rdfs:label ?label. ";
         queryString += "}";
+        return queryString;
+    }
+     public String selectResultSparqlGenerator(String json) {
+
+        JsonParser parser = Json.createParser(new StringReader(json));
+        Event event = parser.next();// START_OBJECT
+        event = parser.next();//"category"
+        event = parser.next();//value of category
+        String iri = getIRI(parser.getString());
+        String queryString = "SELECT ?p ?o WHERE { ?s rdf:type " + iri + " . ";
+        event = parser.next();//"label"
+        event = parser.next();//value of label
+        queryString += "?s rdfs:label "+parser.getString()+". ";
+        queryString += "?s ?p ?o. }";
         return queryString;
     }
     public ArrayList<String> readFile(String filepath){
@@ -481,8 +500,7 @@ public class WebServices {
             String sCurrentLine;
 
             while ((sCurrentLine = br.readLine()) != null) {
-               result.add(sCurrentLine);
-              
+               if(sCurrentLine.length()>0&&!sCurrentLine.equals("\"\"")) result.add(sCurrentLine);
             }
 
         } catch (IOException e) {
@@ -492,13 +510,14 @@ public class WebServices {
     }
     
     public String readFileToJSON(String filepath) throws FileNotFoundException{
+        System.out.println("readFileToJSON");
         ArrayList<String> result = new ArrayList<>();
         JsonArrayBuilder out = Json.createArrayBuilder();
         JsonObjectBuilder resultObject = Json.createObjectBuilder();
 
         
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
-
+System.out.println("readfile");
             String sCurrentLine;
 
             while ((sCurrentLine = br.readLine()) != null) {
@@ -509,9 +528,8 @@ public class WebServices {
                     matchList.add(regexMatcher.group());
                 }
                 if(matchList.size()>=2){
-                resultObject.add("url", matchList.get(0).replaceAll("<|>", ""));
-                resultObject.add("head", matchList.get(1).replace("\"", ""));
-                    
+                    resultObject.add("name", matchList.get(0));
+                    resultObject.add("value", matchList.get(1).replace("\"", ""));
                 }
                 out.add(resultObject);
 
@@ -521,5 +539,32 @@ public class WebServices {
         };
 
         return out.build().toString();
+    }
+    public void replaceString(String filePath) throws IOException{
+        Path path = Paths.get(filePath);
+        Charset charset = StandardCharsets.UTF_8;
+
+        String content = new String(Files.readAllBytes(path), charset);
+        content = content.replaceAll("^^<http://www.w3.org/2001/XMLSchema#int>", "");
+        content = content.replaceAll("<http://xmlns.com/foaf/0.1/page>\n", "");
+        content = content.replaceAll("<http://www.w3.org/2002/07/owl#sameAs>\n", "");
+        content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#label>\n", "");
+        content = content.replaceAll("<http://dbpedia.org/property/hasPhotoCollection>\n", "");
+        content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>\n", "");
+        content = content.replaceAll("<http://www.w3.org/2002/07/owl#", "owl:");
+        content = content.replaceAll("<http://www.w3.org/2001/XMLSchema#", "xsd:");
+        content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#", "rdfs:");
+        content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:");
+        content = content.replaceAll("<http://xmlns.com/foaf/0.1/", "foaf:");
+        content = content.replaceAll("<http://data.linkedmdb.org/resource/oddlinker/", "oddlinker:");
+        content = content.replaceAll("<file:/C:/d2r-server-0.4/mapping.n3#", "map:");
+        content = content.replaceAll("<http://data.linkedmdb.org/resource/movie/", "movie:");
+        content = content.replaceAll("<http://data.linkedmdb.org/resource/", "db:");
+        content = content.replaceAll("<http://dbpedia.org/property/", "dbpedia:");
+        content = content.replaceAll("<http://www.w3.org/2004/02/skos/core#", "skos:");
+        content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
+        content = content.replaceAll(">", "");
+        Files.write(path, content.getBytes(charset));
+    
     }
 }

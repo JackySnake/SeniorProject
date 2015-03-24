@@ -1,1 +1,1 @@
-<http://data.linkedmdb.org/resource/performance/15> "performance #15"
+db:performance/15 "performance #15"
