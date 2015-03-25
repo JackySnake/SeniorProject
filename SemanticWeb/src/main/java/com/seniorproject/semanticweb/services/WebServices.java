@@ -5,6 +5,8 @@
  */
 package com.seniorproject.semanticweb.services;
 
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Multiset;
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
@@ -31,7 +33,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -39,6 +40,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.json.Json;
@@ -363,8 +365,8 @@ public class WebServices {
         System.out.println("runningPig");
         System.out.println(servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/test4.pig"));
         Process ps2 = Runtime.getRuntime().exec("pig -param inputData='/user/admin/SeniorData/linkedmdb-latest-dump.nt' "
-                + "-param outputData='/user/admin/SeniorData/out4' -param reducerNum='12' " + 
-                servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/test4.pig"));
+                + "-param outputData='/user/admin/SeniorData/out4' -param reducerNum='12' "
+                + servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/test4.pig"));
         ps2.waitFor();
         java.io.InputStream is2 = ps2.getInputStream();
         byte b2[] = new byte[is2.available()];
@@ -433,9 +435,22 @@ public class WebServices {
         return properties;
     }
 
-    public String generateQueryPropertyString(String category, String property) {
+    public String addPropertySparqlGenerator(String category, String property, String selectedValues) {
+        System.out.println("addProperty");
         String iri = getIRI(category);
-        String queryString = "SELECT ?o WHERE { ?s rdf:type " + iri + " . ?s " + property + " ?o .}";
+        String queryString = "SELECT ?o WHERE { ";
+        queryString += "?s rdf:type " + iri + " . ";
+        if (selectedValues.length() > 0) {
+            JsonParser parser = Json.createParser(new StringReader(selectedValues));
+            Event event = parser.next();// START_OBJECT
+
+            while ((event = parser.next()) != Event.END_OBJECT) {
+                queryString += "?s " + parser.getString() + " ";
+                event = parser.next();
+                queryString += parser.getString() + ". ";
+            }
+        }
+        queryString += "?s " + property + " ?o . } ORDER BY ?o";
         return queryString;
     }
 
@@ -475,11 +490,11 @@ public class WebServices {
             event = parser.next();
             queryString += parser.getString() + ". ";
         }
-        queryString += "?s rdfs:label ?label. ";
-        queryString += "}";
+        queryString += "?s rdfs:label ?label. } ORDER BY ?label";
         return queryString;
     }
-     public String selectResultSparqlGenerator(String json) {
+
+    public String selectResultSparqlGenerator(String json) {
 
         JsonParser parser = Json.createParser(new StringReader(json));
         Event event = parser.next();// START_OBJECT
@@ -489,18 +504,21 @@ public class WebServices {
         String queryString = "SELECT ?p ?o WHERE { ?s rdf:type " + iri + " . ";
         event = parser.next();//"label"
         event = parser.next();//value of label
-        queryString += "?s rdfs:label "+parser.getString()+". ";
+        queryString += "?s rdfs:label " + parser.getString() + ". ";
         queryString += "?s ?p ?o. }";
         return queryString;
     }
-    public ArrayList<String> readFile(String filepath){
+
+    public ArrayList<String> readFile(String filepath) {
         ArrayList<String> result = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
 
             String sCurrentLine;
 
             while ((sCurrentLine = br.readLine()) != null) {
-               if(sCurrentLine.length()>0&&!sCurrentLine.equals("\"\"")) result.add(sCurrentLine);
+                if (sCurrentLine.length() > 0 && !sCurrentLine.equals("\"\"")) {
+                    result.add(sCurrentLine);
+                }
             }
 
         } catch (IOException e) {
@@ -508,16 +526,15 @@ public class WebServices {
         };
         return result;
     }
-    
-    public String readFileToJSON(String filepath) throws FileNotFoundException{
+
+    public String readFileToJSON(String filepath) throws FileNotFoundException {
         System.out.println("readFileToJSON");
         ArrayList<String> result = new ArrayList<>();
         JsonArrayBuilder out = Json.createArrayBuilder();
         JsonObjectBuilder resultObject = Json.createObjectBuilder();
 
-        
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
-System.out.println("readfile");
+            System.out.println("readfile");
             String sCurrentLine;
 
             while ((sCurrentLine = br.readLine()) != null) {
@@ -527,20 +544,21 @@ System.out.println("readfile");
                 while (regexMatcher.find()) {
                     matchList.add(regexMatcher.group());
                 }
-                if(matchList.size()>=2){
+                if (matchList.size() >= 2) {
                     resultObject.add("name", matchList.get(0));
                     resultObject.add("value", matchList.get(1).replace("\"", ""));
                 }
                 out.add(resultObject);
 
             }
-             } catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         };
 
         return out.build().toString();
     }
-    public String replaceString(String filePath) throws IOException{
+
+    public String replaceString(String filePath) throws IOException {
         Path path = Paths.get(filePath);
         Charset charset = StandardCharsets.UTF_8;
 
@@ -564,8 +582,37 @@ System.out.println("readfile");
         content = content.replaceAll("<http://www.w3.org/2004/02/skos/core#", "skos:");
         content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
         content = content.replaceAll(">", "");
-         Path newpath = Paths.get(filePath+"new");
+        Path newpath = Paths.get(filePath + "new");
         Files.write(newpath, content.getBytes(charset));
-    return newpath.toString();
+        return newpath.toString();
+    }
+    
+    public String countValue(String filepath){
+       Multiset<String> multiset = HashMultiset.create();
+       
+               try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+
+            String sCurrentLine;
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                 if (sCurrentLine.length() > 0 && !sCurrentLine.equals("\"\"")){
+                        multiset.add(sCurrentLine);     
+                 }
+                
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        };
+         JsonArrayBuilder out = Json.createArrayBuilder();
+        JsonObjectBuilder resultObject = Json.createObjectBuilder();
+        for (Multiset.Entry<String> entry : multiset.entrySet())
+      {
+          resultObject.add("elem", entry.getElement());
+          resultObject.add("count", entry.getCount());
+         // System.out.println("elem : "+entry.getElement()+" count : "+entry.getCount());
+          out.add(resultObject);
+      }
+        
+        return out.build().toString();
     }
 }

@@ -72,3 +72,9 @@ display: block
 .panel-body .list-group .list-group-item {
     border: none;
 }
+
+.sort_by {
+    float: right;
+    margin-right: 20px;
+    margin-top: 5px;
+}

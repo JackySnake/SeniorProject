@@ -91,42 +91,49 @@ $(function () {
 
 });
 function addProperty(property) {
-    console.log(property.text);
     $("#addProperty .selection").text(property.text);
     var res = property.text.split(":");
-
+    var selectedValues = {};
+    var elems = $(".panel-body .list-group .list-group-item.active");
+//        var elems = document.getElementsByClassName("select");
+    for (var i = 0; i < elems.length; i++) {
+        selectedValues[$(elems[i]).parent().parent().parent().attr("data-property")] = $(elems[i]).text();
+    }
     $.ajax({
         url: $("#addProperty").attr("action"),
-        data: 'category=' + $("#category .selection").text() + '&property=' + property.text,
+        data: {
+            loadProds: 3,
+            category: $("#category .selection").text(),
+            property: property.text,
+            selectedValues: JSON.stringify(selectedValues)
+        },
         type: "GET",
         datatype: "json",
         success: function (response) {
             if ($("#accordion" + res[1]).length <= 0) {
+                var json = JSON.parse(response);
+                
                 var html = "" +
                         "<div class='panel-group property' id='accordion" + res[1] + "' role='tablist' aria-multiselectable='true'>" +
-                        "<div class='panel panel-default'>" +
-                        "<div class='panel-heading' role='tab' id='heading" + res[1] + "'>" +
-                        "<h4 class='panel-title'>" +
-                        "<a data-toggle='collapse' data-parent='#accordion" + res[1] + "' href='#collapse" + res[1] + "' aria-expanded='true' aria-controls='collapse" + res[1] + "'>" +
-                        res[1] +
-                        "</a>" +
-                        "<button type='button' class='close' onclick='removeProperty(this)' data-target='#accordion" + res[1] + "' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
-                        "</h4>" +
+                            "<div class='panel panel-default'>" +
+                                "<div class='panel-heading' role='tab' id='heading" + res[1] + "'>" +
+                                    "<h4 class='panel-title'>" +
+                                        "<a data-toggle='collapse' data-parent='#accordion" + res[1] + "' href='#collapse" + res[1] + "' aria-expanded='true' aria-controls='collapse" + res[1] + "'>" +
+                                            res[1] +
+                                        "</a>" +
+                                        "<button type='button' class='close' onclick='removeProperty(this)' data-target='#accordion" + res[1] + "' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
+                                        "<small class='sort_by'>sort by <a href='#!' class='active' onclick='jsonSortByName(this,collapse"+res[1]+","+response+"')>name</a> <a href='#!' onclick='jsonSortByCount(this,collapse"+res[1]+","+response+"')>count</a></small>"+
+                                    "</h4>" +
+                                "</div>" +
+                            "<div data-property=" + property.text + " id='collapse" + res[1] + "' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" + res[1] + "'>" +
+                                "<div class='panel-body'>" +
+                                    "<div class='list-group'>"+
+                                        propertyHTMLFromJson(JSON.parse(response))+ 
+                                    "</div>" +
+                                "</div>" +
+                            "</div>" +
                         "</div>" +
-                        "<div data-property=" + property.text + " id='collapse" + res[1] + "' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" + res[1] + "'>" +
-                        "<div class='panel-body'>" +
-                        "<div class='list-group'>";
-                for (var value in response) {
-                    html += "<a href='#!' class='list-group-item' onclick='selectValue(this)'>" +
-//                          "<span class='badge'>14</span>"+
-                            response[value] + "</a>";
-
-                }
-                html += "</div>" +
-                        "</div>" +
-                        "</div>" +
-                        "</div>" +
-                        "</div>";
+                    "</div>";
                 $("#property").append(html);
             }
         }
@@ -134,20 +141,16 @@ function addProperty(property) {
 }
 function selectValue(elem) {
     var old = $(elem).parent().find(".active");
-//        old.siblings().remove();
     old.removeClass("active");
-//        var a = document.createElement('a');
-//                    a.setAttribute("href", "#");
-//                    a.setAttribute("onclick", "removeValue(elem)");
-//                    a.appendChild(document.createTextNode(" remove"));
-//        $(elem).parent().append(a);
     $(elem).addClass("active");
+    $(elem).parents(".panel-group.property").nextAll(".panel-group.property").remove();
     var values = {};
     var elems = $(".panel-body .list-group .list-group-item.active");
 //        var elems = document.getElementsByClassName("select");
     values["category"] = $("#category .selection").text();
     for (var i = 0; i < elems.length; i++) {
-        values[$(elems[i]).parent().parent().parent().attr("data-property")] = $(elems[i]).text();
+        console.log("test "+$(elems[i]).attr("data-property"));
+        values[$(elems[i]).parent().parent().parent().attr("data-property")] = $(elems[i]).attr("data-property");
     }
     $.ajax({
         url: ctx + "/selectValue",
@@ -221,6 +224,37 @@ function removeProperty(elem) {
     console.log("remove");
     var target = $($(elem).attr("data-target"));
     target.remove();
+}
+function jsonSortByName(elem,collapseID,response){
+    console.log("sortName");
+    var json = JSON.parse(response);
+    $(elem).siblings().removeClass("active");
+    $(elem).addClass("active");
+    json.sort(function(a, b){
+        return a.elem.localeCompare(b.elem);
+    });
+    $("#"+collapseID).children().children().html(propertyHTMLFromJson(json));
+}
+function jsonSortByCount(elem,collapseID,response){
+    console.log("sortCount");
+    var json = JSON.parse(response);
+    $(elem).siblings().removeClass("active");
+    $(elem).addClass("active");
+    json.sort(function(a, b){
+        return a.count-b.count;
+    });
+    
+    $("#"+collapseID).children().children().html(propertyHTMLFromJson(json));
+}
+
+function propertyHTMLFromJson(json){
+    var html="";
+    for (var i=0;i<json.length;i++) {
+         html += "<a href='#!' class='list-group-item' data-property="+json[i].elem+" onclick='selectValue(this)'>" +
+                 "<span class='badge'>"+json[i].count+"</span>"+
+                  json[i].elem + "</a>";
+    }
+    return html;
 }
 
 function createTable(result) {
