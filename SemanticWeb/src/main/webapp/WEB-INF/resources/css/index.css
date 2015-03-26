@@ -78,3 +78,7 @@ display: block
     margin-right: 20px;
     margin-top: 5px;
 }
+
+.sort_by .active{
+    color: blue;
+}

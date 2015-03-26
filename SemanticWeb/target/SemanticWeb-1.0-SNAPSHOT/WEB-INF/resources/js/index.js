@@ -72,6 +72,7 @@ $(function () {
                     a.setAttribute("tabindex", "-1");
                     a.setAttribute("href", "#!");
                     a.setAttribute("onclick", "addProperty(this)");
+                    a.setAttribute("data-property",response[property] );
                     a.appendChild(document.createTextNode(response[property]));
                     li.appendChild(a);
                     $("#dropdownAddProperty > div > ul").append(li);
@@ -79,20 +80,11 @@ $(function () {
             }
         });
     });
-
-
-
-//    $(".dropdown-menu li a").click(function () {
-//        $(this).parent().parent().parent().find("button .selection").val($(this).text())
-//        $(this).parent().parent().parent().find("button .selection").text($(this).text())
-//        console.log($(this).parent().parent().parent().find("button .selection").val());
-//    });
-
-
 });
-function addProperty(property) {
-    $("#addProperty .selection").text(property.text);
-    var res = property.text.split(":");
+function addProperty(elem) {
+    console.log("addP");
+    $("#addProperty .selection").text($(elem).text());
+    var res = $(elem).text().split(":");
     var selectedValues = {};
     var elems = $(".panel-body .list-group .list-group-item.active");
 //        var elems = document.getElementsByClassName("select");
@@ -104,7 +96,7 @@ function addProperty(property) {
         data: {
             loadProds: 3,
             category: $("#category .selection").text(),
-            property: property.text,
+            property: $(elem).text(),
             selectedValues: JSON.stringify(selectedValues)
         },
         type: "GET",
@@ -122,10 +114,10 @@ function addProperty(property) {
                                             res[1] +
                                         "</a>" +
                                         "<button type='button' class='close' onclick='removeProperty(this)' data-target='#accordion" + res[1] + "' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
-                                        "<small class='sort_by'>sort by <a href='#!' class='active' onclick='jsonSortByName(this,collapse"+res[1]+","+response+"')>name</a> <a href='#!' onclick='jsonSortByCount(this,collapse"+res[1]+","+response+"')>count</a></small>"+
+                                        "<small class='sort_by'>sort by <a href='#!' class='active' onclick='jsonSortByName(this,collapse"+res[1]+","+response+")'>name</a> <a href='#!' onclick='jsonSortByCount(this,collapse"+res[1]+","+response+")'>count</a></small>"+
                                     "</h4>" +
                                 "</div>" +
-                            "<div data-property=" + property.text + " id='collapse" + res[1] + "' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" + res[1] + "'>" +
+                            "<div data-property=" + $(elem).text() + " id='collapse" + res[1] + "' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" + res[1] + "'>" +
                                 "<div class='panel-body'>" +
                                     "<div class='list-group'>"+
                                         propertyHTMLFromJson(JSON.parse(response))+ 
@@ -211,8 +203,8 @@ function selectResult(elem) {
                 var json = JSON.parse(response);
 
                 for (var i = 0; i < json.length; i++) {
-                    html += "<dt>" + json.name + "</dt>" +
-                            "<dd>" + json.value + "</dd>";
+                    html += "<dt>"+json.name+"</dt>" +
+                            "<dd><a href='#' onclick='searchFor(this)'>"+json.value+"</a></dd>";
                 }
                 html += "</dl>";
                 $(elem).next().children().html(html);
@@ -220,31 +212,35 @@ function selectResult(elem) {
         });
     }
 }
+function searchFor(elem){
+     $("#category + .dropdown-menu li a[data-category='"+$(elem).parent().siblings("dt").text()+"']").click();
+//     console.log($("#dropdownAddProperty div ul li a").first().attr("data-property"));
+//     //$("#dropdownAddProperty ul li a[data-property='"+$(elem).text()+"']").click();
+//     addProperty($("#dropdownAddProperty ul li a[data-property='"+$(elem).text()+"']"));
+     
+}
 function removeProperty(elem) {
     console.log("remove");
     var target = $($(elem).attr("data-target"));
     target.remove();
 }
-function jsonSortByName(elem,collapseID,response){
+function jsonSortByName(elem,collapseID,json){
     console.log("sortName");
-    var json = JSON.parse(response);
     $(elem).siblings().removeClass("active");
     $(elem).addClass("active");
     json.sort(function(a, b){
         return a.elem.localeCompare(b.elem);
     });
-    $("#"+collapseID).children().children().html(propertyHTMLFromJson(json));
+    $(collapseID).children().children().html(propertyHTMLFromJson(json));
 }
-function jsonSortByCount(elem,collapseID,response){
+function jsonSortByCount(elem,collapseID,json){
     console.log("sortCount");
-    var json = JSON.parse(response);
     $(elem).siblings().removeClass("active");
     $(elem).addClass("active");
     json.sort(function(a, b){
-        return a.count-b.count;
+        return b.count-a.count;
     });
-    
-    $("#"+collapseID).children().children().html(propertyHTMLFromJson(json));
+    $(collapseID).children().children().html(propertyHTMLFromJson(json));
 }
 
 function propertyHTMLFromJson(json){

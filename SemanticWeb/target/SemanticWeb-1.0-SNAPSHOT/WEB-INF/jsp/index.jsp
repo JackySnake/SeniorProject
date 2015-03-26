@@ -54,7 +54,7 @@
                                     </button>
                                     <ul class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="category">
                                         <c:forEach items="${categories}" var="category">
-                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">${category}</a></li>
+                                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-category="${category}">${category}</a></li>
                                             </c:forEach>
                                     </ul>
                                 </div>
