@@ -16,7 +16,6 @@ import com.hp.hpl.jena.query.ReadWrite;
 import com.hp.hpl.jena.query.ResultSetFactory;
 import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.query.ResultSetRewindable;
-import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.tdb.TDBFactory;
 import com.hp.hpl.jena.tdb.TDBLoader;
 import com.hp.hpl.jena.tdb.base.file.Location;
@@ -31,26 +30,19 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.io.StringReader;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.stream.JsonParser;
 import javax.json.stream.JsonParser.Event;
 import javax.servlet.ServletContext;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -402,7 +394,7 @@ public class WebServices {
             String sCurrentLine;
 
             while ((sCurrentLine = br.readLine()) != null) {
-                List<String> matchList = new ArrayList<String>();
+                List<String> matchList = new ArrayList<>();
                 Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
                 Matcher regexMatcher = regex.matcher(sCurrentLine);
                 while (regexMatcher.find()) {
@@ -460,7 +452,7 @@ public class WebServices {
             String sCurrentLine;
 
             while ((sCurrentLine = br.readLine()) != null) {
-                List<String> matchList = new ArrayList<String>();
+                List<String> matchList = new ArrayList<>();
                 Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
                 Matcher regexMatcher = regex.matcher(sCurrentLine);
                 while (regexMatcher.find()) {
@@ -472,7 +464,6 @@ public class WebServices {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
         };
         return "";
     }
@@ -488,7 +479,31 @@ public class WebServices {
         while ((event = parser.next()) != Event.END_OBJECT) {
             queryString += "?s " + parser.getString() + " ";
             event = parser.next();
-            queryString += parser.getString() + ". ";
+            String value = parser.getString();
+             try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/prefix.txt")))) {
+
+            String sCurrentLine;
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                List<String> matchList = new ArrayList<String>();
+                Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
+                Matcher regexMatcher = regex.matcher(sCurrentLine);
+                while (regexMatcher.find()) {
+                    matchList.add(regexMatcher.group());
+                }
+                if (matchList.size() > 0) {
+                    value = value.replace(matchList.get(0), matchList.get(1));
+                }
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        };
+        if(value.charAt(0)!='\"'){
+            value+=">";
+        }
+            queryString += value + ". ";
         }
         queryString += "?s rdfs:label ?label. } ORDER BY ?label";
         return queryString;
@@ -509,61 +524,88 @@ public class WebServices {
         return queryString;
     }
 
-    public ArrayList<String> readFile(String filepath) {
-        ArrayList<String> result = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
-
-            String sCurrentLine;
-
-            while ((sCurrentLine = br.readLine()) != null) {
-                if (sCurrentLine.length() > 0 && !sCurrentLine.equals("\"\"")) {
-                    result.add(sCurrentLine);
+    public ArrayList<String> readFile(String filepath) throws IOException {
+                File file = new File(filepath);
+       LineIterator it = FileUtils.lineIterator(file, "UTF-8");
+       ArrayList<String> results = new ArrayList<>();
+try {
+    while (it.hasNext()) {
+        String content = it.nextLine();
+if (content.length() > 0 && !content.equals("\"\"")) {
+                    results.add(content);
                 }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        };
-        return result;
+    }
+} finally {
+    LineIterator.closeQuietly(it);
+}
+//        ArrayList<String> result = new ArrayList<>();
+//        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+//
+//            String sCurrentLine;
+//
+//            while ((sCurrentLine = br.readLine()) != null) {
+//                if (sCurrentLine.length() > 0 && !sCurrentLine.equals("\"\"")) {
+//                    result.add(sCurrentLine);
+//                }
+//            }
+//
+//        } catch (IOException e) {
+//        };
+        return results;
     }
 
-    public String readFileToJSON(String filepath) throws FileNotFoundException {
+    public String readFileToJSON(ArrayList<String> data) throws FileNotFoundException {
         System.out.println("readFileToJSON");
         ArrayList<String> result = new ArrayList<>();
         JsonArrayBuilder out = Json.createArrayBuilder();
         JsonObjectBuilder resultObject = Json.createObjectBuilder();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
-            System.out.println("readfile");
-            String sCurrentLine;
-
-            while ((sCurrentLine = br.readLine()) != null) {
-                List<String> matchList = new ArrayList<String>();
-                Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
-                Matcher regexMatcher = regex.matcher(sCurrentLine);
-                while (regexMatcher.find()) {
-                    matchList.add(regexMatcher.group());
-                }
-                if (matchList.size() >= 2) {
-                    resultObject.add("name", matchList.get(0));
-                    resultObject.add("value", matchList.get(1).replace("\"", ""));
-                }
-                out.add(resultObject);
-
+        for (String line : data) {
+            List<String> matchList = new ArrayList<>();
+            Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
+            Matcher regexMatcher = regex.matcher(line);
+            while (regexMatcher.find()) {
+                matchList.add(regexMatcher.group());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        };
+            if (matchList.size() >= 2) {
+                resultObject.add("name", matchList.get(0));
+                resultObject.add("value", matchList.get(1).replace("\"", ""));
+            }
+            out.add(resultObject);
+        }
+//        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+//            System.out.println("readfile");
+//            String sCurrentLine;
+//
+//            while ((sCurrentLine = br.readLine()) != null) {
+//                List<String> matchList = new ArrayList<String>();
+//                Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
+//                Matcher regexMatcher = regex.matcher(sCurrentLine);
+//                while (regexMatcher.find()) {
+//                    matchList.add(regexMatcher.group());
+//                }
+//                if (matchList.size() >= 2) {
+//                    resultObject.add("name", matchList.get(0));
+//                    resultObject.add("value", matchList.get(1).replace("\"", ""));
+//                }
+//                out.add(resultObject);
+//
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        };
 
         return out.build().toString();
     }
 
-    public String replaceString(String filePath) throws IOException {
-        Path path = Paths.get(filePath);
-        Charset charset = StandardCharsets.UTF_8;
-
-        String content = new String(Files.readAllBytes(path), charset);
-        content = content.replaceAll("^^<http://www.w3.org/2001/XMLSchema#int>", "");
+    public ArrayList<String> replaceString(String filepath) throws IOException {
+        
+        File file = new File(filepath);
+       LineIterator it = FileUtils.lineIterator(file, "UTF-8");
+       ArrayList<String> results = new ArrayList<>();
+try {
+    while (it.hasNext()) {
+        String content = it.nextLine();
+content = content.replaceAll("^^<http://www.w3.org/2001/XMLSchema#int>", "");
         content = content.replaceAll("<http://xmlns.com/foaf/0.1/page>\n", "");
         content = content.replaceAll("<http://www.w3.org/2002/07/owl#sameAs>\n", "");
         content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#label>\n", "");
@@ -582,27 +624,72 @@ public class WebServices {
         content = content.replaceAll("<http://www.w3.org/2004/02/skos/core#", "skos:");
         content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
         content = content.replaceAll(">", "");
-        Path newpath = Paths.get(filePath + "new");
-        Files.write(newpath, content.getBytes(charset));
-        return newpath.toString();
+        results.add(content);
+    }
+} finally {
+    LineIterator.closeQuietly(it);
+}
+//        Path path = Paths.get(filePath);
+//        Charset charset = StandardCharsets.UTF_8;
+//
+//        String content = new String(Files.readAllBytes(path), charset);
+//        content = content.replaceAll("^^<http://www.w3.org/2001/XMLSchema#int>", "");
+//        content = content.replaceAll("<http://xmlns.com/foaf/0.1/page>\n", "");
+//        content = content.replaceAll("<http://www.w3.org/2002/07/owl#sameAs>\n", "");
+//        content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#label>\n", "");
+//        content = content.replaceAll("<http://dbpedia.org/property/hasPhotoCollection>\n", "");
+//        content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>\n", "");
+//        content = content.replaceAll("<http://www.w3.org/2002/07/owl#", "owl:");
+//        content = content.replaceAll("<http://www.w3.org/2001/XMLSchema#", "xsd:");
+//        content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#", "rdfs:");
+//        content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:");
+//        content = content.replaceAll("<http://xmlns.com/foaf/0.1/", "foaf:");
+//        content = content.replaceAll("<http://data.linkedmdb.org/resource/oddlinker/", "oddlinker:");
+//        content = content.replaceAll("<file:/C:/d2r-server-0.4/mapping.n3#", "map:");
+//        content = content.replaceAll("<http://data.linkedmdb.org/resource/movie/", "movie:");
+//        content = content.replaceAll("<http://data.linkedmdb.org/resource/", "db:");
+//        content = content.replaceAll("<http://dbpedia.org/property/", "dbpedia:");
+//        content = content.replaceAll("<http://www.w3.org/2004/02/skos/core#", "skos:");
+//        content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
+//        content = content.replaceAll(">", "");
+//        Path newpath = Paths.get(filePath + "new");
+//        Files.write(newpath, content.getBytes(charset));
+//        return newpath.toString();
+return results;
     }
     
-    public String countValue(String filepath){
+    public String countValue(ArrayList<String> in) throws IOException{
        Multiset<String> multiset = HashMultiset.create();
-       
-               try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
-
-            String sCurrentLine;
-
-            while ((sCurrentLine = br.readLine()) != null) {
-                 if (sCurrentLine.length() > 0 && !sCurrentLine.equals("\"\"")){
-                        multiset.add(sCurrentLine);     
+       for (int i=0;i<in.size();i++){
+           if (in.get(i).length() > 0 && !in.get(i).equals("\"\"")){
+                        multiset.add(in.get(i));     
                  }
-                
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        };
+       }
+//       File file = new File(filepath);
+//       LineIterator it = FileUtils.lineIterator(file, "UTF-8");
+//try {
+//    while (it.hasNext()) {
+//        String sCurrentLine = it.nextLine();
+//       if (sCurrentLine.length() > 0 && !sCurrentLine.equals("\"\"")){
+//                        multiset.add(sCurrentLine);     
+//                 }
+//    }
+//} finally {
+//    LineIterator.closeQuietly(it);
+//}
+//               try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+//
+//            String sCurrentLine;
+//
+//            while ((sCurrentLine = br.readLine()) != null) {
+//                 if (sCurrentLine.length() > 0 && !sCurrentLine.equals("\"\"")){
+//                        multiset.add(sCurrentLine);     
+//                 }
+//                
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        };
          JsonArrayBuilder out = Json.createArrayBuilder();
         JsonObjectBuilder resultObject = Json.createObjectBuilder();
         for (Multiset.Entry<String> entry : multiset.entrySet())

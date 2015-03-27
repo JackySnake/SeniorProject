@@ -103,8 +103,28 @@ function addProperty(elem) {
         datatype: "json",
         success: function (response) {
             if ($("#accordion" + res[1]).length <= 0) {
-                var json = JSON.parse(response);
-                
+//                var htmlBuffer = [];
+//                htmlBuffer.push( "<div class='panel-group property' id='accordion" + res[1] + "' role='tablist' aria-multiselectable='true'>" +
+//                            "<div class='panel panel-default'>" +
+//                                "<div class='panel-heading' role='tab' id='heading" + res[1] + "'>" +
+//                                    "<h4 class='panel-title'>" +
+//                                        "<a data-toggle='collapse' data-parent='#accordion" + res[1] + "' href='#collapse" + res[1] + "' aria-expanded='true' aria-controls='collapse" + res[1] + "'>" +
+//                                            res[1] +
+//                                        "</a>" +
+//                                        "<button type='button' class='close' onclick='removeProperty(this)' data-target='#accordion" + res[1] + "' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
+//                                        "<small class='sort_by'>sort by <a href='#!' class='active' onclick='jsonSortByName(this,collapse"+res[1]+","+response+")'>name</a> <a href='#!' onclick='jsonSortByCount(this,collapse"+res[1]+","+response+")'>count</a></small>"+
+//                                    "</h4>" +
+//                                "</div>" +
+//                            "<div data-property=" + $(elem).text() + " id='collapse" + res[1] + "' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" + res[1] + "'>" +
+//                                "<div class='panel-body'>" +
+//                                    "<div class='list-group'>"+
+//                                        propertyHTMLFromJson(response)+ 
+//                                    "</div>" +
+//                                "</div>" +
+//                            "</div>" +
+//                        "</div>" +
+//                    "</div>");
+//            var html = htmlBuffer.join('\n');
                 var html = "" +
                         "<div class='panel-group property' id='accordion" + res[1] + "' role='tablist' aria-multiselectable='true'>" +
                             "<div class='panel panel-default'>" +
@@ -124,7 +144,7 @@ function addProperty(elem) {
                                     "</div>" +
                                 "</div>" +
                             "</div>" +
-                        "</div>" +
+                        "</div>"+
                     "</div>";
                 $("#property").append(html);
             }
@@ -177,7 +197,6 @@ function selectResult(elem) {
     console.log("selectResult");
     var old = $("#search_result").find(".active");
     if (!old.is($(elem))) {
-        console.log("test");
 
         old.removeClass("active");
         old.next().removeClass("collapse in");
@@ -244,13 +263,13 @@ function jsonSortByCount(elem,collapseID,json){
 }
 
 function propertyHTMLFromJson(json){
-    var html="";
+    var htmlBuffer = [];
     for (var i=0;i<json.length;i++) {
-         html += "<a href='#!' class='list-group-item' data-property="+json[i].elem+" onclick='selectValue(this)'>" +
+         htmlBuffer.push("<a href='#!' class='list-group-item' data-property="+json[i].elem+" onclick='selectValue(this)'>" +
                  "<span class='badge'>"+json[i].count+"</span>"+
-                  json[i].elem + "</a>";
+                  json[i].elem + "</a>");
     }
-    return html;
+    return htmlBuffer.join("\n");
 }
 
 function createTable(result) {
