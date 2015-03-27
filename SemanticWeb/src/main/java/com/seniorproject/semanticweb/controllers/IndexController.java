@@ -84,7 +84,7 @@ public class IndexController {
         
 //        String filePath = this.webServices.queryHadoop(queryString);
        
-        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/personal_film_appearance_type.txt");
+        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/actor_name.txt");
         System.out.println("hadoop done");
         this.webServices.replaceString(filePath);
         //ArrayList<String> result = this.webServices.readFile(filePath);
@@ -100,7 +100,7 @@ public class IndexController {
         System.out.println(queryString);
         
 //        String filePath = this.webServices.queryHadoop(queryString);
-        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/performance_char_anita.txt");
+        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/music_contributor_name_Zakir.txt");
         String filePath2 = this.webServices.replaceString(filePath);
         String result = this.webServices.readFileToJSON(filePath2);
         System.out.println(result);
