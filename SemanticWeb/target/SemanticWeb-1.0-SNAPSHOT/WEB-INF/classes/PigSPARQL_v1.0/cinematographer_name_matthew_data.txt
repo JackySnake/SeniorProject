@@ -1,0 +1,12 @@
+<http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f80000000010c7f2e>
+<http://www.w3.org/2000/01/rdf-schema#label> "Matthew F. Leonetti (Cinematographer)"
+<http://data.linkedmdb.org/resource/movie/cinematographer_cinematographerid> "152"^^<http://www.w3.org/2001/XMLSchema#int>
+<http://data.linkedmdb.org/resource/movie/cinematographer_name> "Matthew F. Leonetti"
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/cinematographer>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person>
+<http://data.linkedmdb.org/resource/movie/cinematographer_cinematographerid> "2756"^^<http://www.w3.org/2001/XMLSchema#int>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.linkedmdb.org/resource/movie/cinematographer>
+<http://xmlns.com/foaf/0.1/page> <http://www.freebase.com/view/guid/9202a8c04000641f80000000047ff6c7>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person>
+<http://data.linkedmdb.org/resource/movie/cinematographer_name> "Matthew F. Leonetti"
+<http://www.w3.org/2000/01/rdf-schema#label> "Matthew F. Leonetti (Cinematographer)"

@@ -161,8 +161,14 @@ function selectValue(elem) {
 //        var elems = document.getElementsByClassName("select");
     values["category"] = $("#category .selection").text();
     for (var i = 0; i < elems.length; i++) {
-        console.log("test "+$(elems[i]).attr("data-property"));
-        values[$(elems[i]).parent().parent().parent().attr("data-property")] = $(elems[i]).attr("data-property");
+        var text;
+        $(elems[i]).contents().each(function(){
+            if(this.nodeType===3){
+                text= this.wholeText;
+            }
+        });
+        console.log("test "+text);
+        values[$(elems[i]).parent().parent().parent().attr("data-property")] = text;
     }
     $.ajax({
         url: ctx + "/selectValue",
@@ -173,7 +179,6 @@ function selectValue(elem) {
         type: "GET",
         datatype: "json",
         success: function (response) {
-            console.log("showFacetedSearchResult");
             var json = JSON.parse(response);
             var html = "<div class='list-group'>";
             for (var i = 0; i < json.length; i++) {
@@ -222,8 +227,14 @@ function selectResult(elem) {
                 var json = JSON.parse(response);
 
                 for (var i = 0; i < json.length; i++) {
-                    html += "<dt>"+json.name+"</dt>" +
-                            "<dd><a href='#' onclick='searchFor(this)'>"+json.value+"</a></dd>";
+                    html += "<dt>"+json[i].name+"</dt>" +
+                            "<dd>";
+                    console.log(json[i].value.substr(0,4));
+                            if(json[i].value.substr(0,4)=="http"){
+                    html+="<a href="+json[i].value+">";        
+                    }
+                    html+=json[i].value+"</a></dd>";
+                    
                 }
                 html += "</dl>";
                 $(elem).next().children().html(html);
@@ -265,6 +276,7 @@ function jsonSortByCount(elem,collapseID,json){
 function propertyHTMLFromJson(json){
     var htmlBuffer = [];
     for (var i=0;i<json.length;i++) {
+       // console.log(json[i].elem);
          htmlBuffer.push("<a href='#!' class='list-group-item' data-property="+json[i].elem+" onclick='selectValue(this)'>" +
                  "<span class='badge'>"+json[i].count+"</span>"+
                   json[i].elem + "</a>");

@@ -480,6 +480,7 @@ public class WebServices {
             queryString += "?s " + parser.getString() + " ";
             event = parser.next();
             String value = parser.getString();
+            System.out.print(value);
              try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/prefix.txt")))) {
 
             String sCurrentLine;
@@ -500,6 +501,8 @@ public class WebServices {
         } catch (IOException e) {
             e.printStackTrace();
         };
+        
+        System.out.print("cha0 "+value.charAt(0));
         if(value.charAt(0)!='\"'){
             value+=">";
         }
@@ -516,7 +519,7 @@ public class WebServices {
         event = parser.next();//"category"
         event = parser.next();//value of category
         String iri = getIRI(parser.getString());
-        String queryString = "SELECT ?p ?o WHERE { ?s rdf:type " + iri + " . ";
+        String queryString = "SELECT DISTINCT ?p ?o WHERE { ?s rdf:type " + iri + " . ";
         event = parser.next();//"label"
         event = parser.next();//value of label
         queryString += "?s rdfs:label " + parser.getString() + ". ";
@@ -538,19 +541,7 @@ if (content.length() > 0 && !content.equals("\"\"")) {
 } finally {
     LineIterator.closeQuietly(it);
 }
-//        ArrayList<String> result = new ArrayList<>();
-//        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
-//
-//            String sCurrentLine;
-//
-//            while ((sCurrentLine = br.readLine()) != null) {
-//                if (sCurrentLine.length() > 0 && !sCurrentLine.equals("\"\"")) {
-//                    result.add(sCurrentLine);
-//                }
-//            }
-//
-//        } catch (IOException e) {
-//        };
+
         return results;
     }
 
@@ -572,27 +563,6 @@ if (content.length() > 0 && !content.equals("\"\"")) {
             }
             out.add(resultObject);
         }
-//        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
-//            System.out.println("readfile");
-//            String sCurrentLine;
-//
-//            while ((sCurrentLine = br.readLine()) != null) {
-//                List<String> matchList = new ArrayList<String>();
-//                Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
-//                Matcher regexMatcher = regex.matcher(sCurrentLine);
-//                while (regexMatcher.find()) {
-//                    matchList.add(regexMatcher.group());
-//                }
-//                if (matchList.size() >= 2) {
-//                    resultObject.add("name", matchList.get(0));
-//                    resultObject.add("value", matchList.get(1).replace("\"", ""));
-//                }
-//                out.add(resultObject);
-//
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        };
 
         return out.build().toString();
     }
@@ -624,37 +594,12 @@ content = content.replaceAll("^^<http://www.w3.org/2001/XMLSchema#int>", "");
         content = content.replaceAll("<http://www.w3.org/2004/02/skos/core#", "skos:");
         content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
         content = content.replaceAll(">", "");
+        content = content.replaceAll("<", "");
         results.add(content);
     }
 } finally {
     LineIterator.closeQuietly(it);
 }
-//        Path path = Paths.get(filePath);
-//        Charset charset = StandardCharsets.UTF_8;
-//
-//        String content = new String(Files.readAllBytes(path), charset);
-//        content = content.replaceAll("^^<http://www.w3.org/2001/XMLSchema#int>", "");
-//        content = content.replaceAll("<http://xmlns.com/foaf/0.1/page>\n", "");
-//        content = content.replaceAll("<http://www.w3.org/2002/07/owl#sameAs>\n", "");
-//        content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#label>\n", "");
-//        content = content.replaceAll("<http://dbpedia.org/property/hasPhotoCollection>\n", "");
-//        content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>\n", "");
-//        content = content.replaceAll("<http://www.w3.org/2002/07/owl#", "owl:");
-//        content = content.replaceAll("<http://www.w3.org/2001/XMLSchema#", "xsd:");
-//        content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#", "rdfs:");
-//        content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:");
-//        content = content.replaceAll("<http://xmlns.com/foaf/0.1/", "foaf:");
-//        content = content.replaceAll("<http://data.linkedmdb.org/resource/oddlinker/", "oddlinker:");
-//        content = content.replaceAll("<file:/C:/d2r-server-0.4/mapping.n3#", "map:");
-//        content = content.replaceAll("<http://data.linkedmdb.org/resource/movie/", "movie:");
-//        content = content.replaceAll("<http://data.linkedmdb.org/resource/", "db:");
-//        content = content.replaceAll("<http://dbpedia.org/property/", "dbpedia:");
-//        content = content.replaceAll("<http://www.w3.org/2004/02/skos/core#", "skos:");
-//        content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
-//        content = content.replaceAll(">", "");
-//        Path newpath = Paths.get(filePath + "new");
-//        Files.write(newpath, content.getBytes(charset));
-//        return newpath.toString();
 return results;
     }
     
@@ -665,31 +610,6 @@ return results;
                         multiset.add(in.get(i));     
                  }
        }
-//       File file = new File(filepath);
-//       LineIterator it = FileUtils.lineIterator(file, "UTF-8");
-//try {
-//    while (it.hasNext()) {
-//        String sCurrentLine = it.nextLine();
-//       if (sCurrentLine.length() > 0 && !sCurrentLine.equals("\"\"")){
-//                        multiset.add(sCurrentLine);     
-//                 }
-//    }
-//} finally {
-//    LineIterator.closeQuietly(it);
-//}
-//               try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
-//
-//            String sCurrentLine;
-//
-//            while ((sCurrentLine = br.readLine()) != null) {
-//                 if (sCurrentLine.length() > 0 && !sCurrentLine.equals("\"\"")){
-//                        multiset.add(sCurrentLine);     
-//                 }
-//                
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        };
          JsonArrayBuilder out = Json.createArrayBuilder();
         JsonObjectBuilder resultObject = Json.createObjectBuilder();
         for (Multiset.Entry<String> entry : multiset.entrySet())
