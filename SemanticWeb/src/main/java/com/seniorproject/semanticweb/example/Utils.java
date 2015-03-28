@@ -28,8 +28,8 @@ import java.util.regex.Pattern;
 public class Utils {
 
     public static void main(String[] args) throws IOException {
-//        getPropertiesFromHadoop();
-        modifyProperty();
+        getPropertiesFromHadoop();
+//        modifyProperty();
     }
 
     private static void getPropertiesFromHadoop() throws IOException {
@@ -59,7 +59,7 @@ public class Utils {
                     matchList.add(regexMatcher.group());
                 }
                 if (matchList.size() > 0) {
-                    File file = new File("src/main/resources/hadoop/propertyQuery/", "propertyQuery_" + matchList.get(0) + ".sparql");
+                    File file = new File("src/main/resources/hadoop/isValueOfQuery/", "isValueOfQuery_" + matchList.get(0) + ".sparql");
 
                     if (file.createNewFile()) {
                         System.out.println("File is created!");
@@ -69,7 +69,7 @@ public class Utils {
                     String queryString = "SELECT DISTINCT ?p "
                             + "WHERE {"
                             + "?s rdf:type " + matchList.get(1) + "."
-                            + "?s ?p ?o. }";
+                            + "?o ?p ?s. }";
                     FileWriter fw = new FileWriter(file.getAbsoluteFile());
                     BufferedWriter bw = new BufferedWriter(fw);
                     bw.write(prefix + queryString);
