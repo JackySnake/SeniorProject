@@ -424,6 +424,17 @@ public class WebServices {
         } catch (IOException e) {
             e.printStackTrace();
         };
+        try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/modified_isValueOfQuery/modified_isValueOfQuery_" + category + ".txt")))) {
+
+            String sCurrentLine;
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                properties.add("is " + sCurrentLine + " of");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        };
         return properties;
     }
 
@@ -437,12 +448,24 @@ public class WebServices {
             Event event = parser.next();// START_OBJECT
 
             while ((event = parser.next()) != Event.END_OBJECT) {
-                queryString += "?s " + parser.getString() + " ";
-                event = parser.next();
-                queryString += parser.getString() + ". ";
+
+                if (parser.getString().substring(0, 2).equalsIgnoreCase("is")) {
+                    String[] parts = parser.getString().split(" ");
+                    event = parser.next();
+                    queryString += convertToNoPrefix(parser.getString()) + " " + parts[1] + " .";
+                } else {
+                    queryString += "?s " + parser.getString() + " ";
+                    event = parser.next();
+                    queryString += convertToNoPrefix(parser.getString()) + ". ";
+                }
             }
         }
-        queryString += "?s " + property + " ?o . } ORDER BY ?o";
+        if (property.substring(0, 2).equalsIgnoreCase("is")) {
+            String[] parts = property.split(" ");
+            queryString += "?o " + property + " ?s . } ORDER BY ?o";
+        } else {
+            queryString += "?s " + property + " ?o . } ORDER BY ?o";
+        }
         return queryString;
     }
 
@@ -469,7 +492,6 @@ public class WebServices {
     }
 
     public String selectValueSparqlGenerator(String json) {
-
         JsonParser parser = Json.createParser(new StringReader(json));
         Event event = parser.next();// START_OBJECT
         event = parser.next();//"category"
@@ -477,11 +499,32 @@ public class WebServices {
         String iri = getIRI(parser.getString());
         String queryString = "SELECT ?s ?label WHERE { ?s rdf:type " + iri + " . ";
         while ((event = parser.next()) != Event.END_OBJECT) {
-            queryString += "?s " + parser.getString() + " ";
-            event = parser.next();
-            String value = parser.getString();
-            System.out.print(value);
-             try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/prefix.txt")))) {
+            if (parser.getString().substring(0, 2).equalsIgnoreCase("is")) {
+                String[] parts = parser.getString().split(" ");
+                event = parser.next();
+                String value = parser.getString();
+                value = convertToNoPrefix(value);
+                if (value.charAt(0) != '\"') {
+                    value += ">";
+                }
+                queryString += value + " " + parts[1] + " ?s .";
+            } else {
+                queryString += "?s " + parser.getString() + " ";
+                event = parser.next();
+                String value = parser.getString();
+                value = convertToNoPrefix(value);
+                if (value.charAt(0) != '\"') {
+                    value += ">";
+                }
+                queryString += value + ". ";
+            }
+        }
+        queryString += "?s rdfs:label ?label. } ORDER BY ?label";
+        return queryString;
+    }
+
+    public String convertToNoPrefix(String str) {
+        try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/prefix.txt")))) {
 
             String sCurrentLine;
 
@@ -493,23 +536,14 @@ public class WebServices {
                     matchList.add(regexMatcher.group());
                 }
                 if (matchList.size() > 0) {
-                    value = value.replace(matchList.get(0), matchList.get(1));
+                    str = str.replace(matchList.get(0), matchList.get(1));
                 }
-
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         };
-        
-        System.out.print("cha0 "+value.charAt(0));
-        if(value.charAt(0)!='\"'){
-            value+=">";
-        }
-            queryString += value + ". ";
-        }
-        queryString += "?s rdfs:label ?label. } ORDER BY ?label";
-        return queryString;
+        return str;
     }
 
     public String selectResultSparqlGenerator(String json) {
@@ -528,19 +562,19 @@ public class WebServices {
     }
 
     public ArrayList<String> readFile(String filepath) throws IOException {
-                File file = new File(filepath);
-       LineIterator it = FileUtils.lineIterator(file, "UTF-8");
-       ArrayList<String> results = new ArrayList<>();
-try {
-    while (it.hasNext()) {
-        String content = it.nextLine();
-if (content.length() > 0 && !content.equals("\"\"")) {
+        File file = new File(filepath);
+        LineIterator it = FileUtils.lineIterator(file, "UTF-8");
+        ArrayList<String> results = new ArrayList<>();
+        try {
+            while (it.hasNext()) {
+                String content = it.nextLine();
+                if (content.length() > 0 && !content.equals("\"\"")) {
                     results.add(content);
                 }
-    }
-} finally {
-    LineIterator.closeQuietly(it);
-}
+            }
+        } finally {
+            LineIterator.closeQuietly(it);
+        }
 
         return results;
     }
@@ -568,58 +602,57 @@ if (content.length() > 0 && !content.equals("\"\"")) {
     }
 
     public ArrayList<String> replaceString(String filepath) throws IOException {
-        
+
         File file = new File(filepath);
-       LineIterator it = FileUtils.lineIterator(file, "UTF-8");
-       ArrayList<String> results = new ArrayList<>();
-try {
-    while (it.hasNext()) {
-        String content = it.nextLine();
-content = content.replaceAll("^^<http://www.w3.org/2001/XMLSchema#int>", "");
-        content = content.replaceAll("<http://xmlns.com/foaf/0.1/page>\n", "");
-        content = content.replaceAll("<http://www.w3.org/2002/07/owl#sameAs>\n", "");
-        content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#label>\n", "");
-        content = content.replaceAll("<http://dbpedia.org/property/hasPhotoCollection>\n", "");
-        content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>\n", "");
-        content = content.replaceAll("<http://www.w3.org/2002/07/owl#", "owl:");
-        content = content.replaceAll("<http://www.w3.org/2001/XMLSchema#", "xsd:");
-        content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#", "rdfs:");
-        content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:");
-        content = content.replaceAll("<http://xmlns.com/foaf/0.1/", "foaf:");
-        content = content.replaceAll("<http://data.linkedmdb.org/resource/oddlinker/", "oddlinker:");
-        content = content.replaceAll("<file:/C:/d2r-server-0.4/mapping.n3#", "map:");
-        content = content.replaceAll("<http://data.linkedmdb.org/resource/movie/", "movie:");
-        content = content.replaceAll("<http://data.linkedmdb.org/resource/", "db:");
-        content = content.replaceAll("<http://dbpedia.org/property/", "dbpedia:");
-        content = content.replaceAll("<http://www.w3.org/2004/02/skos/core#", "skos:");
-        content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
-        content = content.replaceAll(">", "");
-        content = content.replaceAll("<", "");
-        results.add(content);
+        LineIterator it = FileUtils.lineIterator(file, "UTF-8");
+        ArrayList<String> results = new ArrayList<>();
+        try {
+            while (it.hasNext()) {
+                String content = it.nextLine();
+                content = content.replaceAll("^^<http://www.w3.org/2001/XMLSchema#int>", "");
+                content = content.replaceAll("<http://xmlns.com/foaf/0.1/page>\n", "");
+                content = content.replaceAll("<http://www.w3.org/2002/07/owl#sameAs>\n", "");
+                content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#label>\n", "");
+                content = content.replaceAll("<http://dbpedia.org/property/hasPhotoCollection>\n", "");
+                content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>\n", "");
+                content = content.replaceAll("<http://www.w3.org/2002/07/owl#", "owl:");
+                content = content.replaceAll("<http://www.w3.org/2001/XMLSchema#", "xsd:");
+                content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#", "rdfs:");
+                content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:");
+                content = content.replaceAll("<http://xmlns.com/foaf/0.1/", "foaf:");
+                content = content.replaceAll("<http://data.linkedmdb.org/resource/oddlinker/", "oddlinker:");
+                content = content.replaceAll("<file:/C:/d2r-server-0.4/mapping.n3#", "map:");
+                content = content.replaceAll("<http://data.linkedmdb.org/resource/movie/", "movie:");
+                content = content.replaceAll("<http://data.linkedmdb.org/resource/", "db:");
+                content = content.replaceAll("<http://dbpedia.org/property/", "dbpedia:");
+                content = content.replaceAll("<http://www.w3.org/2004/02/skos/core#", "skos:");
+                content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
+                content = content.replaceAll(">", "");
+                content = content.replaceAll("<", "");
+                results.add(content);
+            }
+        } finally {
+            LineIterator.closeQuietly(it);
+        }
+        return results;
     }
-} finally {
-    LineIterator.closeQuietly(it);
-}
-return results;
-    }
-    
-    public String countValue(ArrayList<String> in) throws IOException{
-       Multiset<String> multiset = HashMultiset.create();
-       for (int i=0;i<in.size();i++){
-           if (in.get(i).length() > 0 && !in.get(i).equals("\"\"")){
-                        multiset.add(in.get(i));     
-                 }
-       }
-         JsonArrayBuilder out = Json.createArrayBuilder();
+
+    public String countValue(ArrayList<String> in) throws IOException {
+        Multiset<String> multiset = HashMultiset.create();
+        for (int i = 0; i < in.size(); i++) {
+            if (in.get(i).length() > 0 && !in.get(i).equals("\"\"")) {
+                multiset.add(in.get(i));
+            }
+        }
+        JsonArrayBuilder out = Json.createArrayBuilder();
         JsonObjectBuilder resultObject = Json.createObjectBuilder();
-        for (Multiset.Entry<String> entry : multiset.entrySet())
-      {
-          resultObject.add("elem", entry.getElement());
-          resultObject.add("count", entry.getCount());
-         // System.out.println("elem : "+entry.getElement()+" count : "+entry.getCount());
-          out.add(resultObject);
-      }
-        
+        for (Multiset.Entry<String> entry : multiset.entrySet()) {
+            resultObject.add("elem", entry.getElement());
+            resultObject.add("count", entry.getCount());
+            // System.out.println("elem : "+entry.getElement()+" count : "+entry.getCount());
+            out.add(resultObject);
+        }
+
         return out.build().toString();
     }
 }
