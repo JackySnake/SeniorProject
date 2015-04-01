@@ -20,15 +20,16 @@ public class QueryHadoop {
 	public static void main(String[] args) throws IOException, InterruptedException {
                 System.out.println("Working Directory = " +
               System.getProperty("user.dir"));
-//                   String sparqlFileName = "test1";
-//                String pigFileName = "test3";
-//                String modifiedPigFileName = "test4";
-//                String outputFileName = "src/main/resources/PigSPARQL_v1.0/out";
-                   File folder = new File("src/main/resources/hadoop/isValueOfQuery");
-File[] listOfFiles = folder.listFiles();
+                long lStartTime = System.nanoTime();
+//                   String sparqlFileName = "queryTest";
+//                String pigFileName = "queryPig";
+//                String modifiedPigFileName = "queryPigModified";
+//                String outputFileName = "src/main/resources/PigSPARQL_v1.0/output";
+                   //File folder = new File("src/main/resources/hadoop/isValueOfQuery");
+//File[] listOfFiles = folder.listFiles();
 
-   for(int i=2;i<listOfFiles.length;i++){
-        String filename =FilenameUtils.removeExtension(listOfFiles[i].getName());
+
+        String filename ="isValueOfQuery_film_festival_focus";
         System.out.println(filename);
         String sparqlFileName = filename;
                 String pigFileName = filename+"2";
@@ -51,9 +52,11 @@ File[] listOfFiles = folder.listFiles();
             //merge file back into local
                 
                 mergeHadoopFile(outputFileName);
-    
+                    long lEndTime = System.nanoTime();
+                    long lTotalTime = lEndTime - lStartTime;
+                    System.out.println("Total Time: " + lTotalTime );
 	}
-        }
+        //}
 	private static void deleteFolderFromHadoop() throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 		Process ps2 = Runtime.getRuntime().exec("hadoop fs -rm -r /user/admin/SeniorData/out4");
@@ -128,11 +131,6 @@ File[] listOfFiles = folder.listFiles();
 
 	private static void converSparql(String sparqlFileName, String pigFileName) throws IOException, InterruptedException {
 		File f = new File("src/main/resources/PigSPARQL_v1.0/"+sparqlFileName+".sparql");
-                if(f.exists()){
-                    System.out.println("yes");
-                }else{
-                    System.out.println("no");
-                }
 		Process ps = Runtime.getRuntime().exec("java -jar src/main/resources/PigSPARQL_v1.0/PigSPARQL_main.jar -e -i src/main/resources/PigSPARQL_v1.0/"+sparqlFileName+".sparql -o src/main/resources/PigSPARQL_v1.0/"+pigFileName+".pig -opt");
 	     // Then retreive the process output
 	   //     InputStream in = proc.getInputStream();

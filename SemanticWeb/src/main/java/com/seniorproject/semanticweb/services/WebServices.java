@@ -439,20 +439,19 @@ public class WebServices {
     }
 
     public String addPropertySparqlGenerator(String category, String property, String selectedValues) {
-        System.out.println("addProperty");
         String iri = getIRI(category);
         String queryString = "SELECT ?o WHERE { ";
         queryString += "?s rdf:type " + iri + " . ";
         if (selectedValues.length() > 0) {
             JsonParser parser = Json.createParser(new StringReader(selectedValues));
+            
             Event event = parser.next();// START_OBJECT
-
             while ((event = parser.next()) != Event.END_OBJECT) {
-
                 if (parser.getString().substring(0, 2).equalsIgnoreCase("is")) {
+                    
                     String[] parts = parser.getString().split(" ");
                     event = parser.next();
-                    queryString += convertToNoPrefix(parser.getString()) + " " + parts[1] + " .";
+                    queryString += convertToNoPrefix(parser.getString()) + " " + parts[1] + " ?s .";
                 } else {
                     queryString += "?s " + parser.getString() + " ";
                     event = parser.next();
@@ -462,7 +461,7 @@ public class WebServices {
         }
         if (property.substring(0, 2).equalsIgnoreCase("is")) {
             String[] parts = property.split(" ");
-            queryString += "?o " + property + " ?s . } ORDER BY ?o";
+            queryString += "?o " + parts[1] + " ?s . } ORDER BY ?o";
         } else {
             queryString += "?s " + property + " ?o . } ORDER BY ?o";
         }

@@ -15,7 +15,7 @@ film_collection							movie:film_collection							<http://data.linkedmdb.org/res
 film_company							movie:film_company							<http://data.linkedmdb.org/resource/movie/film_company>
 film_costume_designer				movie:film_costume_designer				<http://data.linkedmdb.org/resource/movie/film_costume_designer>
 film_crew_gig							movie:film_crew_gig 							<http://data.linkedmdb.org/resource/movie/film_crew_gig>
-film_crew_member						movie:flim_crew_member					<http://data.linkedmdb.org/resource/movie/film_crew_member>
+film_crewmember						movie:film_crewmember					<http://data.linkedmdb.org/resource/movie/film_crewmember>
 film_critic									movie:film_critic									<http://data.linkedmdb.org/resource/movie/film_critic>
 film_cut										movie:film_cut									<http://data.linkedmdb.org/resource/movie/film_cut>
 film_distribution_medium			movie:film_distribution_medium			<http://data.linkedmdb.org/resource/movie/film_distribution_medium>
@@ -40,7 +40,7 @@ film_set_designer						movie:film_set_designer						<http://data.linkedmdb.org/r
 film_story_contributor					movie:film_story_contributor				<http://data.linkedmdb.org/resource/movie/film_story_contributor>
 film_subject								movie:film_subject								<http://data.linkedmdb.org/resource/movie/film_subject>
 film_theorist								movie:film_theorist								<http://data.linkedmdb.org/resource/movie/film_theorist>
-interlink										db:interlink										<http://data.linkedmdb.org/resource/interlink>
+interlink										oddlinker:interlink										<http://data.linkedmdb.org/resource/interlink>
 linkage_run								oddlinker:linkage_run							<http://data.linkedmdb.org/resource/oddlinker/linkage_run>
 music_contributor						movie:music_contributor						<http://data.linkedmdb.org/resource/movie/music_contributor>
 performance								movie:performance								<http://data.linkedmdb.org/resource/movie/performance>

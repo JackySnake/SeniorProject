@@ -28,8 +28,8 @@ import java.util.regex.Pattern;
 public class Utils {
 
     public static void main(String[] args) throws IOException {
-        getPropertiesFromHadoop();
-//        modifyProperty();
+   //     getPropertiesFromHadoop();
+        modifyProperty();
     }
 
     private static void getPropertiesFromHadoop() throws IOException {
@@ -85,11 +85,11 @@ public class Utils {
     }
 
     private static void modifyProperty() throws IOException {
-        File folder = new File("src/main/resources/hadoop/propertyQuery");
+        File folder = new File("src/main/resources/hadoop/isValueOfQuery");
         File[] listOfFiles = folder.listFiles();
 
         for (int i = 0; i < listOfFiles.length; i++) {
-            Path path = Paths.get("src/main/resources/hadoop/propertyQuery/" + listOfFiles[i].getName());
+            Path path = Paths.get("src/main/resources/hadoop/isValueOfQuery/" + listOfFiles[i].getName());
             Charset charset = StandardCharsets.UTF_8;
 
             String content = new String(Files.readAllBytes(path), charset);
@@ -112,7 +112,7 @@ public class Utils {
             content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
             content = content.replaceAll(">", "");
 
-            Files.write(Paths.get("src/main/resources/hadoop/modified_propertyQuery/modified_" + listOfFiles[i].getName()), content.getBytes(charset));
+            Files.write(Paths.get("src/main/resources/hadoop/modified_isValueOfQuery/modified_" + listOfFiles[i].getName()), content.getBytes(charset));
         }
     }
 
