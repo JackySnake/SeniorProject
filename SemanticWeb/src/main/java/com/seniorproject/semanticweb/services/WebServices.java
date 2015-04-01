@@ -545,18 +545,19 @@ public class WebServices {
         return str;
     }
 
-    public String selectResultSparqlGenerator(String json) {
+    public String selectResultSparqlGenerator(String json,String category) {
 
         JsonParser parser = Json.createParser(new StringReader(json));
         Event event = parser.next();// START_OBJECT
-        event = parser.next();//"category"
-        event = parser.next();//value of category
-        String iri = getIRI(parser.getString());
+        String iri = getIRI(category);
         String queryString = "SELECT DISTINCT ?p ?o WHERE { ?s rdf:type " + iri + " . ";
         event = parser.next();//"label"
         event = parser.next();//value of label
         queryString += "?s rdfs:label " + parser.getString() + ". ";
         queryString += "?s ?p ?o. }";
+        queryString += "UNION {?s rdfs:label "+parser.getString()+" .";
+        queryString += "?v ?p ?s .}";
+        queryString += "ORDER BY ?p ?s ?v";
         return queryString;
     }
 
@@ -578,7 +579,7 @@ public class WebServices {
         return results;
     }
 
-    public String readFileToJSON(ArrayList<String> data) throws FileNotFoundException {
+    public String readFileToJSON(ArrayList<String> data, String category) throws FileNotFoundException {
         System.out.println("readFileToJSON");
         ArrayList<String> result = new ArrayList<>();
         JsonArrayBuilder out = Json.createArrayBuilder();
@@ -591,6 +592,20 @@ public class WebServices {
                 matchList.add(regexMatcher.group());
             }
             if (matchList.size() >= 2) {
+                try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/modified_isValueOfQuery/modified_isValueOfQuery_" + category + ".txt")))) {
+
+            String sCurrentLine;
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                if(matchList.get(0).equalsIgnoreCase(sCurrentLine)){
+                    matchList.set(0, "is "+matchList.get(0)+" of");
+                    break;
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        };
                 resultObject.add("name", matchList.get(0));
                 resultObject.add("value", matchList.get(1).replace("\"", ""));
             }

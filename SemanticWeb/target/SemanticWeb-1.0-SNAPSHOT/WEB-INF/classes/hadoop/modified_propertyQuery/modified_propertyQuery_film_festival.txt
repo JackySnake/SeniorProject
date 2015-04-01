@@ -1,3 +1,4 @@
+rdfs:label
 movie:film_festival_name
 movie:film_festival_event
 movie:film_festival_film_festivalid

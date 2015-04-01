@@ -1,3 +1,4 @@
+rdfs:label
 movie:film_company
 movie:film_film_company_relationship_name
 movie:film_film_company_relationship_freebase_url

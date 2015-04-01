@@ -1,3 +1,4 @@
+rdfs:label
 movie:film_set_designer_name
 movie:film_set_designer_freebase_url
 movie:film_set_designer_film_set_designer_id

@@ -1,3 +1,4 @@
+rdfs:label
 movie:film_casting_director_name
 movie:film_casting_director_freebase_url
 movie:film_casting_director_film_casting_director_id

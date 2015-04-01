@@ -1,3 +1,4 @@
+rdfs:label
 rdfs:SeeAlso
 movie:writer_name
 movie:writer_writerid

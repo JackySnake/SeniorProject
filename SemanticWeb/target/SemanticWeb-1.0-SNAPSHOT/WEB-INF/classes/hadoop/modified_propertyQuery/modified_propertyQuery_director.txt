@@ -1,3 +1,4 @@
 foaf:made
+rdfs:label
 movie:director_name
 movie:director_directorid

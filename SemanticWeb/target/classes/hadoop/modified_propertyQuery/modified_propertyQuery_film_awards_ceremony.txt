@@ -1,3 +1,4 @@
+rdfs:label
 movie:film_awards_ceremony_id
 movie:film_awards_ceremony_name
 movie:film_awards_ceremony_film_awards_ceremonyid

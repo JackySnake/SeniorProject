@@ -1,3 +1,4 @@
+rdfs:label
 movie:content_rating_name
 movie:content_rating_system
 movie:content_rating_country

@@ -1,2 +1,3 @@
+rdfs:label
 movie:special_film_performance_type_name
 movie:special_film_performance_type_special_film_performance_typeid

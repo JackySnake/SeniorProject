@@ -85,17 +85,17 @@ public class Utils {
     }
 
     private static void modifyProperty() throws IOException {
-        File folder = new File("src/main/resources/hadoop/isValueOfQuery");
+        File folder = new File("src/main/resources/hadoop/propertyQuery");
         File[] listOfFiles = folder.listFiles();
 
         for (int i = 0; i < listOfFiles.length; i++) {
-            Path path = Paths.get("src/main/resources/hadoop/isValueOfQuery/" + listOfFiles[i].getName());
+            Path path = Paths.get("src/main/resources/hadoop/propertyQuery/" + listOfFiles[i].getName());
             Charset charset = StandardCharsets.UTF_8;
 
             String content = new String(Files.readAllBytes(path), charset);
             content = content.replaceAll("<http://xmlns.com/foaf/0.1/page>\n", "");
             content = content.replaceAll("<http://www.w3.org/2002/07/owl#sameAs>\n", "");
-            content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#label>\n", "");
+           // content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#label>\n", "");
             content = content.replaceAll("<http://dbpedia.org/property/hasPhotoCollection>\n", "");
             content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>\n", "");
             content = content.replaceAll("<http://www.w3.org/2002/07/owl#", "owl:");
@@ -112,7 +112,7 @@ public class Utils {
             content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
             content = content.replaceAll(">", "");
 
-            Files.write(Paths.get("src/main/resources/hadoop/modified_isValueOfQuery/modified_" + listOfFiles[i].getName()), content.getBytes(charset));
+            Files.write(Paths.get("src/main/resources/hadoop/modified_propertyQuery/modified_" + listOfFiles[i].getName()), content.getBytes(charset));
         }
     }
 

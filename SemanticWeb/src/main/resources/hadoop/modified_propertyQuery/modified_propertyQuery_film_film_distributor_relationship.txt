@@ -1,3 +1,4 @@
+rdfs:label
 movie:film_distributor
 movie:film_of_distributor
 movie:film_distribution_medium

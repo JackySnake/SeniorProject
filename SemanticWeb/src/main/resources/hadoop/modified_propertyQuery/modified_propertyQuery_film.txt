@@ -1,6 +1,7 @@
 dc:date
 dc:title
 foaf:based_near
+rdfs:label
 skos:subject
 movie:actor
 movie:genre

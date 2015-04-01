@@ -1,2 +1,3 @@
+rdfs:label
 movie:personal_film_appearance_type_name
 movie:personal_film_appearance_type_personal_film_appearance_typeid

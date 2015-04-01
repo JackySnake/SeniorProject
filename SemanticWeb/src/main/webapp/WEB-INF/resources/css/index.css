@@ -66,8 +66,8 @@ display: block
 }
 .panel-body .list-group {
     margin-bottom: 0;
-    max-height: 200px;
-    overflow-y: scroll;
+   // max-height: 200px;
+   // overflow-y: scroll;
 }
 .panel-body .list-group .list-group-item {
     border: none;
@@ -81,4 +81,9 @@ display: block
 
 .sort_by .active{
     color: blue;
+}
+
+.pager {
+    margin-top: 0;
+    margin-bottom: 5px;
 }

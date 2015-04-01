@@ -1,3 +1,4 @@
+rdfs:label
 movie:dubbing_performance_film
 movie:dubbing_performance_name
 movie:dubbing_performance_actor

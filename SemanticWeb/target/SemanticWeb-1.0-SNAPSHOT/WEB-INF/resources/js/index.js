@@ -1,3 +1,4 @@
+var globalproperty=[];
 $(function () {
     $('#search_tab a:first').tab('show');
     $('#advanceSearch').submit(function (event) {
@@ -11,28 +12,6 @@ $(function () {
         });
         event.preventDefault();
     });
-
-//    $('#facetedSearch').submit(function (event) {
-//        console.log("submit");
-//        var filter_wrapper = document.getElementById('filter_wrapper');
-//        filter_wrapper.hidden = false;
-//        if ($("#type").val() === "Movie") {
-//            var a = document.createElement('a');
-//            a.setAttribute("href", "#");
-//            a.appendChild(document.createTextNode("Date"));
-//            filter_wrapper.appendChild(a);
-//        }
-//
-//        $.ajax({
-//            url: $("#facetedSearch").attr("action"),
-//            data: 'searchString=' + $("#keyword").val() + "&type=" + $("#type").val(),
-//            type: "GET",
-//            success: function (response) {
-//                createTable(response);
-//            }
-//        });
-//        event.preventDefault();
-//    });
 
     $("#category + .dropdown-menu li a").click(function () {
         console.log("select category");
@@ -111,6 +90,8 @@ function addProperty(elem) {
         type: "GET",
         datatype: "json",
         success: function (response) {
+            var pages = Math.ceil(JSON.parse(response).length/5);
+            globalproperty["collapse" + res[1]]=response;
             if ($("#accordion" + res[1]).length <= 0) {
                 var html = "" +
                         "<div class='panel-group property' id='accordion" + res[1] + "' role='tablist' aria-multiselectable='true'>" +
@@ -127,8 +108,12 @@ function addProperty(elem) {
                             "<div data-property=" + $(elem).text() + " id='collapse" + res[1] + "' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" + res[1] + "'>" +
                                 "<div class='panel-body'>" +
                                     "<div class='list-group'>"+
-                                        propertyHTMLFromJson(JSON.parse(response))+ 
+                                        propertyHTMLFromJson(JSON.parse(response),0)+ 
                                     "</div>" +
+                                    "<ul class='pager' data-curpage='0'>"+
+                                        "<li><a href='#!' onclick='previousPage(this,"+pages+")'>Previous</a></li>"+
+                                        "<li><a href='#!' onclick='nextPage(this,"+pages+")'>Next</a></li>"+
+                                    "</ul>"+
                                 "</div>" +
                             "</div>" +
                         "</div>"+
@@ -138,6 +123,35 @@ function addProperty(elem) {
         }
     });
 }
+function removeProperty(elem) {
+    console.log(globalproperty.length);
+    var target = $($(elem).attr("data-target"));
+    delete globalproperty[$(elem).parents(".panel-group.property").find(".panel-collapse").attr("id")];
+    console.log(globalproperty.length);
+    target.remove();
+}
+function previousPage(elem,pages){
+    //console.log(globalproperty.length);
+    var currentPage = $(elem).parents("ul").attr("data-curpage");
+    //console.log("pre "+currentPage);
+    if(currentPage>0){
+        var json = $(elem).parents(".panel-group.property").attr("data-json");
+        $(elem).parents("ul").attr("data-curpage",parseInt(currentPage)-1);
+        $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]),parseInt(currentPage)-1));
+    }
+}
+
+function nextPage(elem,pages){
+   // console.log(globalproperty[$(elem).parents(".panel-collapse").attr("id")]);
+    var currentPage = $(elem).parents("ul").attr("data-curpage");
+   // console.log("next "+currentPage);
+    if(currentPage<pages){
+        var json = $(elem).parents(".panel-group.property").attr("data-json");
+        $(elem).parents("ul").attr("data-curpage",parseInt(currentPage)+1);
+        $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]),parseInt(currentPage)+1));
+    }
+}
+
 function selectValue(elem) {
     var old = $(elem).parent().find(".active");
     old.removeClass("active");
@@ -146,7 +160,6 @@ function selectValue(elem) {
     var values = {};
     var elems = $(".panel-body .list-group .list-group-item.active");
 //        var elems = document.getElementsByClassName("select");
-    values["category"] = $("#category .selection").text();
     for (var i = 0; i < elems.length; i++) {
         var text;
         $(elems[i]).contents().each(function(){
@@ -159,7 +172,8 @@ function selectValue(elem) {
     $.ajax({
         url: ctx + "/selectValue",
         data: {
-            loadProds: 1,
+            loadProds: 2,
+            category: $("#category .selection").text(),
             values: JSON.stringify(values)
         },
         type: "GET",
@@ -196,13 +210,13 @@ function selectResult(elem) {
 
 
         var result = {};
-        result["category"] = $("#category .selection").text();
         result["label"] = "\"" + $(elem).children().first().text() + "\"";
         console.log(result);
         $.ajax({
             url: ctx + "/selectResult",
             data: {
-                loadProds: 1,
+                loadProds: 2,
+                category: $("#category .selection").text(),
                 result: JSON.stringify(result)
             },
             type: "GET",
@@ -235,11 +249,7 @@ function searchFor(elem){
 //     addProperty($("#dropdownAddProperty ul li a[data-property='"+$(elem).text()+"']"));
      
 }
-function removeProperty(elem) {
-    console.log("remove");
-    var target = $($(elem).attr("data-target"));
-    target.remove();
-}
+
 function jsonSortByName(elem,collapseID,json){
     console.log("sortName");
     $(elem).siblings().removeClass("active");
@@ -259,10 +269,15 @@ function jsonSortByCount(elem,collapseID,json){
     $(collapseID).children().children().html(propertyHTMLFromJson(json));
 }
 
-function propertyHTMLFromJson(json){
+function propertyHTMLFromJson(json,page){
+   // console.log("pphtmlfjson "+json.length);
+   // var j = JSON.parse("\""+json+"\"");
+   // console.log(j);
     var htmlBuffer = [];
-    for (var i=0;i<json.length;i++) {
-       // console.log(json[i].elem);
+    for (var i=page;i<json.length;i++) {
+     //   console.log(json[i]);
+        if(i>=page+5) break;
+        //console.log("i "+i+" elem "+json[i].elem);
          htmlBuffer.push("<a href='#!' class='list-group-item' data-property="+json[i].elem+" onclick='selectValue(this)'>" +
                  "<span class='badge'>"+json[i].count+"</span>"+
                   json[i].elem + "</a>");

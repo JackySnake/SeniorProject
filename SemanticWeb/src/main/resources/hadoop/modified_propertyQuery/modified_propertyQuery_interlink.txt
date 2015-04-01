@@ -1,3 +1,4 @@
+rdfs:label
 movie:linkid
 oddlinker:link_type
 oddlinker:link_source

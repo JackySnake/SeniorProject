@@ -1,3 +1,4 @@
+rdfs:label
 movie:country_id
 movie:country_name
 movie:country_capital

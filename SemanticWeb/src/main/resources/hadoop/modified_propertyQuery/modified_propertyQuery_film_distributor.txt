@@ -1,3 +1,4 @@
+rdfs:label
 movie:film_distributor_name
 movie:film_distributor_freebase_url
 movie:film_distributor_film_distributorid

@@ -1,2 +1,3 @@
+rdfs:label
 movie:film_critic_name
 movie:film_critic_film_criticid

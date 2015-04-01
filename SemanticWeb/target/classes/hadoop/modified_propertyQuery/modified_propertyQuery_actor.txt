@@ -1,3 +1,4 @@
+rdfs:label
 movie:actor_name
 movie:performance
 movie:actor_actorid

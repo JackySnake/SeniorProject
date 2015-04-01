@@ -1,3 +1,4 @@
+rdfs:label
 movie:personal_film_appearance_name
 movie:personal_film_appearance_type
 movie:personal_film_appearance_person

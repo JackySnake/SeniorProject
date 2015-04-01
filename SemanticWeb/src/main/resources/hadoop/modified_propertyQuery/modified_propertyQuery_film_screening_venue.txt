@@ -1,3 +1,4 @@
+rdfs:label
 movie:film_screening_venue_name
 movie:film_screening_venue_freebase_url
 movie:film_screening_venue_film_screening_venue_id
