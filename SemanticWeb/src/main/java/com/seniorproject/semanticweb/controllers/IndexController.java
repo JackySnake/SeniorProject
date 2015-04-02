@@ -50,7 +50,7 @@ public class IndexController {
     String advanceSearch(@RequestParam("searchString") String queryString) throws IOException, InterruptedException {
         System.out.println("advanceSearch");
         String filePath = this.webServices.queryHadoop(queryString);
-        String result = this.webServices.convertToJSON(filePath);
+        String result = this.webServices.convertToJSON(queryString,filePath);
         return result;
     }
 
@@ -82,9 +82,9 @@ public class IndexController {
         String queryString  = this.webServices.addPropertySparqlGenerator(category, property, selectedValues);
         System.out.println(queryString);
         
-        String filePath = this.webServices.queryHadoop(queryString);
+      //  String filePath = this.webServices.queryHadoop(queryString);
        
-      //  String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/test.txt");
+        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film_actor_label.txt");
         System.out.println("hadoop done");
         ArrayList<String> resultWithPrefix = this.webServices.replaceString(filePath);
         //ArrayList<String> result = this.webServices.readFile(filePath);
@@ -100,7 +100,7 @@ public class IndexController {
         System.out.println(queryString);
         
         String filePath = this.webServices.queryHadoop(queryString);
-    //    String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/music_contributor_name_Zakir.txt");
+    //    String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film_actor_lamour.txt");
 
         ArrayList<String> resultWithPrefix = this.webServices.replaceString(filePath);
         String result = this.webServices.readFileToJSON(resultWithPrefix, category);

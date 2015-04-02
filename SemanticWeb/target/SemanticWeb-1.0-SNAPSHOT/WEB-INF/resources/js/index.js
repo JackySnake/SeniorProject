@@ -210,17 +210,12 @@ function selectResult(elem) {
         old.next().removeClass("collapse in");
         old.next().addClass("collapse");
         $(elem).addClass("active");
-
-
-        var result = {};
-        result["label"] = "\"" + $(elem).children().first().text() + "\"";
-        console.log(result);
         $.ajax({
             url: ctx + "/selectResult",
             data: {
                 loadProds: 2,
                 category: $("#category .selection").text(),
-                result: JSON.stringify(result)
+                result: $(elem).children("p").text()
             },
             type: "GET",
             datatype: "json",

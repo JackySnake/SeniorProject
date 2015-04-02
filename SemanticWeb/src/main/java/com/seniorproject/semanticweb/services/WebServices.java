@@ -121,7 +121,7 @@ public class WebServices {
         return queryString;
     }
 
-    public String convertToJSON(String queryString) throws FileNotFoundException {
+    public String convertToJSON(String queryString, String filepath) throws FileNotFoundException {
         System.out.println("convert");
         JsonArrayBuilder out = Json.createArrayBuilder();
         JsonArrayBuilder resultArray = Json.createArrayBuilder();
@@ -130,6 +130,7 @@ public class WebServices {
         for (int i = 0; i < words.length; i++) {
             if (words[i].equalsIgnoreCase("select")) {
                 int j = i + 1;
+                if(words[j].equalsIgnoreCase("distinct")) j++;
                 while (!words[j].equalsIgnoreCase("where")) {
                     resultArray.add(words[j].substring(1));
                     j++;
@@ -138,7 +139,7 @@ public class WebServices {
             }
         }
         out.add(resultArray);
-        try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/data/data.nt")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
 
             String sCurrentLine;
 
@@ -465,7 +466,7 @@ public class WebServices {
         } else {
             queryString += "?s " + property + " ?o . ";
         }
-        queryString += "?o rdfs:label ?label. } ORDER BY ?o";
+        queryString += "OPTIONAL {?o rdfs:label ?label. }} ORDER BY ?o";
         return queryString;
     }
 
@@ -502,18 +503,12 @@ public class WebServices {
                 event = parser.next();
                 String value = parser.getString();
                 value = convertToNoPrefix(value);
-                if (value.charAt(0) != '\"') {
-                    value += ">";
-                }
                 queryString += value + " " + parts[1] + " ?s .";
             } else {
                 queryString += "?s " + parser.getString() + " ";
                 event = parser.next();
                 String value = parser.getString();
                 value = convertToNoPrefix(value);
-                if (value.charAt(0) != '\"') {
-                    value += ">";
-                }
                 queryString += value + ". ";
             }
         }
@@ -523,7 +518,6 @@ public class WebServices {
 
     public String convertToNoPrefix(String str) {
         try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/prefix.txt")))) {
-
             String sCurrentLine;
 
             while ((sCurrentLine = br.readLine()) != null) {
@@ -537,25 +531,23 @@ public class WebServices {
                     str = str.replace(matchList.get(0), matchList.get(1));
                 }
             }
-
+            if(str.charAt(0)=='<'){
+            str+=">";    
+            }
         } catch (IOException e) {
             e.printStackTrace();
         };
         return str;
     }
 
-    public String selectResultSparqlGenerator(String json,String category) {
-
-        JsonParser parser = Json.createParser(new StringReader(json));
-        Event event = parser.next();// START_OBJECT
+    public String selectResultSparqlGenerator(String result,String category) {
+        String subject = convertToNoPrefix(result);
         String iri = getIRI(category);
-        String queryString = "SELECT DISTINCT ?p ?o ?v WHERE {{ ?s rdf:type " + iri + " . ";
-        event = parser.next();//"label"
-        event = parser.next();//value of label
-        queryString += "?s rdfs:label " + parser.getString() + ". ";
-        queryString += "?s ?p ?o. }";
+        String queryString = "SELECT DISTINCT ?p ?o ?v WHERE { "+subject+" rdf:type " + iri + " . ";
+   
+        queryString += "{"+subject+" ?p ?o. }";
         queryString += "UNION { ";
-        queryString += "?v ?p ?s .}}";
+        queryString += "?v ?p "+subject+" .}}";
         queryString += "ORDER BY ?p ?o ?v";
         return queryString;
     }
