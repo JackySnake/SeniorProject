@@ -84,7 +84,7 @@ public class IndexController {
         
         String filePath = this.webServices.queryHadoop(queryString);
        
-      //  String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film_genre.txt");
+      //  String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/test.txt");
         System.out.println("hadoop done");
         ArrayList<String> resultWithPrefix = this.webServices.replaceString(filePath);
         //ArrayList<String> result = this.webServices.readFile(filePath);
@@ -96,7 +96,7 @@ public class IndexController {
     public @ResponseBody
     String selectValue(@RequestParam("values") String json, @RequestParam("category") String category) throws IOException, InterruptedException {
         System.out.println("selectValue");
-        String queryString  = this.webServices.selectValueSparqlGenerator(json);
+        String queryString  = this.webServices.selectValueSparqlGenerator(json,category);
         System.out.println(queryString);
         
         String filePath = this.webServices.queryHadoop(queryString);

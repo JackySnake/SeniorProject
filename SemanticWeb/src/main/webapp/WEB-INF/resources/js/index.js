@@ -75,6 +75,7 @@ function addProperty(elem) {
         $(elems[i]).contents().each(function(){
             if(this.nodeType===3){
                 text= this.wholeText;
+                if(text.charAt(0)!="\"") text=text.split(" ")[0];
             }
         });
         selectedValues[$(elems[i]).parent().parent().parent().attr("data-property")] = text;
@@ -165,6 +166,8 @@ function selectValue(elem) {
         $(elems[i]).contents().each(function(){
             if(this.nodeType===3){
                 text= this.wholeText;
+                if(text.charAt(0)!="\"") text=text.split(" ")[0];
+                console.log(text);
             }
         });
         values[$(elems[i]).parent().parent().parent().attr("data-property")] = text;

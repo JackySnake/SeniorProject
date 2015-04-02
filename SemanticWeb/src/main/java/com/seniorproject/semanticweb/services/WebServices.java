@@ -440,7 +440,7 @@ public class WebServices {
 
     public String addPropertySparqlGenerator(String category, String property, String selectedValues) {
         String iri = getIRI(category);
-        String queryString = "SELECT ?o WHERE { ";
+        String queryString = "SELECT ?o ?label WHERE { ";
         queryString += "?s rdf:type " + iri + " . ";
         if (selectedValues.length() > 0) {
             JsonParser parser = Json.createParser(new StringReader(selectedValues));
@@ -461,10 +461,11 @@ public class WebServices {
         }
         if (property.substring(0, 2).equalsIgnoreCase("is")) {
             String[] parts = property.split(" ");
-            queryString += "?o " + parts[1] + " ?s . } ORDER BY ?o";
+            queryString += "?o " + parts[1] + " ?s . ";
         } else {
-            queryString += "?s " + property + " ?o . } ORDER BY ?o";
+            queryString += "?s " + property + " ?o . ";
         }
+        queryString += "?o rdfs:label ?label. } ORDER BY ?o";
         return queryString;
     }
 
@@ -490,12 +491,10 @@ public class WebServices {
         return "";
     }
 
-    public String selectValueSparqlGenerator(String json) {
+    public String selectValueSparqlGenerator(String json,String category) {
         JsonParser parser = Json.createParser(new StringReader(json));
         Event event = parser.next();// START_OBJECT
-        event = parser.next();//"category"
-        event = parser.next();//value of category
-        String iri = getIRI(parser.getString());
+        String iri = getIRI(category);
         String queryString = "SELECT ?s ?label WHERE { ?s rdf:type " + iri + " . ";
         while ((event = parser.next()) != Event.END_OBJECT) {
             if (parser.getString().substring(0, 2).equalsIgnoreCase("is")) {
@@ -550,14 +549,14 @@ public class WebServices {
         JsonParser parser = Json.createParser(new StringReader(json));
         Event event = parser.next();// START_OBJECT
         String iri = getIRI(category);
-        String queryString = "SELECT DISTINCT ?p ?o WHERE { ?s rdf:type " + iri + " . ";
+        String queryString = "SELECT DISTINCT ?p ?o ?v WHERE {{ ?s rdf:type " + iri + " . ";
         event = parser.next();//"label"
         event = parser.next();//value of label
         queryString += "?s rdfs:label " + parser.getString() + ". ";
         queryString += "?s ?p ?o. }";
-        queryString += "UNION {?s rdfs:label "+parser.getString()+" .";
-        queryString += "?v ?p ?s .}";
-        queryString += "ORDER BY ?p ?s ?v";
+        queryString += "UNION { ";
+        queryString += "?v ?p ?s .}}";
+        queryString += "ORDER BY ?p ?o ?v";
         return queryString;
     }
 
