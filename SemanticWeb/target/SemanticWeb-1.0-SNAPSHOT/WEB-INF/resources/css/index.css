@@ -80,10 +80,17 @@ display: block
 }
 
 .sort_by .active{
-    color: blue;
+    color: #2A9FD6;
 }
 
 .pager {
     margin-top: 0;
     margin-bottom: 5px;
+}
+
+.panel-title > small{
+    color: #999;
+}
+.nav_pager{
+    margin: 5px;
 }

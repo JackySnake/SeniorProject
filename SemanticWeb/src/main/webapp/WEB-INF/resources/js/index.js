@@ -75,6 +75,7 @@ function addProperty(elem) {
         $(elems[i]).contents().each(function(){
             if(this.nodeType===3){
                 text= this.wholeText;
+                if(text.charAt(0)!="\"") text=text.split(" ")[0];
             }
         });
         selectedValues[$(elems[i]).parent().parent().parent().attr("data-property")] = text;
@@ -110,10 +111,12 @@ function addProperty(elem) {
                                     "<div class='list-group'>"+
                                         propertyHTMLFromJson(JSON.parse(response),0)+ 
                                     "</div>" +
+                                    "<nav class='nav_pager'>"+
                                     "<ul class='pager' data-curpage='0'>"+
-                                        "<li><a href='#!' onclick='previousPage(this,"+pages+")'>Previous</a></li>"+
-                                        "<li><a href='#!' onclick='nextPage(this,"+pages+")'>Next</a></li>"+
+                                        "<li class='previous disabled'><a href='#!' onclick='previousPage(this,"+pages+")'><span aria-hidden='true'>&larr;</span> Previous</a></li>"+
+                                        "<li class='next' ><a href='#!' onclick='nextPage(this,"+pages+")'>Next <span aria-hidden='true'>&rarr;</span></a></li>"+
                                     "</ul>"+
+                                    "</nav>"+
                                 "</div>" +
                             "</div>" +
                         "</div>"+
@@ -134,10 +137,14 @@ function previousPage(elem,pages){
     //console.log(globalproperty.length);
     var currentPage = $(elem).parents("ul").attr("data-curpage");
     //console.log("pre "+currentPage);
+    $(elem).parent("li").siblings().removeClass("disabled");
     if(currentPage>0){
         var json = $(elem).parents(".panel-group.property").attr("data-json");
         $(elem).parents("ul").attr("data-curpage",parseInt(currentPage)-1);
         $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]),parseInt(currentPage)-1));
+        if(parseInt(currentPage)==1){
+            $(elem).parent("li").addClass("disabled");
+        }
     }
 }
 
@@ -145,10 +152,14 @@ function nextPage(elem,pages){
    // console.log(globalproperty[$(elem).parents(".panel-collapse").attr("id")]);
     var currentPage = $(elem).parents("ul").attr("data-curpage");
    // console.log("next "+currentPage);
+   $(elem).parent("li").siblings().removeClass("disabled");
     if(currentPage<pages){
         var json = $(elem).parents(".panel-group.property").attr("data-json");
         $(elem).parents("ul").attr("data-curpage",parseInt(currentPage)+1);
         $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]),parseInt(currentPage)+1));
+    if(parseInt(currentPage)+1==pages){
+            $(elem).parent("li").addClass("disabled");
+        }
     }
 }
 
@@ -165,6 +176,8 @@ function selectValue(elem) {
         $(elems[i]).contents().each(function(){
             if(this.nodeType===3){
                 text= this.wholeText;
+                if(text.charAt(0)!="\"") text=text.split(" ")[0];
+                console.log(text);
             }
         });
         values[$(elems[i]).parent().parent().parent().attr("data-property")] = text;

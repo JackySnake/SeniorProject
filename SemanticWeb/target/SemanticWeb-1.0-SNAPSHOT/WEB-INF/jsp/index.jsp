@@ -24,9 +24,10 @@
         <script src="${cp}/resources/js/index.js"></script>
 
     </head>
+    
     <body>
-        <h1>Movie Search</h1>
-        <hr>
+<h1><span class="glyphicon glyphicon-film" aria-hidden="true"></span> Movie Search</small> <small>Semantic Web</h1>
+<br>
         <div id="content_wrapper">
             <div role="tabpanel" id="search_panel" class="panel panel-default">
 <!--                <h3>Search</h3>-->
@@ -91,7 +92,7 @@
             </div>
 
             <div id="search_result_wrapper" >
-                <h3>Result</h3>
+                <h3><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Results</h3>
                 <div id="search_result"></div>
             </div>
 

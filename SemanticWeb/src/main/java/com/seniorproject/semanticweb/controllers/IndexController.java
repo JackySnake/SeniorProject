@@ -96,7 +96,7 @@ public class IndexController {
     public @ResponseBody
     String selectValue(@RequestParam("values") String json, @RequestParam("category") String category) throws IOException, InterruptedException {
         System.out.println("selectValue");
-        String queryString  = this.webServices.selectValueSparqlGenerator(json);
+        String queryString  = this.webServices.selectValueSparqlGenerator(json,category);
         System.out.println(queryString);
         
     //    String filePath = this.webServices.queryHadoop(queryString);
