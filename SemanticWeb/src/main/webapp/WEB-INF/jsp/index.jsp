@@ -93,7 +93,7 @@
             </div>
 
             <div id="search_result_wrapper" >
-                <h3><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Results</h3>
+<!--                <h3><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Results</h3>-->
                 <div id="search_result"></div>
             </div>
 
