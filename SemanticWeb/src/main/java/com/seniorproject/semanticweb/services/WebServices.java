@@ -121,7 +121,7 @@ public class WebServices {
         return queryString;
     }
 
-    public String convertToJSON(String queryString) throws FileNotFoundException {
+    public String convertToJSON(String queryString, ArrayList<String> results) throws FileNotFoundException {
         System.out.println("convert");
         JsonArrayBuilder out = Json.createArrayBuilder();
         JsonArrayBuilder resultArray = Json.createArrayBuilder();
@@ -130,6 +130,9 @@ public class WebServices {
         for (int i = 0; i < words.length; i++) {
             if (words[i].equalsIgnoreCase("select")) {
                 int j = i + 1;
+                if (words[j].equalsIgnoreCase("distinct")) {
+                    j++;
+                }
                 while (!words[j].equalsIgnoreCase("where")) {
                     resultArray.add(words[j].substring(1));
                     j++;
@@ -138,29 +141,19 @@ public class WebServices {
             }
         }
         out.add(resultArray);
-        try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/data/data.nt")))) {
 
-            String sCurrentLine;
-
-            while ((sCurrentLine = br.readLine()) != null) {
-                List<String> matchList = new ArrayList<String>();
-                Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
-                Matcher regexMatcher = regex.matcher(sCurrentLine);
-                while (regexMatcher.find()) {
-                    matchList.add(regexMatcher.group());
-                }
-
-                for (int i = 0; i < matchList.size(); i++) {
-                    resultArray.add(matchList.get(i));
-                }
-                out.add(resultArray);
-
+        for (String result : results) {
+            List<String> matchList = new ArrayList<String>();
+            Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
+            Matcher regexMatcher = regex.matcher(result);
+            while (regexMatcher.find()) {
+                matchList.add(regexMatcher.group());
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            for (int i = 0; i < matchList.size(); i++) {
+                resultArray.add(matchList.get(i));
+            }
+            out.add(resultArray);
         }
-        ;
         return out.build().toString();
     }
 
@@ -189,30 +182,6 @@ public class WebServices {
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(prefix + queryString);
         bw.close();
-//
-//        BufferedReader br = null;
-//
-//        try {
-//
-//            String sCurrentLine;
-//
-//            br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/test1.sparql")));
-//
-//            while ((sCurrentLine = br.readLine()) != null) {
-//                System.out.println(sCurrentLine);
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (br != null) {
-//                    br.close();
-//                }
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            }
-//        }
         String filePath = test();
         return filePath;
     }
@@ -246,12 +215,7 @@ public class WebServices {
         } else {
             System.out.println("File already exists.");
         }
-//src/main/resources/PigSPARQL_v1.0/test1.sparql 
-        //servletContext.getRealPath("/WEB-INF/resources/PigSPARQL_v1.0/PigSPARQL_main.jar")
-        System.out.println("java"
-                + " -jar " + servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/PigSPARQL_main.jar") + "  -e "
-                + "-i " + servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/test1.sparql")
-                + " -o " + servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/test3.pig") + " -opt");
+
         Process ps = Runtime.getRuntime().exec("java"
                 + " -jar " + servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/PigSPARQL_main.jar") + "  -e "
                 + "-i " + servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/test1.sparql")
@@ -444,11 +408,11 @@ public class WebServices {
         queryString += "?s rdf:type " + iri + " . ";
         if (selectedValues.length() > 0) {
             JsonParser parser = Json.createParser(new StringReader(selectedValues));
-            
+
             Event event = parser.next();// START_OBJECT
             while ((event = parser.next()) != Event.END_OBJECT) {
                 if (parser.getString().substring(0, 2).equalsIgnoreCase("is")) {
-                    
+
                     String[] parts = parser.getString().split(" ");
                     event = parser.next();
                     queryString += convertToNoPrefix(parser.getString()) + " " + parts[1] + " ?s .";
@@ -465,7 +429,7 @@ public class WebServices {
         } else {
             queryString += "?s " + property + " ?o . ";
         }
-        queryString += "?o rdfs:label ?label. } ORDER BY ?o";
+        queryString += "OPTIONAL {?o rdfs:label ?label. }} ORDER BY ?o";
         return queryString;
     }
 
@@ -491,7 +455,7 @@ public class WebServices {
         return "";
     }
 
-    public String selectValueSparqlGenerator(String json,String category) {
+    public String selectValueSparqlGenerator(String json, String category) {
         JsonParser parser = Json.createParser(new StringReader(json));
         Event event = parser.next();// START_OBJECT
         String iri = getIRI(category);
@@ -502,18 +466,12 @@ public class WebServices {
                 event = parser.next();
                 String value = parser.getString();
                 value = convertToNoPrefix(value);
-                if (value.charAt(0) != '\"') {
-                    value += ">";
-                }
                 queryString += value + " " + parts[1] + " ?s .";
             } else {
                 queryString += "?s " + parser.getString() + " ";
                 event = parser.next();
                 String value = parser.getString();
                 value = convertToNoPrefix(value);
-                if (value.charAt(0) != '\"') {
-                    value += ">";
-                }
                 queryString += value + ". ";
             }
         }
@@ -523,7 +481,6 @@ public class WebServices {
 
     public String convertToNoPrefix(String str) {
         try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/prefix.txt")))) {
-
             String sCurrentLine;
 
             while ((sCurrentLine = br.readLine()) != null) {
@@ -537,26 +494,23 @@ public class WebServices {
                     str = str.replace(matchList.get(0), matchList.get(1));
                 }
             }
-
+            if (str.charAt(0) == '<') {
+                str += ">";
+            }
         } catch (IOException e) {
             e.printStackTrace();
         };
         return str;
     }
 
-    public String selectResultSparqlGenerator(String json,String category) {
-
-        JsonParser parser = Json.createParser(new StringReader(json));
-        Event event = parser.next();// START_OBJECT
+    public String selectResultSparqlGenerator(String result, String category) {
+        String subject = convertToNoPrefix(result);
         String iri = getIRI(category);
-        String queryString = "SELECT DISTINCT ?p ?o ?v WHERE {{ ?s rdf:type " + iri + " . ";
-        event = parser.next();//"label"
-        event = parser.next();//value of label
-        queryString += "?s rdfs:label " + parser.getString() + ". ";
-        queryString += "?s ?p ?o. }";
+        String queryString = "SELECT DISTINCT ?p ?o ?v ?label WHERE { " + subject + " rdf:type " + iri + " . ";
+
+        queryString += "{" + subject + " ?p ?o. }";
         queryString += "UNION { ";
-        queryString += "?v ?p ?s .}}";
-        queryString += "ORDER BY ?p ?o ?v";
+        queryString += "?v ?p " + subject + " .} OPTIONAL {?o rdfs:label ?label. ?v rdfs:label ?label.} }";
         return queryString;
     }
 
@@ -593,55 +547,57 @@ public class WebServices {
             if (matchList.size() >= 2) {
                 try (BufferedReader br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/classes/hadoop/modified_isValueOfQuery/modified_isValueOfQuery_" + category + ".txt")))) {
 
-            String sCurrentLine;
+                    String sCurrentLine;
 
-            while ((sCurrentLine = br.readLine()) != null) {
-                if(matchList.get(0).equalsIgnoreCase(sCurrentLine)){
-                    matchList.set(0, "is "+matchList.get(0)+" of");
-                    break;
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        };
-                resultObject.add("name", matchList.get(0));
-                resultObject.add("value", matchList.get(1).replace("\"", ""));
+                    while ((sCurrentLine = br.readLine()) != null) {
+                        if (matchList.get(0).equalsIgnoreCase(sCurrentLine)) {
+                            matchList.set(0, "is " + matchList.get(0) + " of");
+                            break;
+                        }
+                    }
+                    resultObject.add("name", matchList.get(0));
+                    
+                    resultObject.add("url", convertToNoPrefix(matchList.get(1)).replace("<", "").replace(">", ""));
+                    if(matchList.size()>=3){
+                        resultObject.add("value", matchList.get(1).replace("\"", "")+" ("+matchList.get(2).replace("\"", "")+")");
+                    }
+                    System.out.println(convertToNoPrefix(matchList.get(1)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                };
             }
             out.add(resultObject);
         }
-
         return out.build().toString();
     }
 
     public ArrayList<String> replaceString(String filepath) throws IOException {
-
         File file = new File(filepath);
         LineIterator it = FileUtils.lineIterator(file, "UTF-8");
         ArrayList<String> results = new ArrayList<>();
         try {
             while (it.hasNext()) {
                 String content = it.nextLine();
-                content = content.replaceAll("^^<http://www.w3.org/2001/XMLSchema#int>", "");
-                content = content.replaceAll("<http://xmlns.com/foaf/0.1/page>\n", "");
-                content = content.replaceAll("<http://www.w3.org/2002/07/owl#sameAs>\n", "");
-                content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#label>\n", "");
-                content = content.replaceAll("<http://dbpedia.org/property/hasPhotoCollection>\n", "");
-                content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>\n", "");
-                content = content.replaceAll("<http://www.w3.org/2002/07/owl#", "owl:");
-                content = content.replaceAll("<http://www.w3.org/2001/XMLSchema#", "xsd:");
-                content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#", "rdfs:");
-                content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:");
-                content = content.replaceAll("<http://xmlns.com/foaf/0.1/", "foaf:");
-                content = content.replaceAll("<http://data.linkedmdb.org/resource/oddlinker/", "oddlinker:");
-                content = content.replaceAll("<file:/C:/d2r-server-0.4/mapping.n3#", "map:");
-                content = content.replaceAll("<http://data.linkedmdb.org/resource/movie/", "movie:");
-                content = content.replaceAll("<http://data.linkedmdb.org/resource/", "db:");
-                content = content.replaceAll("<http://dbpedia.org/property/", "dbpedia:");
-                content = content.replaceAll("<http://www.w3.org/2004/02/skos/core#", "skos:");
-                content = content.replaceAll("<http://purl.org/dc/terms/", "dc:");
-                content = content.replaceAll(">", "");
-                content = content.replaceAll("<", "");
+                content = content.replace("^^<http://www.w3.org/2001/XMLSchema#int>", "");
+                content = content.replace("<http://xmlns.com/foaf/0.1/page>\n", "");
+                content = content.replace("<http://www.w3.org/2002/07/owl#sameAs>\n", "");
+                content = content.replace("<http://www.w3.org/2000/01/rdf-schema#label>\n", "");
+                content = content.replace("<http://dbpedia.org/property/hasPhotoCollection>\n", "");
+                content = content.replace("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>\n", "");
+                content = content.replace("<http://www.w3.org/2002/07/owl#", "owl:");
+                content = content.replace("<http://www.w3.org/2001/XMLSchema#", "xsd:");
+                content = content.replace("<http://www.w3.org/2000/01/rdf-schema#", "rdfs:");
+                content = content.replace("<http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf:");
+                content = content.replace("<http://xmlns.com/foaf/0.1/", "foaf:");
+                content = content.replace("<http://data.linkedmdb.org/resource/oddlinker/", "oddlinker:");
+                content = content.replace("<file:/C:/d2r-server-0.4/mapping.n3#", "map:");
+                content = content.replace("<http://data.linkedmdb.org/resource/movie/", "movie:");
+                content = content.replace("<http://data.linkedmdb.org/resource/", "db:");
+                content = content.replace("<http://dbpedia.org/property/", "dbpedia:");
+                content = content.replace("<http://www.w3.org/2004/02/skos/core#", "skos:");
+                content = content.replace("<http://purl.org/dc/terms/", "dc:");
+                content = content.replace(">", "");
+                content = content.replace("<", "");
                 results.add(content);
             }
         } finally {

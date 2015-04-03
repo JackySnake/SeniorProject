@@ -94,3 +94,9 @@ display: block
 .nav_pager{
     margin: 5px;
 }
+.dl-horizontal dd{
+    margin-left: 220px;
+}
+.dl-horizontal dt {
+    width : 200px;
+}

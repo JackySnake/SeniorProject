@@ -26,9 +26,10 @@
     </head>
     
     <body>
-<h1><span class="glyphicon glyphicon-film" aria-hidden="true"></span> Movie Search</small> <small>Semantic Web</h1>
+<h1><span class="glyphicon glyphicon-film" aria-hidden="true"></span> Movie Search <small>Semantic Web</small></h1>
 <br>
         <div id="content_wrapper">
+            
             <div role="tabpanel" id="search_panel" class="panel panel-default">
 <!--                <h3>Search</h3>-->
                 <!-- Nav tabs -->

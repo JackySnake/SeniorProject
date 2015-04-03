@@ -1,4 +1,4 @@
-var globalproperty=[];
+var globalproperty=new Array();
 $(function () {
     $('#search_tab a:first').tab('show');
     $('#advanceSearch').submit(function (event) {
@@ -64,7 +64,6 @@ function addProperty(elem) {
     $("#addProperty .selection").text($(elem).text());
     var res = $(elem).text().split(":");
     if($(elem).text().split(" ")[0]=="is"){
-        console.log("isValueOf");
         res[1]="is "+res[1];
     }
     var selectedValues = {};
@@ -93,6 +92,7 @@ function addProperty(elem) {
         success: function (response) {
             var pages = Math.ceil(JSON.parse(response).length/5);
             globalproperty["collapse" + res[1]]=response;
+            console.log(globalproperty.length);
             if ($("#accordion" + res[1]).length <= 0) {
                 var html = "" +
                         "<div class='panel-group property' id='accordion" + res[1] + "' role='tablist' aria-multiselectable='true'>" +
@@ -103,7 +103,7 @@ function addProperty(elem) {
                                             res[1] +
                                         "</a>" +
                                         "<button type='button' class='close' onclick='removeProperty(this)' data-target='#accordion" + res[1] + "' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
-                                        "<small class='sort_by'>sort by <a href='#!' class='active' onclick='jsonSortByName(this,collapse"+res[1]+","+response+")'>name</a> <a href='#!' onclick='jsonSortByCount(this,collapse"+res[1]+","+response+")'>count</a></small>"+
+                                        "<small class='sort_by'>sort by <a href='#!' class='active' onclick='jsonSortByName(this,collapse"+res[1]+")'>name</a> <a href='#!' onclick='jsonSortByCount(this,collapse"+res[1]+")'>count</a></small>"+
                                     "</h4>" +
                                 "</div>" +
                             "<div data-property=" + $(elem).text() + " id='collapse" + res[1] + "' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" + res[1] + "'>" +
@@ -113,8 +113,14 @@ function addProperty(elem) {
                                     "</div>" +
                                     "<nav class='nav_pager'>"+
                                     "<ul class='pager' data-curpage='0'>"+
-                                        "<li class='previous disabled'><a href='#!' onclick='previousPage(this,"+pages+")'><span aria-hidden='true'>&larr;</span> Previous</a></li>"+
-                                        "<li class='next' ><a href='#!' onclick='nextPage(this,"+pages+")'>Next <span aria-hidden='true'>&rarr;</span></a></li>"+
+                                        "<li class='previous disabled'><a href='#!' onclick='previousPage(this,"+pages+")'><span aria-hidden='true'>&larr;</span> Previous</a></li>";
+                 
+                if(pages<=1){
+                                    html+="<li class='next disabled'>";
+                                }else{
+                                    html+="<li class='next' >";
+                                }
+                                      html+="<a href='#!' onclick='nextPage(this,"+pages+")'>Next <span aria-hidden='true'>&rarr;</span></a></li>"+
                                     "</ul>"+
                                     "</nav>"+
                                 "</div>" +
@@ -126,19 +132,45 @@ function addProperty(elem) {
         }
     });
 }
+function jsonSortByName(elem,collapseID){
+    
+    console.log("sortName");
+    $(elem).siblings().removeClass("active");
+    $(elem).addClass("active");
+    var currentPage = $(elem).parents(".panel-group.property").find(".pager").attr("data-curpage"); 
+    var property= JSON.parse(globalproperty[$(collapseID).attr("id")]);
+    property.sort(function(a, b){
+        return a.elem.localeCompare(b.elem);
+    });
+    
+    $(collapseID).children(".panel-body").children(".list-group").html(propertyHTMLFromJson(property,currentPage));
+}
+function jsonSortByCount(elem,collapseID){
+    console.log("sortCount");
+    $(elem).siblings().removeClass("active");
+    $(elem).addClass("active");
+    var currentPage = $(elem).parents(".panel-group.property").find(".pager").attr("data-curpage");
+     var property= JSON.parse(globalproperty[$(collapseID).attr("id")]);
+    property.sort(function(a, b){
+        return b.count-a.count;
+    });
+         
+     $(collapseID).children(".panel-body").children(".list-group").html(propertyHTMLFromJson(property,currentPage));
+}
 function removeProperty(elem) {
     console.log(globalproperty.length);
     var target = $($(elem).attr("data-target"));
     delete globalproperty[$(elem).parents(".panel-group.property").find(".panel-collapse").attr("id")];
-    console.log(globalproperty.length);
     target.remove();
 }
 function previousPage(elem,pages){
+    if($(elem).attr("class"))
     //console.log(globalproperty.length);
     var currentPage = $(elem).parents("ul").attr("data-curpage");
     //console.log("pre "+currentPage);
-    $(elem).parent("li").siblings().removeClass("disabled");
+    
     if(currentPage>0){
+        $(elem).parent("li").siblings().removeClass("disabled");
         var json = $(elem).parents(".panel-group.property").attr("data-json");
         $(elem).parents("ul").attr("data-curpage",parseInt(currentPage)-1);
         $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]),parseInt(currentPage)-1));
@@ -152,8 +184,9 @@ function nextPage(elem,pages){
    // console.log(globalproperty[$(elem).parents(".panel-collapse").attr("id")]);
     var currentPage = $(elem).parents("ul").attr("data-curpage");
    // console.log("next "+currentPage);
-   $(elem).parent("li").siblings().removeClass("disabled");
-    if(currentPage<pages){
+   console.log("cur "+currentPage+" page "+pages);
+    if(currentPage<pages-1){
+        $(elem).parent("li").siblings().removeClass("disabled");
         var json = $(elem).parents(".panel-group.property").attr("data-json");
         $(elem).parents("ul").attr("data-curpage",parseInt(currentPage)+1);
         $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]),parseInt(currentPage)+1));
@@ -220,17 +253,12 @@ function selectResult(elem) {
         old.next().removeClass("collapse in");
         old.next().addClass("collapse");
         $(elem).addClass("active");
-
-
-        var result = {};
-        result["label"] = "\"" + $(elem).children().first().text() + "\"";
-        console.log(result);
         $.ajax({
             url: ctx + "/selectResult",
             data: {
                 loadProds: 2,
                 category: $("#category .selection").text(),
-                result: JSON.stringify(result)
+                result: $(elem).children("p").text()
             },
             type: "GET",
             datatype: "json",
@@ -238,13 +266,15 @@ function selectResult(elem) {
                 var html = "<dl class='dl-horizontal'>";
 
                 var json = JSON.parse(response);
-
+json.sort(function(a, b){
+        return a.name.localeCompare(b.name);
+    });
                 for (var i = 0; i < json.length; i++) {
                     html += "<dt>"+json[i].name+"</dt>" +
                             "<dd>";
-                    console.log(json[i].value.substr(0,4));
-                            if(json[i].value.substr(0,4)=="http"){
-                    html+="<a href="+json[i].value+">";        
+                  
+                            if(json[i].url.substr(0,4)=="http"){
+                    html+="<a href="+json[i].url+">";        
                     }
                     html+=json[i].value+"</a></dd>";
                     
@@ -255,41 +285,17 @@ function selectResult(elem) {
         });
     }
 }
-function searchFor(elem){
-     $("#category + .dropdown-menu li a[data-category='"+$(elem).parent().siblings("dt").text()+"']").click();
-//     console.log($("#dropdownAddProperty div ul li a").first().attr("data-property"));
-//     //$("#dropdownAddProperty ul li a[data-property='"+$(elem).text()+"']").click();
-//     addProperty($("#dropdownAddProperty ul li a[data-property='"+$(elem).text()+"']"));
-     
-}
 
-function jsonSortByName(elem,collapseID,json){
-    console.log("sortName");
-    $(elem).siblings().removeClass("active");
-    $(elem).addClass("active");
-    json.sort(function(a, b){
-        return a.elem.localeCompare(b.elem);
-    });
-    $(collapseID).children().children().html(propertyHTMLFromJson(json));
-}
-function jsonSortByCount(elem,collapseID,json){
-    console.log("sortCount");
-    $(elem).siblings().removeClass("active");
-    $(elem).addClass("active");
-    json.sort(function(a, b){
-        return b.count-a.count;
-    });
-    $(collapseID).children().children().html(propertyHTMLFromJson(json));
-}
+
 
 function propertyHTMLFromJson(json,page){
    // console.log("pphtmlfjson "+json.length);
    // var j = JSON.parse("\""+json+"\"");
    // console.log(j);
     var htmlBuffer = [];
-    for (var i=page;i<json.length;i++) {
+    for (var i=page*5;i<json.length;i++) {
      //   console.log(json[i]);
-        if(i>=page+5) break;
+        if(i>=page*5+5) break;
         //console.log("i "+i+" elem "+json[i].elem);
          htmlBuffer.push("<a href='#!' class='list-group-item' data-property="+json[i].elem+" onclick='selectValue(this)'>" +
                  "<span class='badge'>"+json[i].count+"</span>"+
@@ -300,35 +306,54 @@ function propertyHTMLFromJson(json,page){
 
 function createTable(result) {
     var json = JSON.parse(result);
-
-    if (document.getElementById("result_table") !== null) {
-        document.getElementById("result_table").remove();
-    }
-
-    var body = document.getElementById('search_result');
-    var tbl = document.createElement('table');
-    tbl.setAttribute("class", "table table-hover");
-    tbl.setAttribute("id", "result_table");
-    var tbdy = document.createElement('tbody');
-    var tr = document.createElement('tr');
-
-    for (var i = 0; i < json[0].length; i++) {
-        var th = document.createElement('th');
-        th.appendChild(document.createTextNode(json[0][i]));
-        tr.appendChild(th);
-    }
-    tbdy.appendChild(tr);
-    for (var i = 1; i < json.length; i++) {
-        var tr = document.createElement('tr');
-        for (var j = 0; j < json[i].length; j++) {
-            var td = document.createElement('td');
-            td.appendChild(document.createTextNode(json[i][j]));
-            tr.appendChild(td);
-        }
-        tbdy.appendChild(tr);
-    }
-    tbl.appendChild(tbdy);
-    body.appendChild(tbl);
+//
+//    if (document.getElementById("result_table") !== null) {
+//        document.getElementById("result_table").remove();
+//    }
+    var html="<table class='table table-hover' id='result_table'>"+
+                "<tbody>"+
+                    "<tr>";
+                    for (var i = 0; i < json[0].length; i++) {
+                        html+="<th>"+json[0][i]+"</th>";
+                    }
+        
+                    html+="</tr>";
+                    for (var i = 1; i < json.length; i++) {
+                        html+="<tr>";
+                        for (var j = 0; j < json[i].length; j++) {
+                            console.log(json[i][j]);
+                            html+="<td>"+json[i][j]+"</td>";
+                        }
+                        html+="</tr>";
+      
+                    }   
+                html+="</tbody>"+
+            "</table>";
+        $("#search_result").html(html);
+//    var body = document.getElementById('search_result');
+//    var tbl = document.createElement('table');
+//    tbl.setAttribute("class", "table table-hover");
+//    tbl.setAttribute("id", "result_table");
+//    var tbdy = document.createElement('tbody');
+//    var tr = document.createElement('tr');
+//
+//    for (var i = 0; i < json[0].length; i++) {
+//        var th = document.createElement('th');
+//        th.appendChild(document.createTextNode(json[0][i]));
+//        tr.appendChild(th);
+//    }
+//    tbdy.appendChild(tr);
+//    for (var i = 1; i < json.length; i++) {
+//        var tr = document.createElement('tr');
+//        for (var j = 0; j < json[i].length; j++) {
+//            var td = document.createElement('td');
+//            td.appendChild(document.createTextNode(json[i][j]));
+//            tr.appendChild(td);
+//        }
+//        tbdy.appendChild(tr);
+//    }
+//    tbl.appendChild(tbdy);
+//    body.appendChild(tbl);
     //    For Jena
 //    for (var i = 0; i < json.head.vars.length; i++) {
 //        var th = document.createElement('th');
