@@ -103,7 +103,7 @@ function addProperty(elem) {
                                             res[1] +
                                         "</a>" +
                                         "<button type='button' class='close' onclick='removeProperty(this)' data-target='#accordion" + res[1] + "' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
-                                        "<small class='sort_by'>sort by <a href='#!' class='active' onclick='jsonSortByName(this,collapse"+res[1]+")'>name</a> <a href='#!' onclick='jsonSortByCount(this,collapse"+res[1]+")'>count</a></small>"+
+                                        "<small class='sort_by'>sort by <a href='#!' onclick='jsonSortByName(this,collapse"+res[1]+")'>name</a> <a href='#!' onclick='jsonSortByCount(this,collapse"+res[1]+")'>count</a></small>"+
                                     "</h4>" +
                                 "</div>" +
                             "<div data-property=" + $(elem).text() + " id='collapse" + res[1] + "' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='heading" + res[1] + "'>" +
@@ -113,6 +113,11 @@ function addProperty(elem) {
                                     "</div>" +
                                     "<nav class='nav_pager'>"+
                                     "<ul class='pager' data-curpage='0'>"+
+
+"<li>"+
+    "<input type='number' class='form-control input-sm' id='pagebox' value='1' min='1' max='"+pages+"'>/"+pages+
+  "<button class='btn btn-primary btn-sm' onclick='gotopage(this,"+pages+")'>Go</button>"+
+"</li>"+
                                         "<li class='previous disabled'><a href='#!' onclick='previousPage(this,"+pages+")'><span aria-hidden='true'>&larr;</span> Previous</a></li>";
                  
                 if(pages<=1){
@@ -132,6 +137,23 @@ function addProperty(elem) {
         }
     });
 }
+function gotopage(elem,pagesize){
+    var page =$("#pagebox").val()-1;
+    if(page>=0&&page<pagesize){
+    
+    $(elem).parents("ul").attr("data-curpage",page);
+    $(elem).parent("li").siblings(".next").removeClass("disabled");
+    $(elem).parent("li").siblings(".previous").removeClass("disabled");
+    if(page==0){
+        $(elem).parent("li").siblings(".previous").addClass("disabled");
+    }
+    if(page==pagesize-1){
+        $(elem).parent("li").siblings(".next").addClass("disabled");
+    }
+   // console.log(globalproperty[$(elem).parents(".panel-collapse").attr("id")]);
+     $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]),page));
+     }
+ }
 function jsonSortByName(elem,collapseID){
     
     console.log("sortName");
@@ -140,9 +162,9 @@ function jsonSortByName(elem,collapseID){
     var currentPage = $(elem).parents(".panel-group.property").find(".pager").attr("data-curpage"); 
     var property= JSON.parse(globalproperty[$(collapseID).attr("id")]);
     property.sort(function(a, b){
-        return a.elem.localeCompare(b.elem);
+        return a.label.localeCompare(b.label);
     });
-    
+    globalproperty[$(collapseID).attr("id")]=JSON.stringify(property);
     $(collapseID).children(".panel-body").children(".list-group").html(propertyHTMLFromJson(property,currentPage));
 }
 function jsonSortByCount(elem,collapseID){
@@ -154,7 +176,7 @@ function jsonSortByCount(elem,collapseID){
     property.sort(function(a, b){
         return b.count-a.count;
     });
-         
+    globalproperty[$(collapseID).attr("id")]=JSON.stringify(property);     
      $(collapseID).children(".panel-body").children(".list-group").html(propertyHTMLFromJson(property,currentPage));
 }
 function removeProperty(elem) {
@@ -164,7 +186,7 @@ function removeProperty(elem) {
     target.remove();
 }
 function previousPage(elem,pages){
-    if($(elem).attr("class"))
+    //if($(elem).attr("class"))
     //console.log(globalproperty.length);
     var currentPage = $(elem).parents("ul").attr("data-curpage");
     //console.log("pre "+currentPage);
@@ -173,6 +195,7 @@ function previousPage(elem,pages){
         $(elem).parent("li").siblings().removeClass("disabled");
         var json = $(elem).parents(".panel-group.property").attr("data-json");
         $(elem).parents("ul").attr("data-curpage",parseInt(currentPage)-1);
+        $("#pagebox").val(parseInt(currentPage));
         $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]),parseInt(currentPage)-1));
         if(parseInt(currentPage)==1){
             $(elem).parent("li").addClass("disabled");
@@ -184,11 +207,13 @@ function nextPage(elem,pages){
    // console.log(globalproperty[$(elem).parents(".panel-collapse").attr("id")]);
     var currentPage = $(elem).parents("ul").attr("data-curpage");
    // console.log("next "+currentPage);
-   console.log("cur "+currentPage+" page "+pages);
+  // console.log("cur "+currentPage+" page "+pages);
     if(currentPage<pages-1){
         $(elem).parent("li").siblings().removeClass("disabled");
         var json = $(elem).parents(".panel-group.property").attr("data-json");
+      
         $(elem).parents("ul").attr("data-curpage",parseInt(currentPage)+1);
+        $("#pagebox").val(parseInt(currentPage)+2);
         $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]),parseInt(currentPage)+1));
     if(parseInt(currentPage)+1==pages){
             $(elem).parent("li").addClass("disabled");
@@ -299,7 +324,7 @@ function propertyHTMLFromJson(json,page){
         //console.log("i "+i+" elem "+json[i].elem);
          htmlBuffer.push("<a href='#!' class='list-group-item' data-property="+json[i].elem+" onclick='selectValue(this)'>" +
                  "<span class='badge'>"+json[i].count+"</span>"+
-                  json[i].elem + "</a>");
+                  json[i].elem + " <small>"+json[i].label+"</small></a>");
     }
     return htmlBuffer.join("\n");
 }

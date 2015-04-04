@@ -24,6 +24,7 @@ import com.hp.hpl.jena.util.FileManager;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -560,8 +561,11 @@ public class WebServices {
                     resultObject.add("url", convertToNoPrefix(matchList.get(1)).replace("<", "").replace(">", ""));
                     if(matchList.size()>=3){
                         resultObject.add("value", matchList.get(1).replace("\"", "")+" ("+matchList.get(2).replace("\"", "")+")");
+                    }else {
+                        resultObject.add("value", matchList.get(1).replace("\"", ""));
+
                     }
-                    System.out.println(convertToNoPrefix(matchList.get(1)));
+                  //  System.out.println(convertToNoPrefix(matchList.get(1)));
                 } catch (IOException e) {
                     e.printStackTrace();
                 };
@@ -616,9 +620,23 @@ public class WebServices {
         JsonArrayBuilder out = Json.createArrayBuilder();
         JsonObjectBuilder resultObject = Json.createObjectBuilder();
         for (Multiset.Entry<String> entry : multiset.entrySet()) {
-            resultObject.add("elem", entry.getElement());
+             List<String> matchList = new ArrayList<>();
+            Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
+            Matcher regexMatcher = regex.matcher(entry.getElement());
+            while (regexMatcher.find()) {
+                matchList.add(regexMatcher.group());
+            }
+            resultObject.add("elem", matchList.get(0));
             resultObject.add("count", entry.getCount());
-            // System.out.println("elem : "+entry.getElement()+" count : "+entry.getCount());
+            if(matchList.size()>=2){
+                String label = "";
+                for(int j=1;j<matchList.size();j++){
+                    label+=matchList.get(j);
+                }
+            resultObject.add("label",label);
+            }else {
+                resultObject.add("label","");
+            }
             out.add(resultObject);
         }
 

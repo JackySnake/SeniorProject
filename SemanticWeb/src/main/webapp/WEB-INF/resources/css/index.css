@@ -100,3 +100,7 @@ display: block
 .dl-horizontal dt {
     width : 200px;
 }
+#pagebox {
+    width: 70px;
+    display: inline-block;
+}
