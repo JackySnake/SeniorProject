@@ -115,7 +115,7 @@ function addProperty(elem) {
                                     "<ul class='pager' data-curpage='0'>"+
 
 "<li>"+
-    "<input type='number' class='form-control input-sm' id='pagebox' value='1' min='1' max='"+pages+"'>/"+pages+
+    "<input type='number' class='form-control input-sm' id='pagebox' value='1' min='1' max='"+pages+"'>/"+pages+" "+
   "<button class='btn btn-primary btn-sm' onclick='gotopage(this,"+pages+")'>Go</button>"+
 "</li>"+
                                         "<li class='previous disabled'><a href='#!' onclick='previousPage(this,"+pages+")'><span aria-hidden='true'>&larr;</span> Previous</a></li>";
@@ -251,7 +251,8 @@ function selectValue(elem) {
         datatype: "json",
         success: function (response) {
             var json = JSON.parse(response);
-            var html = "<div class='list-group'>";
+            var html = "<h3>found "+json.length+" results</h3>"+
+                    "<div class='list-group'>";
             for (var i = 0; i < json.length; i++) {
                 html += "<a href='#collapse" + i + "' onclick='selectResult(this)' class='list-group-item' data-toggle='collapse' aria-expanded='false' aria-controls='collapse" + i + "'>" +
                         "<h4 class='list-group-item-heading'>" + json[i].value + "</h4>" +
