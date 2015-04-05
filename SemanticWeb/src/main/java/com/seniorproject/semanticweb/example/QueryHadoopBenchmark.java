@@ -20,11 +20,12 @@ public class QueryHadoopBenchmark {
 	public static void main(String[] args) throws IOException, InterruptedException {
                 System.out.println("Working Directory = " +
               System.getProperty("user.dir"));
-                long lStartTime = System.nanoTime();
-                   String sparqlFileName = "query4";
+                
+                   String sparqlFileName = "query1";
                 String pigFileName = "queryPig";
                 String modifiedPigFileName = "queryPigModified";
                 String outputFileName = "src/main/resources/PigSPARQL_v1.0/output";
+                 long lStartTime = System.nanoTime();
 /*                   File folder = new File("src/main/resources/hadoop/isValueOfQuery");
 File[] listOfFiles = folder.listFiles();
 
@@ -47,6 +48,7 @@ File[] listOfFiles = folder.listFiles();
 
 	    //Then call pig file and query on HDFS using pigsparql 
 	      //  Process
+               
 		runningPig(modifiedPigFileName);
                 
             //merge file back into local
@@ -70,7 +72,7 @@ File[] listOfFiles = folder.listFiles();
 	private static void runningPig(String modifiedPigFileName) throws InterruptedException, IOException {
 		// TODO Auto-generated method stub
 		
-		Process ps2 = Runtime.getRuntime().exec("pig -param inputData='/user/admin/SeniorData/University80-clean2.nt' -param outputData='/user/admin/SeniorData/out4' -param reducerNum='12' src/main/resources/PigSPARQL_v1.0/"+modifiedPigFileName+".pig");
+		Process ps2 = Runtime.getRuntime().exec("pig -param inputData='/user/admin/SeniorData/University160-clean2.nt' -param outputData='/user/admin/SeniorData/out4' -param reducerNum='12' src/main/resources/PigSPARQL_v1.0/"+modifiedPigFileName+".pig");
         ps2.waitFor();
         java.io.InputStream is2=ps2.getInputStream();
         byte b2[]=new byte[is2.available()];

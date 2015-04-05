@@ -38,7 +38,7 @@ public class QueryJenaBenchmark {
         long startLoadTime = System.nanoTime();
         FileManager fm = FileManager.get();
         fm.addLocatorClassLoader(QueryJena.class.getClassLoader());
-        InputStream in = fm.open("data/University80-clean2.nt");
+        InputStream in = fm.open("data/University160-clean3.nt");
 //        InputStream in = fm.open("data/data.nt");
 //        Location location = new Location("target/TDB");
         Location location = Location.create("target/TDB");
