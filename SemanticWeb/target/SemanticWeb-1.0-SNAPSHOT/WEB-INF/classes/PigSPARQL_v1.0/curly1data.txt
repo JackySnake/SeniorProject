@@ -1,0 +1,23 @@
+<http://data.linkedmdb.org/resource/movie/actor> "Kantimathi (Actor)" <http://data.linkedmdb.org/resource/actor/1454> 
+<http://data.linkedmdb.org/resource/movie/director> "Bharathiraja (Director)" <http://data.linkedmdb.org/resource/director/11636> 
+<http://purl.org/dc/terms/date>  "1977" 
+<http://data.linkedmdb.org/resource/movie/performance> "performance #82" <http://data.linkedmdb.org/resource/performance/82> 
+<http://data.linkedmdb.org/resource/movie/performance> "performance #85" <http://data.linkedmdb.org/resource/performance/85> 
+<http://data.linkedmdb.org/resource/movie/music_contributor> "Ilayaraaja (Music Contributor)" <http://data.linkedmdb.org/resource/music_contributor/36> 
+<http://www.w3.org/2000/01/rdf-schema#label>  "16 Vayathinile" 
+<http://data.linkedmdb.org/resource/movie/actor> "Sridevi Kapoor (Actor)" <http://data.linkedmdb.org/resource/actor/38171> 
+<http://data.linkedmdb.org/resource/movie/country> "India (Country)" <http://data.linkedmdb.org/resource/country/IN> 
+<http://xmlns.com/foaf/0.1/made> "Bharathiraja (Director)"  <http://data.linkedmdb.org/resource/director/11636>
+<http://xmlns.com/foaf/0.1/page>  <http://www.freebase.com/view/guid/9202a8c04000641f8000000000b83d7e> 
+<http://xmlns.com/foaf/0.1/based_near>  <http://sws.geonames.org/1269750/> 
+<http://data.linkedmdb.org/resource/movie/producer> "Bharathiraja (Producer)" <http://data.linkedmdb.org/resource/producer/12116> 
+<http://data.linkedmdb.org/resource/movie/performance> "performance #84" <http://data.linkedmdb.org/resource/performance/84> 
+<http://purl.org/dc/terms/title>  "16 Vayathinile" 
+<http://data.linkedmdb.org/resource/movie/actor> "Rajnikanth (Actor)" <http://data.linkedmdb.org/resource/actor/33130> 
+<http://data.linkedmdb.org/resource/movie/actor> "Kamal Haasan (Actor)" <http://data.linkedmdb.org/resource/actor/31110> 
+<http://data.linkedmdb.org/resource/movie/writer> "Bharathiraja (Writer)" <http://data.linkedmdb.org/resource/writer/17586> 
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>  <http://data.linkedmdb.org/resource/movie/film> 
+<http://data.linkedmdb.org/resource/movie/filmid>  "46785"^^<http://www.w3.org/2001/XMLSchema#int> 
+<http://data.linkedmdb.org/resource/movie/music_contributor> "Ilaiyaraaja (Music Contributor)" <http://data.linkedmdb.org/resource/music_contributor/5795> 
+<http://data.linkedmdb.org/resource/movie/initial_release_date>  "1977" 
+<http://data.linkedmdb.org/resource/movie/performance> "performance #83" <http://data.linkedmdb.org/resource/performance/83> 
