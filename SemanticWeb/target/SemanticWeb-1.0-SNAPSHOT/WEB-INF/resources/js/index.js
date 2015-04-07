@@ -140,7 +140,6 @@ function addProperty(elem) {
 function gotopage(elem, pagesize) {
     var page = $("#pagebox").val() - 1;
     if (page >= 0 && page < pagesize) {
-
         $(elem).parents("ul").attr("data-curpage", page);
         $(elem).parent("li").siblings(".next").removeClass("disabled");
         $(elem).parent("li").siblings(".previous").removeClass("disabled");
@@ -150,7 +149,6 @@ function gotopage(elem, pagesize) {
         if (page == pagesize - 1) {
             $(elem).parent("li").siblings(".next").addClass("disabled");
         }
-        // console.log(globalproperty[$(elem).parents(".panel-collapse").attr("id")]);
         $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]), page));
     }
 }
@@ -210,10 +208,7 @@ function previousPage(elem, pages) {
 }
 
 function nextPage(elem, pages) {
-    // console.log(globalproperty[$(elem).parents(".panel-collapse").attr("id")]);
     var currentPage = $(elem).parents("ul").attr("data-curpage");
-    // console.log("next "+currentPage);
-    // console.log("cur "+currentPage+" page "+pages);
     if (currentPage < pages - 1) {
         $(elem).parent("li").siblings().removeClass("disabled");
         var json = $(elem).parents(".panel-group.property").attr("data-json");
@@ -221,7 +216,7 @@ function nextPage(elem, pages) {
         $(elem).parents("ul").attr("data-curpage", parseInt(currentPage) + 1);
         $("#pagebox").val(parseInt(currentPage) + 2);
         $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]), parseInt(currentPage) + 1));
-        if (parseInt(currentPage) + 1 == pages) {
+        if (parseInt(currentPage) + 2 == pages) {
             $(elem).parent("li").addClass("disabled");
         }
     }
@@ -304,7 +299,7 @@ function selectResult(elem) {
                 });
                 
         html+="<dt>image</dt>"+
-                "<dd><img src='http://upload.wikimedia.org/wikipedia/en/thumb/5/5e/SavedbytheBelleTITLE.jpg/220px-SavedbytheBelleTITLE.jpg'></img></dd>";
+                "<dd><img src='http://upload.wikimedia.org/wikipedia/en/thumb/3/33/3DumbClucksTITLE.jpg/220px-3DumbClucksTITLE.jpg'></img></dd>";
                 for (var i = 0; i < json.length; i++) {
                     html += "<dt>" + json[i].name + "</dt>" +
                             "<dd>";
@@ -325,15 +320,11 @@ function selectResult(elem) {
     }
 }
 
-
-
 function propertyHTMLFromJson(json, page) {
     var htmlBuffer = [];
     for (var i = page * 5; i < json.length; i++) {
-        //   console.log(json[i]);
         if (i >= page * 5 + 5)
             break;
-        console.log("i " + i + " elem " + json[i].elem);
         htmlBuffer.push("<a href='#!' class='list-group-item' data-property=" + json[i].elem + " onclick='selectValue(this)'>" +
                 "<span class='badge'>" + json[i].count + "</span>" +
                 json[i].elem + " <small>" + json[i].label + "</small></a>");

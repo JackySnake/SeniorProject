@@ -26,14 +26,7 @@ import java.util.regex.Pattern;
  * @author mtmmoei
  */
 public class Utils {
-
-    public static void main(String[] args) throws IOException {
-   //     getPropertiesFromHadoop();
-        modifyProperty();
-    }
-
-    private static void getPropertiesFromHadoop() throws IOException {
-        String prefix
+    public static String prefix
                 = "PREFIX owl: <http://www.w3.org/2002/07/owl#> "
                 + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
                 + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
@@ -46,11 +39,14 @@ public class Utils {
                 + "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> "
                 + "PREFIX dc: <http://purl.org/dc/terms/> "
                 + "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
+    public static void main(String[] args) throws IOException {
+   //     getPropertiesFromHadoop();
+        modifyProperty();
+    }
 
+    private static void getPropertyFromHadoop() throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/hadoop/dictionary.txt"))) {
-
             String sCurrentLine;
-
             while ((sCurrentLine = br.readLine()) != null) {
                 List<String> matchList = new ArrayList<String>();
                 Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
@@ -58,26 +54,29 @@ public class Utils {
                 while (regexMatcher.find()) {
                     matchList.add(regexMatcher.group());
                 }
+                String category="";
                 if (matchList.size() > 0) {
-                    File file = new File("src/main/resources/hadoop/isValueOfQuery/", "isValueOfQuery_" + matchList.get(0) + ".sparql");
-
-                    if (file.createNewFile()) {
-                        System.out.println("File is created!");
-                    } else {
-                        System.out.println("File already exists.");
-                    }
-                    String queryString = "SELECT DISTINCT ?p "
+                    File file = new File("src/main/resources/hadoop/propertyQuery_/", "propertyQuery_" + matchList.get(0) + ".sparql");
+                    String queryString = "SELECT DISTINCT ?property "
                             + "WHERE {"
-                            + "?s rdf:type " + matchList.get(1) + "."
-                            + "?o ?p ?s. }";
+                            + "?subject rdf:type " + category + "."
+                            + "?subject ?property ?value. }";
                     FileWriter fw = new FileWriter(file.getAbsoluteFile());
                     BufferedWriter bw = new BufferedWriter(fw);
                     bw.write(prefix + queryString);
                     bw.close();
+                    
+                    file = new File("src/main/resources/hadoop/isValueOfQuery/", "isValueOfQuery_" + matchList.get(0) + ".sparql");
+                    queryString = "SELECT DISTINCT ?property "
+                            + "WHERE {"
+                            + "?subject rdf:type " + category + "."
+                            + "?isValueOf ?property ?subject. }";
+                    fw = new FileWriter(file.getAbsoluteFile());
+                    bw = new BufferedWriter(fw);
+                    bw.write(prefix + queryString);
+                    bw.close();
                 }
-
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         };

@@ -191,8 +191,8 @@ public class WebServices {
 
     public String addPropertySparqlGenerator(String category, String property, String selectedValues) {
         String iri = getIRI(category);
-        String queryString = "SELECT ?o ?label WHERE { ";
-        queryString += "?s rdf:type " + iri + " . ";
+        String queryString = "test\nSELECT ?value ?label \nWHERE { \n";
+        queryString += "?subject rdf:type " + iri + " . \n";
         if (selectedValues.length() > 0) {
             JsonParser parser = Json.createParser(new StringReader(selectedValues));
 
@@ -202,21 +202,21 @@ public class WebServices {
 
                     String[] parts = parser.getString().split(" ");
                     event = parser.next();
-                    queryString += convertToNoPrefix(parser.getString()) + " " + parts[1] + " ?s .";
+                    queryString += convertToNoPrefix(parser.getString()) + " " + parts[1] + " ?subject .\n";
                 } else {
-                    queryString += "?s " + parser.getString() + " ";
+                    queryString += "?subject " + parser.getString() + " ";
                     event = parser.next();
-                    queryString += convertToNoPrefix(parser.getString()) + ". ";
+                    queryString += convertToNoPrefix(parser.getString()) + ". \n";
                 }
             }
         }
         if (property.substring(0, 2).equalsIgnoreCase("is")) {
             String[] parts = property.split(" ");
-            queryString += "?o " + parts[1] + " ?s . ";
+            queryString += "?value " + parts[1] + " ?subject . \n";
         } else {
-            queryString += "?s " + property + " ?o . ";
+            queryString += "?subject " + property + " ?value . \n";
         }
-        queryString += "OPTIONAL {?o rdfs:label ?label. }} ORDER BY ?o";
+        queryString += "OPTIONAL {?value rdfs:label ?label. }\n} \n";
         return queryString;
     }
 
@@ -246,23 +246,23 @@ public class WebServices {
         JsonParser parser = Json.createParser(new StringReader(json));
         Event event = parser.next();// START_OBJECT
         String iri = getIRI(category);
-        String queryString = "SELECT ?s ?label WHERE { ?s rdf:type " + iri + " . ";
+        String queryString = "test\nSELECT ?subject ?label \nWHERE { \n?subject rdf:type " + iri + " . \n";
         while ((event = parser.next()) != Event.END_OBJECT) {
             if (parser.getString().substring(0, 2).equalsIgnoreCase("is")) {
                 String[] parts = parser.getString().split(" ");
                 event = parser.next();
                 String value = parser.getString();
                 value = convertToNoPrefix(value);
-                queryString += value + " " + parts[1] + " ?s .";
+                queryString += value + " " + parts[1] + " ?subject .\n";
             } else {
-                queryString += "?s " + parser.getString() + " ";
+                queryString += "?subject " + parser.getString() + " ";
                 event = parser.next();
                 String value = parser.getString();
                 value = convertToNoPrefix(value);
-                queryString += value + ". ";
+                queryString += value + ". \n";
             }
         }
-        queryString += "?s rdfs:label ?label. } ORDER BY ?label";
+        queryString += "?subject rdfs:label ?label. \n}";
         return queryString;
     }
 
@@ -292,11 +292,11 @@ public class WebServices {
 
     public String selectResultSparqlGenerator(String result) {
         String subject = convertToNoPrefix(result);
-        String queryString = "SELECT DISTINCT ?p ?o ?v ?label WHERE { ";
+        String queryString = "test \nSELECT DISTINCT ?property ?value ?isValueOf ?label \nWHERE {\n ";
 
-        queryString += "{" + subject + " ?p ?o. OPTIONAL {?o rdfs:label ?label.}}";
-        queryString += "UNION { ";
-        queryString += "?v ?p " + subject + " . OPTIONAL {?v rdfs:label ?label.} } }";
+        queryString += "{" + subject + " ?property ?value. \nOPTIONAL {?value rdfs:label ?label.}}\n";
+        queryString += "UNION \n{ ";
+        queryString += "?isValueOf ?property " + subject + " . \nOPTIONAL {?isValueOf rdfs:label ?label.} } \n}";
         return queryString;
     }
 
