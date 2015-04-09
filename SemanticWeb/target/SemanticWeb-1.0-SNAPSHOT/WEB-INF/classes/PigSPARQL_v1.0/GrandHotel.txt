@@ -1,0 +1,49 @@
+<http://data.linkedmdb.org/resource/movie/genre> "Drama (Film Genre)" <http://data.linkedmdb.org/resource/film_genre/4> 
+<http://data.linkedmdb.org/resource/movie/language>  <http://www.lingvoj.org/lingvo/en> 
+<http://data.linkedmdb.org/resource/movie/actor> "Jean Hersholt (Actor)" <http://data.linkedmdb.org/resource/actor/29977> 
+<http://data.linkedmdb.org/resource/movie/actor> "Joan Crawford (Actor)" <http://data.linkedmdb.org/resource/actor/29798> 
+<http://data.linkedmdb.org/resource/movie/producer> "Irving Thalberg (Producer)" <http://data.linkedmdb.org/resource/producer/10050> 
+<http://data.linkedmdb.org/resource/movie/music_contributor> "Charles Maxwell (Music Contributor)" <http://data.linkedmdb.org/resource/music_contributor/5421> 
+<http://data.linkedmdb.org/resource/movie/initial_release_date>  "1932-04-12" 
+<http://data.linkedmdb.org/resource/movie/performance> "performance #12857" <http://data.linkedmdb.org/resource/performance/12857> 
+<http://data.linkedmdb.org/resource/movie/performance> "performance #12860" <http://data.linkedmdb.org/resource/performance/12860> 
+<http://data.linkedmdb.org/resource/movie/music_contributor> "William Axt (Music Contributor)" <http://data.linkedmdb.org/resource/music_contributor/587> 
+<http://data.linkedmdb.org/resource/movie/writer> "Vicki Baum (Writer)" <http://data.linkedmdb.org/resource/writer/15676> 
+<http://data.linkedmdb.org/resource/movie/runtime>  "112" 
+<http://www.w3.org/2002/07/owl#sameAs>  <http://mpii.de/yago/resource/Grand_Hotel_%28film%29> 
+<http://www.w3.org/2000/01/rdf-schema#label>  "Grand Hotel" 
+<http://data.linkedmdb.org/resource/movie/actor> "Greta Garbo (Actor)" <http://data.linkedmdb.org/resource/actor/29947> 
+<http://dbpedia.org/property/hasPhotoCollection>  <http://www4.wiwiss.fu-berlin.de/flickrwrappr/photos/Grand_Hotel_(film)> 
+<http://data.linkedmdb.org/resource/movie/film_cut> "Film Cut #2717" <http://data.linkedmdb.org/resource/film_cut/2717> 
+<http://data.linkedmdb.org/resource/movie/producer> "Paul Bern (Producer)" <http://data.linkedmdb.org/resource/producer/12095> 
+<http://data.linkedmdb.org/resource/movie/film_of_distributor> "film_film_distributor_relationship #6417"  <http://data.linkedmdb.org/resource/film_film_distributor_relationship/6417>
+<http://data.linkedmdb.org/resource/movie/director> "Edmund Goulding (Director)" <http://data.linkedmdb.org/resource/director/11113> 
+<http://purl.org/dc/terms/date>  "1932-04-12" 
+<http://xmlns.com/foaf/0.1/page>  <http://www.freebase.com/view/guid/9202a8c04000641f8000000000059774> 
+<http://www.w3.org/2002/07/owl#sameAs>  <http://dbpedia.org/resource/Grand_Hotel_%28film%29> 
+<http://data.linkedmdb.org/resource/movie/performance> "performance #12856" <http://data.linkedmdb.org/resource/performance/12856> 
+<http://data.linkedmdb.org/resource/movie/performance> "performance #12859" <http://data.linkedmdb.org/resource/performance/12859> 
+<http://data.linkedmdb.org/resource/movie/performance> "performance #12862" <http://data.linkedmdb.org/resource/performance/12862> 
+<http://data.linkedmdb.org/resource/movie/production_company> "Metro-Goldwyn-Mayer (Production Company)" <http://data.linkedmdb.org/resource/production_company/18> 
+<http://data.linkedmdb.org/resource/movie/actor> "John Barrymore (Actor)" <http://data.linkedmdb.org/resource/actor/29999> 
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>  <http://data.linkedmdb.org/resource/movie/film> 
+<http://purl.org/dc/terms/title>  "Grand Hotel" 
+<http://xmlns.com/foaf/0.1/page>  <http://www.imdb.com/title/tt0022958> 
+<http://xmlns.com/foaf/0.1/page>  <http://www.rottentomatoes.com/alias?type=imdbid&s=0022958> 
+<http://data.linkedmdb.org/resource/movie/actor> "Lionel Barrymore (Actor)" <http://data.linkedmdb.org/resource/actor/29987> 
+<http://data.linkedmdb.org/resource/oddlinker/link_source> "28 (Interlink)"  <http://data.linkedmdb.org/resource/interlink/28>
+<http://data.linkedmdb.org/resource/oddlinker/link_source> "133998 (Interlink)"  <http://data.linkedmdb.org/resource/interlink/133998>
+<http://data.linkedmdb.org/resource/movie/actor> "Lewis Stone (Actor)" <http://data.linkedmdb.org/resource/actor/30307> 
+<http://data.linkedmdb.org/resource/movie/actor> "Wallace Beery (Actor)" <http://data.linkedmdb.org/resource/actor/30308> 
+<http://data.linkedmdb.org/resource/movie/editor> "Blanche Sewell (Editor)" <http://data.linkedmdb.org/resource/editor/3019> 
+<http://data.linkedmdb.org/resource/movie/filmid>  "58"^^<http://www.w3.org/2001/XMLSchema#int> 
+<http://data.linkedmdb.org/resource/movie/writer> "William A. Drake (Writer)" <http://data.linkedmdb.org/resource/writer/2746> 
+<http://xmlns.com/foaf/0.1/made> "Edmund Goulding (Director)"  <http://data.linkedmdb.org/resource/director/11113>
+<http://data.linkedmdb.org/resource/movie/writer> "B\u00C3\u00A9la Bal\u00C3\u00A1zs (Writer)" <http://data.linkedmdb.org/resource/writer/14593> 
+<http://data.linkedmdb.org/resource/movie/performance> "performance #12858" <http://data.linkedmdb.org/resource/performance/12858> 
+<http://data.linkedmdb.org/resource/movie/performance> "performance #12861" <http://data.linkedmdb.org/resource/performance/12861> 
+<http://data.linkedmdb.org/resource/movie/cinematographer> "William H. Daniels (Cinematographer)" <http://data.linkedmdb.org/resource/cinematographer/26> 
+<http://data.linkedmdb.org/resource/oddlinker/link_source> "18561 (Interlink)"  <http://data.linkedmdb.org/resource/interlink/18561>
+<http://data.linkedmdb.org/resource/oddlinker/link_source> "37094 (Interlink)"  <http://data.linkedmdb.org/resource/interlink/37094>
+<http://data.linkedmdb.org/resource/oddlinker/link_source> "70242 (Interlink)"  <http://data.linkedmdb.org/resource/interlink/70242>
+<http://data.linkedmdb.org/resource/movie/film_art_director> "Cedric Gibbons (Film Art Director)" <http://data.linkedmdb.org/resource/film_art_director/5> 
