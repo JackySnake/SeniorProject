@@ -75,13 +75,21 @@ public class IndexController {
       //  String filePath = this.hadoopService.queryHadoop(queryString);
         String filePath;
         if(property.equalsIgnoreCase("movie:actor")){
-        filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film_actor.txt");    
-        }else {
+       // filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film_actor.txt");
+            filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film->genre->drama->actor.txt");
+            
+           // filePath = this.hadoopService.queryHadoop(queryString);
+        }else if(property.equalsIgnoreCase("movie:director")){
             
         filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film_actor_curly_director.txt");
+        }else if(property.equalsIgnoreCase("movie:genre")){
+            filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film->genre.txt");
+        }
+        else {
+            filePath = this.hadoopService.queryHadoop(queryString);
         }
         
-        System.out.println("hadoop done");
+        //System.out.println("hadoop done");
         ArrayList<String> resultWithPrefix = this.webServices.replaceString(filePath);
         String result = this.webServices.countValue(resultWithPrefix);
         return result;
@@ -93,12 +101,19 @@ public class IndexController {
         String queryString  = this.webServices.selectValueSparqlGenerator(json,category);
         System.out.println(queryString);
     // String filePath = this.hadoopService.queryHadoop(queryString);
-       // System.out.println("test "+json);
+        System.out.println("test1 "+json);
         String filePath;
         if(json.equalsIgnoreCase("{\"movie:actor\":\"db:actor/35247\"}")){
-        filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film_actor_value.txt");    
-        }else {
-         //  filePath = this.hadoopService.queryHadoop(queryString);
+         filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film_actor_value.txt");       
+        }else if(json.equalsIgnoreCase("{\"movie:genre\":\"db:film_genre/4\"}")){
+         filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film->genre->drama.txt");    
+        
+        }else if(json.equalsIgnoreCase("{\"movie:genre\":\"db:film_genre/4\",\"movie:actor\":\"db:actor/29798\"}")){
+            filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film->drama->joan.txt");
+            
+        }
+        else {
+        //   filePath = this.hadoopService.queryHadoop(queryString);
         filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/charley chase.txt");
         }
          
@@ -112,10 +127,9 @@ public class IndexController {
         System.out.println("selectResult");
         String queryString  = this.webServices.selectResultSparqlGenerator(json);
         System.out.println(queryString);
-        
-        //String filePath = this.hadoopService.queryHadoop(queryString);
-      //  System.out.println("test "+json);
-        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/3_dumb_clucks.txt");
+        System.out.println("test2 "+json);
+    //    String filePath = this.hadoopService.queryHadoop(queryString);
+        String filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/GrandHotel.txt");
         
         ArrayList<String> resultWithPrefix = this.webServices.replaceString(filePath);
         String result = this.webServices.readFileToJSON2(resultWithPrefix,category);

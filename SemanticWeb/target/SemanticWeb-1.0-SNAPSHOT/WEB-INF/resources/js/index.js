@@ -299,7 +299,7 @@ function selectResult(elem) {
                 });
                 
         html+="<dt>image</dt>"+
-                "<dd><img src='http://upload.wikimedia.org/wikipedia/en/thumb/3/33/3DumbClucksTITLE.jpg/220px-3DumbClucksTITLE.jpg'></img></dd>";
+                "<dd><img src='http://theaxisofego.files.wordpress.com/2014/03/grandhotelposter.jpg'></img></dd>";
                 for (var i = 0; i < json.length; i++) {
                     html += "<dt>" + json[i].name + "</dt>" +
                             "<dd>";
