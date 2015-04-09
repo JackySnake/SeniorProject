@@ -76,14 +76,14 @@ public class IndexController {
         String filePath;
         if(property.equalsIgnoreCase("movie:actor")){
        // filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film_actor.txt");
-            filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film->genre->drama->actor.txt");
+            filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film-genre-drama-actor.txt");
             
            // filePath = this.hadoopService.queryHadoop(queryString);
         }else if(property.equalsIgnoreCase("movie:director")){
             
         filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film_actor_curly_director.txt");
         }else if(property.equalsIgnoreCase("movie:genre")){
-            filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film->genre.txt");
+            filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film-genre.txt");
         }
         else {
             filePath = this.hadoopService.queryHadoop(queryString);
@@ -106,10 +106,10 @@ public class IndexController {
         if(json.equalsIgnoreCase("{\"movie:actor\":\"db:actor/35247\"}")){
          filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film_actor_value.txt");       
         }else if(json.equalsIgnoreCase("{\"movie:genre\":\"db:film_genre/4\"}")){
-         filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film->genre->drama.txt");    
+         filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film-genre-drama.txt");    
         
         }else if(json.equalsIgnoreCase("{\"movie:genre\":\"db:film_genre/4\",\"movie:actor\":\"db:actor/29798\"}")){
-            filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film->drama->joan.txt");
+            filePath = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/film-drama-joan.txt");
             
         }
         else {
