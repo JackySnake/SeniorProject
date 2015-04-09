@@ -115,7 +115,7 @@ function addProperty(elem) {
                         "<nav class='nav_pager'>" +
                         "<ul class='pager' data-curpage='0'>" +
                         "<li>" +
-                        "<input type='number' class='form-control input-sm' id='pagebox' value='1' min='1' max='" + pages + "'>/" + pages +
+                        "<input type='number' class='form-control input-sm pagebox' value='1' min='1' max='" + pages + "'>/" + pages +
                         "<button class='btn btn-primary btn-sm' onclick='gotopage(this," + pages + ")'>Go</button>" +
                         "</li>" +
                         "<li class='previous disabled'><a href='#!' onclick='previousPage(this," + pages + ")'><span aria-hidden='true'>&larr;</span> Previous</a></li>";
@@ -138,7 +138,7 @@ function addProperty(elem) {
     });
 }
 function gotopage(elem, pagesize) {
-    var page = $("#pagebox").val() - 1;
+    var page = $(elem).siblings(".pagebox").val() - 1;
     if (page >= 0 && page < pagesize) {
         $(elem).parents("ul").attr("data-curpage", page);
         $(elem).parent("li").siblings(".next").removeClass("disabled");
@@ -199,7 +199,7 @@ function previousPage(elem, pages) {
         $(elem).parent("li").siblings().removeClass("disabled");
         var json = $(elem).parents(".panel-group.property").attr("data-json");
         $(elem).parents("ul").attr("data-curpage", parseInt(currentPage) - 1);
-        $("#pagebox").val(parseInt(currentPage));
+        $(elem).parent().parent().find("li .pagebox").val(parseInt(currentPage));
         $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]), parseInt(currentPage) - 1));
         if (parseInt(currentPage) == 1) {
             $(elem).parent("li").addClass("disabled");
@@ -214,7 +214,7 @@ function nextPage(elem, pages) {
         var json = $(elem).parents(".panel-group.property").attr("data-json");
 
         $(elem).parents("ul").attr("data-curpage", parseInt(currentPage) + 1);
-        $("#pagebox").val(parseInt(currentPage) + 2);
+        $(elem).parent().parent().find("li .pagebox").val(parseInt(currentPage) + 2);
         $(elem).parents(".panel-collapse").children().children(".list-group").html(propertyHTMLFromJson(JSON.parse(globalproperty[$(elem).parents(".panel-collapse").attr("id")]), parseInt(currentPage) + 1));
         if (parseInt(currentPage) + 2 == pages) {
             $(elem).parent("li").addClass("disabled");

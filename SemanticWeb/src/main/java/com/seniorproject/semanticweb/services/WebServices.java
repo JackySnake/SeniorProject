@@ -191,7 +191,7 @@ public class WebServices {
 
     public String addPropertySparqlGenerator(String category, String property, String selectedValues) {
         String iri = getIRI(category);
-        String queryString = "SELECT ?value ?label \nWHERE { ";
+        String queryString = "SELECT ?value ?label WHERE { ";
         queryString += "?subject rdf:type " + iri + " . ";
         if (selectedValues.length() > 0) {
             JsonParser parser = Json.createParser(new StringReader(selectedValues));
