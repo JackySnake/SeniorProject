@@ -1,4 +1,4 @@
-package com.seniorproject.semanticweb.example;
+package com.seniorproject.semanticweb.utils;
 
 
 import java.io.BufferedReader;
@@ -8,33 +8,29 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import org.apache.commons.io.FilenameUtils;
 
 
-public class QueryHadoop {
+public class QueryHadoopBenchmark {
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
                 System.out.println("Working Directory = " +
               System.getProperty("user.dir"));
-                long lStartTime = System.nanoTime();
-//                   String sparqlFileName = "queryTest";
-//                String pigFileName = "queryPig";
-//                String modifiedPigFileName = "queryPigModified";
-//                String outputFileName = "src/main/resources/PigSPARQL_v1.0/output";
-                   //File folder = new File("src/main/resources/hadoop/isValueOfQuery");
-//File[] listOfFiles = folder.listFiles();
+                
+                   String sparqlFileName = "query1";
+                String pigFileName = "queryPig";
+                String modifiedPigFileName = "queryPigModified";
+                String outputFileName = "src/main/resources/PigSPARQL_v1.0/output";
+                 long lStartTime = System.nanoTime();
+/*                   File folder = new File("src/main/resources/hadoop/isValueOfQuery");
+File[] listOfFiles = folder.listFiles();
 
-
-        String filename ="isValueOfQuery_film_festival_focus";
+   for(int i=2;i<listOfFiles.length;i++){
+        String filename =FilenameUtils.removeExtension(listOfFiles[i].getName());
         System.out.println(filename);
         String sparqlFileName = filename;
                 String pigFileName = filename+"2";
                 String modifiedPigFileName = filename+"3";
-                String outputFileName = "src/main/resources/PigSPARQL_v1.0/"+filename+"4";
+                String outputFileName = "src/main/resources/PigSPARQL_v1.0/"+filename+"4";*/
 		// convert sparql file into pig calling pigsparql main file
                     converSparql(sparqlFileName,pigFileName);
 		
@@ -47,13 +43,14 @@ public class QueryHadoop {
 
 	    //Then call pig file and query on HDFS using pigsparql 
 	      //  Process
+               
 		runningPig(modifiedPigFileName);
                 
             //merge file back into local
                 
                 mergeHadoopFile(outputFileName);
                     long lEndTime = System.nanoTime();
-                    long lTotalTime = lEndTime - lStartTime;
+                    long lTotalTime = (lEndTime - lStartTime)/1000000000;
                     System.out.println("Total Time: " + lTotalTime );
 	}
         //}
@@ -70,7 +67,7 @@ public class QueryHadoop {
 	private static void runningPig(String modifiedPigFileName) throws InterruptedException, IOException {
 		// TODO Auto-generated method stub
 		
-		Process ps2 = Runtime.getRuntime().exec("pig -param inputData='/user/admin/SeniorData/linkedmdb-latest-dump.nt' -param outputData='/user/admin/SeniorData/out4' -param reducerNum='12' src/main/resources/PigSPARQL_v1.0/"+modifiedPigFileName+".pig");
+		Process ps2 = Runtime.getRuntime().exec("pig -param inputData='/user/admin/SeniorData/University160-clean2.nt' -param outputData='/user/admin/SeniorData/out4' -param reducerNum='12' src/main/resources/PigSPARQL_v1.0/"+modifiedPigFileName+".pig");
         ps2.waitFor();
         java.io.InputStream is2=ps2.getInputStream();
         byte b2[]=new byte[is2.available()];
@@ -131,6 +128,11 @@ public class QueryHadoop {
 
 	private static void converSparql(String sparqlFileName, String pigFileName) throws IOException, InterruptedException {
 		File f = new File("src/main/resources/PigSPARQL_v1.0/"+sparqlFileName+".sparql");
+                if(f.exists()){
+                    System.out.println("yes");
+                }else{
+                    System.out.println("no");
+                }
 		Process ps = Runtime.getRuntime().exec("java -jar src/main/resources/PigSPARQL_v1.0/PigSPARQL_main.jar -e -i src/main/resources/PigSPARQL_v1.0/"+sparqlFileName+".sparql -o src/main/resources/PigSPARQL_v1.0/"+pigFileName+".pig -opt");
 	     // Then retreive the process output
 	   //     InputStream in = proc.getInputStream();

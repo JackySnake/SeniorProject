@@ -24,15 +24,13 @@
         <script src="${cp}/resources/js/index.js"></script>
 
     </head>
-    
+
     <body>
-<h1><span class="glyphicon glyphicon-film" aria-hidden="true"></span> Movie Search <small>Semantic Web</small></h1>
-<br>
+        <h1><span class="glyphicon glyphicon-film" aria-hidden="true"></span> Movie Search <small>Semantic Web</small></h1>
+        <br>
         <div id="content_wrapper">
-            
+
             <div role="tabpanel" id="search_panel" class="panel panel-default">
-<!--                <h3>Search</h3>-->
-                <!-- Nav tabs -->
                 <br>
                 <ul class="nav nav-pills" role="tablist" id="search_tab">
                     <li role="presentation" class="active">
@@ -45,9 +43,9 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="faceted_search_tabpanel">
                         <div id="facetedSearch">
- 
+
                             <div class="form-group col-sm-12">
-                             
+
                                 <label for="category" class="col-sm-4 control-label">Search for</label>
                                 <div class="dropdown">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="category" action="${pageContext.request.contextPath}/selectCategory" data-toggle="dropdown" aria-expanded="true">
@@ -62,9 +60,9 @@
                                 </div>
                             </div>
                         </div>
-                                        
-                                        <div id="property"></div>
-                                        <div id='dropdownAddProperty' class='form-group col-sm-12'></div>
+
+                        <div id="property"></div>
+                        <div id='dropdownAddProperty' class='form-group col-sm-12'></div>
 
                     </div>
                     <div role="tabpanel" class="tab-pane" id="advance_search_tabpanel">
@@ -93,7 +91,6 @@
             </div>
 
             <div id="search_result_wrapper" >
-<!--                <h3><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Results</h3>-->
                 <div id="search_result"></div>
             </div>
 

@@ -95,28 +95,6 @@ public class HadoopService {
         byte b[] = new byte[is.available()];
         is.read(b, 0, b.length);
         System.out.println(new String(b));
-
-//BufferedReader br = null;
-// 
-//		try {
-// System.out.println(servletContext.getRealPath("/WEB-INF/resources/PigSPARQL_v1.0/PigSPARQL_main.jar"));
-//			String sCurrentLine;
-// 
-//			br = new BufferedReader(new FileReader(servletContext.getRealPath("/WEB-INF/resources/hadoop/test3.pig")));
-// 
-//			while ((sCurrentLine = br.readLine()) != null) {
-//				System.out.println(sCurrentLine);
-//			}
-// 
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if (br != null)br.close();
-//			} catch (IOException ex) {
-//				ex.printStackTrace();
-//			}
-//		}
     }
 
     private void modifiedPig() throws IOException {

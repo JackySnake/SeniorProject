@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.seniorproject.semanticweb.example;
+package com.seniorproject.semanticweb.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  *
  * @author mtmmoei
  */
-public class Utils {
+public class PrepareDataProperty {
     public static String prefix
                 = "PREFIX owl: <http://www.w3.org/2002/07/owl#> "
                 + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
@@ -40,7 +40,7 @@ public class Utils {
                 + "PREFIX dc: <http://purl.org/dc/terms/> "
                 + "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
     public static void main(String[] args) throws IOException {
-   //     getPropertiesFromHadoop();
+        getPropertyFromHadoop();
         modifyProperty();
     }
 
@@ -94,7 +94,6 @@ public class Utils {
             String content = new String(Files.readAllBytes(path), charset);
             content = content.replaceAll("<http://xmlns.com/foaf/0.1/page>\n", "");
             content = content.replaceAll("<http://www.w3.org/2002/07/owl#sameAs>\n", "");
-           // content = content.replaceAll("<http://www.w3.org/2000/01/rdf-schema#label>\n", "");
             content = content.replaceAll("<http://dbpedia.org/property/hasPhotoCollection>\n", "");
             content = content.replaceAll("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>\n", "");
             content = content.replaceAll("<http://www.w3.org/2002/07/owl#", "owl:");

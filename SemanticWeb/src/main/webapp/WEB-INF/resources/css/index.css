@@ -23,8 +23,8 @@ body {
 
 .center {
     margin-left:auto;
-margin-right:0;
-display: block
+    margin-right:0;
+    display: block
 }
 #facetedSearch {
     display:block;
@@ -33,10 +33,6 @@ display: block
 
 #facetedSearch .form-group, #facetedSearch .dropdown {
     display: inline-block;
-}
-
-#facetedSearch input[type="submit"], #facetedSearch .dropdown{
-/*    display: block;*/
 }
 
 #keyword {
@@ -58,7 +54,7 @@ display: block
 }
 
 .panel-body .list-group-item:first-child{
-     border-radius: 0;
+    border-radius: 0;
 }
 
 .panel-collapse .panel-body {
@@ -66,8 +62,6 @@ display: block
 }
 .panel-body .list-group {
     margin-bottom: 0;
-   // max-height: 200px;
-   // overflow-y: scroll;
 }
 .panel-body .list-group .list-group-item {
     border: none;

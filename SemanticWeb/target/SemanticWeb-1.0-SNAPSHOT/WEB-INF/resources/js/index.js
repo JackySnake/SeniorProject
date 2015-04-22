@@ -1,4 +1,5 @@
 var globalproperty = new Array();
+
 $(function () {
     $('#search_tab a:first').tab('show');
     $('#advanceSearch').submit(function (event) {
@@ -14,7 +15,6 @@ $(function () {
     });
 
     $("#category + .dropdown-menu li a").click(function () {
-        console.log("select category");
         $("#category .selection").text($(this).text());
         $.ajax({
             url: $("#category").attr("action"),
@@ -41,7 +41,6 @@ $(function () {
                         "<ul class='dropdown-menu scrollable-menu' role='menu' aria-labelledby='addProperty'>" +
                         "</ul>" +
                         "</div>");
-
 
                 for (property in response) {
                     var li = document.createElement('li');
@@ -93,7 +92,6 @@ function addProperty(elem) {
         success: function (response) {
             var pages = Math.ceil(JSON.parse(response).length / 5);
             globalproperty["collapse" + res[1]] = response;
-            console.log(globalproperty.length);
             if ($("#accordion" + res[1]).length <= 0) {
                 var html = "" +
                         "<div class='panel-group property' id='accordion" + res[1] + "' role='tablist' aria-multiselectable='true'>" +
@@ -153,26 +151,26 @@ function gotopage(elem, pagesize) {
     }
 }
 function jsonSortByName(elem, collapseID) {
-
-    console.log("sortName");
     $(elem).siblings().removeClass("active");
     $(elem).addClass("active");
     var currentPage = $(elem).parents(".panel-group.property").find(".pager").attr("data-curpage");
     var property = JSON.parse(globalproperty[$(collapseID).attr("id")]);
     if (property[0].label != "undefined")
-{property.sort(function (a, b) {
-        return a.label.localeCompare(b.label);
-    });}else {
-    property.sort(function (a, b) {
-        return a.elem.localeCompare(b.elem);
-    });
+    {
+        property.sort(function (a, b) {
+            return a.label.localeCompare(b.label);
+        });
+    } else {
+        property.sort(function (a, b) {
+            return a.elem.localeCompare(b.elem);
+        });
     }
-    
+
     globalproperty[$(collapseID).attr("id")] = JSON.stringify(property);
     $(collapseID).children(".panel-body").children(".list-group").html(propertyHTMLFromJson(property, currentPage));
 }
+
 function jsonSortByCount(elem, collapseID) {
-    console.log("sortCount");
     $(elem).siblings().removeClass("active");
     $(elem).addClass("active");
     var currentPage = $(elem).parents(".panel-group.property").find(".pager").attr("data-curpage");
@@ -183,17 +181,15 @@ function jsonSortByCount(elem, collapseID) {
     globalproperty[$(collapseID).attr("id")] = JSON.stringify(property);
     $(collapseID).children(".panel-body").children(".list-group").html(propertyHTMLFromJson(property, currentPage));
 }
+
 function removeProperty(elem) {
-    console.log(globalproperty.length);
     var target = $($(elem).attr("data-target"));
     delete globalproperty[$(elem).parents(".panel-group.property").find(".panel-collapse").attr("id")];
     target.remove();
 }
+
 function previousPage(elem, pages) {
-    //if($(elem).attr("class"))
-    //console.log(globalproperty.length);
     var currentPage = $(elem).parents("ul").attr("data-curpage");
-    //console.log("pre "+currentPage);
 
     if (currentPage > 0) {
         $(elem).parent("li").siblings().removeClass("disabled");
@@ -229,7 +225,6 @@ function selectValue(elem) {
     $(elem).parents(".panel-group.property").nextAll(".panel-group.property").remove();
     var values = {};
     var elems = $(".panel-body .list-group .list-group-item.active");
-//        var elems = document.getElementsByClassName("select");
     for (var i = 0; i < elems.length; i++) {
         var text;
         $(elems[i]).contents().each(function () {
@@ -237,7 +232,6 @@ function selectValue(elem) {
                 text = this.wholeText;
                 if (text.charAt(0) != "\"")
                     text = text.split(" ")[0];
-                console.log(text);
             }
         });
         values[$(elems[i]).parent().parent().parent().attr("data-property")] = text;
@@ -253,7 +247,7 @@ function selectValue(elem) {
         datatype: "json",
         success: function (response) {
             var json = JSON.parse(response);
-            var html = "<h3>found "+json.length+" results</h3>"+
+            var html = "<h3>found " + json.length + " results</h3>" +
                     "<div class='list-group'>";
             for (var i = 0; i < json.length; i++) {
                 html += "<a href='#collapse" + i + "' onclick='selectResult(this)' class='list-group-item' data-toggle='collapse' aria-expanded='false' aria-controls='collapse" + i + "'>" +
@@ -273,7 +267,6 @@ function selectValue(elem) {
 }
 
 function selectResult(elem) {
-    console.log("selectResult");
     var old = $("#search_result").find(".active");
     if (!old.is($(elem))) {
 
@@ -297,21 +290,17 @@ function selectResult(elem) {
                 json.sort(function (a, b) {
                     return a.name.localeCompare(b.name);
                 });
-                
-        html+="<dt>image</dt>"+
-                "<dd><img src='http://theaxisofego.files.wordpress.com/2014/03/grandhotelposter.jpg'></img></dd>";
                 for (var i = 0; i < json.length; i++) {
                     html += "<dt>" + json[i].name + "</dt>" +
                             "<dd>";
 
-                    if (json[i].url.substring(0,4) == "http") {
-       
+                    if (json[i].url.substring(0, 4) == "http") {
+
                         html += "<a href=" + json[i].url + ">";
-                    }else if(json[i].label.substring(0,4)=="http"){
+                    } else if (json[i].label.substring(0, 4) == "http") {
                         html += "<a href=" + json[i].label + " >";
                     }
                     html += json[i].label + "</a></dd>";
-
                 }
                 html += "</dl>";
                 $(elem).next().children().html(html);
@@ -334,7 +323,6 @@ function propertyHTMLFromJson(json, page) {
 
 function createTable(result) {
     var json = JSON.parse(result);
-
     var html = "<table class='table table-hover' id='result_table'>" +
             "<tbody>" +
             "<tr>";
@@ -346,7 +334,6 @@ function createTable(result) {
     for (var i = 1; i < json.length; i++) {
         html += "<tr>";
         for (var j = 0; j < json[i].length; j++) {
-            console.log(json[i][j]);
             html += "<td>" + json[i][j] + "</td>";
         }
         html += "</tr>";
@@ -355,51 +342,6 @@ function createTable(result) {
     html += "</tbody>" +
             "</table>";
     $("#search_result").html(html);
-//    var body = document.getElementById('search_result');
-//    var tbl = document.createElement('table');
-//    tbl.setAttribute("class", "table table-hover");
-//    tbl.setAttribute("id", "result_table");
-//    var tbdy = document.createElement('tbody');
-//    var tr = document.createElement('tr');
-//
-//    for (var i = 0; i < json[0].length; i++) {
-//        var th = document.createElement('th');
-//        th.appendChild(document.createTextNode(json[0][i]));
-//        tr.appendChild(th);
-//    }
-//    tbdy.appendChild(tr);
-//    for (var i = 1; i < json.length; i++) {
-//        var tr = document.createElement('tr');
-//        for (var j = 0; j < json[i].length; j++) {
-//            var td = document.createElement('td');
-//            td.appendChild(document.createTextNode(json[i][j]));
-//            tr.appendChild(td);
-//        }
-//        tbdy.appendChild(tr);
-//    }
-//    tbl.appendChild(tbdy);
-//    body.appendChild(tbl);
-    //    For Jena
-//    for (var i = 0; i < json.head.vars.length; i++) {
-//        var th = document.createElement('th');
-//        th.appendChild(document.createTextNode(json.head.vars[i]));
-//        tr.appendChild(th);
-//    }
-//    tbdy.appendChild(tr);
-//    for (var i = 0; i < json.results.bindings.length; i++) {
-//        var tr = document.createElement('tr');
-//        for (var b in json.results.bindings[i]) {
-//            var td = document.createElement('td');
-//            if(json.results.bindings[i][b].type=="uri"){
-//                var link = document.createElement('a');
-//                link.setAttribute("href", json.results.bindings[i][b].value);
-//                link.appendChild(document.createTextNode(json.results.bindings[i][b].value));
-//                td.appendChild(link)
-//            }else {
-//                td.appendChild(document.createTextNode(json.results.bindings[i][b].value)); 
-//            }
-//            tr.appendChild(td);
-    //        }
-    //        tbdy.appendChild(tr); //    }
-
 }
+
+
