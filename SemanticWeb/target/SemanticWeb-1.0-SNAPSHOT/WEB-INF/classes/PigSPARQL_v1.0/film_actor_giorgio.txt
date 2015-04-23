@@ -1,2 +1,0 @@
-<http://data.linkedmdb.org/resource/film/83994> "Baaria - La porta del vento"
-<http://data.linkedmdb.org/resource/film/14960> "Notte prima degli esami"

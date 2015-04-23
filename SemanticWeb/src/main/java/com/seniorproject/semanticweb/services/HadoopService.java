@@ -22,40 +22,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HadoopService {
-      @Autowired
+
+    @Autowired
     ServletContext servletContext;
+
     public String queryHadoop(String queryString) throws IOException, InterruptedException {
-        String prefix
-                = "PREFIX owl: <http://www.w3.org/2002/07/owl#> "
-                + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
-                + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
-                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
-                + "PREFIX foaf: <http://xmlns.com/foaf/0.1/> "
-                + "PREFIX oddlinker: <http://data.linkedmdb.org/resource/oddlinker/> "
-                + "PREFIX map: <file:/C:/d2r-server-0.4/mapping.n3#> "
-                + "PREFIX db: <http://data.linkedmdb.org/resource/> "
-                + "PREFIX dbpedia: <http://dbpedia.org/property/> "
-                + "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> "
-                + "PREFIX dc: <http://purl.org/dc/terms/> "
-                + "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
-        File file = new File(servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/"), "test1.sparql");
+        createSparqlFile(queryString);
 
-        if (file.createNewFile()) {
-            System.out.println("File is created!");
-        } else {
-            System.out.println("File already exists.");
-        }
-        FileWriter fw = new FileWriter(file.getAbsoluteFile());
-        BufferedWriter bw = new BufferedWriter(fw);
-        bw.write(prefix + queryString);
-        bw.close();
-        String filePath = test();
-        return filePath;
-    }
-
-    private String test() throws IOException, InterruptedException {
-        System.out.println("Working Directory = "
-                + System.getProperty("user.dir"));
         // convert sparql file into pig calling pigsparql main file
         converSparql();
 
@@ -74,15 +47,31 @@ public class HadoopService {
         return servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/output.txt");
     }
 
+    private void createSparqlFile(String queryString) throws IOException {
+        String prefix
+                = "PREFIX owl: <http://www.w3.org/2002/07/owl#> "
+                + "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
+                + "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+                + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+                + "PREFIX foaf: <http://xmlns.com/foaf/0.1/> "
+                + "PREFIX oddlinker: <http://data.linkedmdb.org/resource/oddlinker/> "
+                + "PREFIX map: <file:/C:/d2r-server-0.4/mapping.n3#> "
+                + "PREFIX db: <http://data.linkedmdb.org/resource/> "
+                + "PREFIX dbpedia: <http://dbpedia.org/property/> "
+                + "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> "
+                + "PREFIX dc: <http://purl.org/dc/terms/> "
+                + "PREFIX movie: <http://data.linkedmdb.org/resource/movie/> ";
+        File file = new File(servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/"), "test1.sparql");
+
+        FileWriter fw = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(prefix + queryString);
+        bw.close();
+    }
+
     private void converSparql() throws IOException, InterruptedException {
         System.out.println("converSparql");
         File file = new File(servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/"), "test3.pig");
-        if (file.createNewFile()) {
-            System.out.println("File is created!");
-        } else {
-            System.out.println("File already exists.");
-        }
-
         Process ps = Runtime.getRuntime().exec("java"
                 + " -jar " + servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/PigSPARQL_main.jar") + "  -e "
                 + "-i " + servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/test1.sparql")
@@ -98,14 +87,8 @@ public class HadoopService {
     }
 
     private void modifiedPig() throws IOException {
-        System.out.println("modifiedPig");
         String sReadFileName = servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/test3.pig");
         File file = new File(servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/"), "test4.pig");
-        if (file.createNewFile()) {
-            System.out.println("File is created!");
-        } else {
-            System.out.println("File already exists.");
-        }
         String sWriteFileName = file.toString();
 
         String sReplaceText = "indata = LOAD '$inputData' USING pigsparql.rdfLoader.ExNTriplesLoader(' ','expand') as (s,p,o)";
@@ -151,8 +134,6 @@ public class HadoopService {
     }
 
     private void deleteFolderFromHadoop() throws IOException, InterruptedException {
-        System.out.println("delete");
-        // TODO Auto-generated method stub
         Process ps2 = Runtime.getRuntime().exec("hadoop fs -rm -r /user/admin/SeniorData/out4");
         ps2.waitFor();
         java.io.InputStream is2 = ps2.getInputStream();
@@ -162,9 +143,6 @@ public class HadoopService {
     }
 
     private void runningPig() throws InterruptedException, IOException {
-        // TODO Auto-generated method stub
-        System.out.println("runningPig");
-        System.out.println(servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/test4.pig"));
         Process ps2 = Runtime.getRuntime().exec("pig -param inputData='/user/admin/SeniorData/linkedmdb-latest-dump.nt' "
                 + "-param outputData='/user/admin/SeniorData/out4' -param reducerNum='12' "
                 + servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/test4.pig"));
@@ -177,13 +155,7 @@ public class HadoopService {
     }
 
     private void mergeHadoopFile() throws IOException, InterruptedException {
-        System.out.println("merge");
         File file = new File(servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/"), "output.txt");
-        if (file.createNewFile()) {
-            System.out.println("File is created!");
-        } else {
-            System.out.println("File already exists.");
-        }
         Process ps = Runtime.getRuntime().exec("hadoop fs -getmerge /user/admin/SeniorData/out4 " + servletContext.getRealPath("/WEB-INF/classes/PigSPARQL_v1.0/output.txt"));
         // Then retreive the process output
         //     InputStream in = proc.getInputStream();

@@ -1,5 +1,0 @@
-<http://data.linkedmdb.org/resource/film/14390> "The Sealed Room"
-<http://data.linkedmdb.org/resource/film/9028> "Oliver Twist"
-<http://data.linkedmdb.org/resource/film/1569> "The Three Musketeers"
-<http://data.linkedmdb.org/resource/film/12451> "The Man Who Laughs"
-<http://data.linkedmdb.org/resource/film/50192> "The Body in the Trunk"
